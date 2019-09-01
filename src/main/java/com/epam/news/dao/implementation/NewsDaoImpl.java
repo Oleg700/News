@@ -10,7 +10,7 @@ import java.util.List;
 
 public class NewsDaoImpl implements NewsDao<News> {
 
-    /*getListOfBriefNews()*/
+
     public List<News> getAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<News> newsList = session.createQuery("select new News(n.title, n.date, n.brief )\n" +
@@ -18,7 +18,6 @@ public class NewsDaoImpl implements NewsDao<News> {
         session.close();
         return newsList;
     }
-
 
     public News get(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -56,5 +55,8 @@ public class NewsDaoImpl implements NewsDao<News> {
         session.delete(news);
         transaction.commit();
         session.close();
+    }
+
+    public NewsDaoImpl() {
     }
 }

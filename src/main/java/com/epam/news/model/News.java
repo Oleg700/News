@@ -51,8 +51,6 @@ public class News {
         this.brief = brief;
     }
 
-
-
     public int getId() {
         return id;
     }
