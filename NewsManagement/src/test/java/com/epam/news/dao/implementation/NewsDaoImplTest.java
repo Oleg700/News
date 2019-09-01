@@ -1,4 +1,3 @@
-/*
 package com.epam.news.dao.implementation;
 
 import com.epam.news.model.News;
@@ -62,4 +61,4 @@ class NewsDaoImplTest {
         News news = (News) newsDaoImpl.get(id);
         assertNull(news);
     }
-}*/
+}

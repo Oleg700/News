@@ -2,14 +2,17 @@ package com.epam.news.service;
 
 import com.epam.news.dao.NewsDao;
 import com.epam.news.model.News;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 
 public class NewsServiceImpl implements NewsService {
 
+
     private NewsDao newsDao;
 
+    @Autowired
     public NewsServiceImpl(NewsDao newsDao) {
         this.newsDao = newsDao;
     }

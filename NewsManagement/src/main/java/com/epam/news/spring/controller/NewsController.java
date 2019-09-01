@@ -2,6 +2,7 @@ package com.epam.news.spring.controller;
 
 import com.epam.news.model.News;
 import com.epam.news.service.NewsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -9,10 +10,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.util.List;
 
 @CrossOrigin("*")
+@RestController
 @EnableWebMvc
 @RequestMapping(value = "/api")
 public class NewsController {
 
+    @Autowired
     private NewsService newsService;
 
     @GetMapping(value = "/news")

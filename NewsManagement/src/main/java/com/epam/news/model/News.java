@@ -1,6 +1,6 @@
 package com.epam.news.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +18,14 @@ public class News {
     private String title;
 
     @Column(name = "date_creation")
-    private LocalDateTime date  = LocalDateTime.now();
+    private LocalDateTime date;
+
+    @PrePersist
+    private void prePersist() {
+        if (date == null) {
+            date = LocalDateTime.now();
+        }
+    }
 
     @Column
     private String brief;
@@ -34,6 +41,13 @@ public class News {
         this.title = title;
         this.date = date;
         this.brief = brief;
+    }
+
+    public News(String title, LocalDateTime date, String brief, String content) {
+        this.title = title;
+        this.date = date;
+        this.brief = brief;
+        this.content = content;
     }
 
     public News(long id, String title, String brief, String content) {
