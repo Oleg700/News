@@ -1,5 +1,7 @@
 package com.epam.news.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -28,6 +30,12 @@ public class News {
     public News() {
     }
 
+    public News(String title, LocalDateTime date, String brief) {
+        this.title = title;
+        this.date = date;
+        this.brief = brief;
+    }
+
     public News(int id, String title, LocalDateTime date, String brief, String content) {
         this.id = id;
         this.title = title;
@@ -37,18 +45,10 @@ public class News {
     }
 
     public News(String title, LocalDateTime date, String brief, String content) {
-        this.id = id;
         this.title = title;
         this.date = date;
         this.brief = brief;
         this.content = content;
-    }
-
-
-    public News(String title, LocalDateTime date, String brief) {
-        this.title = title;
-        this.date = date;
-        this.brief = brief;
     }
 
     public int getId() {
@@ -67,6 +67,7 @@ public class News {
         this.title = title;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public LocalDateTime getDate() {
         return date;
     }
@@ -100,6 +101,11 @@ public class News {
                 ", brief='" + brief + '\'' +
                 ", content='" + content + '\'' +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override

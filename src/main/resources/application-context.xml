@@ -14,7 +14,7 @@
         </property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle8iDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
             </props>
         </property>
@@ -39,5 +39,4 @@
     <bean id = "newsServiceImpl" class = "com.epam.news.service.NewsServiceImpl">
         <constructor-arg ref="newsDaoImpl"/>
     </bean>
-
 </beans>

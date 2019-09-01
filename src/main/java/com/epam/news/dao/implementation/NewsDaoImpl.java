@@ -8,8 +8,11 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
+
 public class NewsDaoImpl implements NewsDao<News> {
 
+    private final static String QUERY_SELECT_ALL_BRIEF_NEW = "select new News(n.title, n.date, n.brief )\n" +
+            "from News n";
     SessionFactory sessionFactory;
 
     public NewsDaoImpl(SessionFactory sessionFactory) {
@@ -18,8 +21,7 @@ public class NewsDaoImpl implements NewsDao<News> {
 
     public List<News> getAll() {
         Session session = sessionFactory.openSession();
-        List<News> newsList = session.createQuery("select new News(n.title, n.date, n.brief )\n" +
-                "from News n").list();
+        List<News> newsList = session.createQuery(QUERY_SELECT_ALL_BRIEF_NEW).list();
         session.close();
         return newsList;
     }
@@ -30,11 +32,13 @@ public class NewsDaoImpl implements NewsDao<News> {
 
 
     public int add(News news) {
-        int id = (int) sessionFactory.openSession().save(news);
+        Session session = sessionFactory.openSession();
+        int id = (int) session.save(news);
+        session.flush();
         return id;
     }
 
-    public void update( News news) {
+    public void update(News news) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(news);
