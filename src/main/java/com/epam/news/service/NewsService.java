@@ -9,7 +9,7 @@ public interface NewsService<T> {
 
     int add(T news);
 
-    void update(int id, T news);
+    void update(T news);
 
     void delete(int id);
 }

@@ -34,8 +34,8 @@ public class NewsServiceImpl implements NewsService<News> {
     }
 
     @Override
-    public void update(int id, News news) {
-        newsDao.update(id, news);
+    public void update(News news) {
+        newsDao.update(news);
     }
 
     @Override
