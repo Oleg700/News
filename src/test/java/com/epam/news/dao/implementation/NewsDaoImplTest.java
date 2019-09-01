@@ -1,7 +1,7 @@
 package com.epam.news.dao.implementation;
 
 import com.epam.news.model.News;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,20 +15,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NewsDaoImplTest {
 
+    private ApplicationContext context;
+    private NewsDaoImpl newsDaoImpl;
+
+    @Test
+    @BeforeEach
+    void init(){
+        context = new ClassPathXmlApplicationContext("src/main/webapp/WEB-INF/applicationContext.xml");
+        newsDaoImpl = (NewsDaoImpl) context.getBean("newsDaoImpl");
+    }
+
     @Test
     void getAll() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
-        NewsDaoImpl newsDaoImpl = (NewsDaoImpl) context.getBean("newsDaoImpl");
         List<News> newsList = newsDaoImpl.getAll();
-        System.out.println(newsList);
         assertFalse(newsList.isEmpty());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1})
     void get(int id) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
-        NewsDaoImpl newsDaoImpl = (NewsDaoImpl) context.getBean("newsDaoImpl");
         News news = (News) newsDaoImpl.get(id);
         assertNotNull(news);
     }
@@ -36,18 +41,13 @@ class NewsDaoImplTest {
     @Test
     void add() {
         News news = new News("Praga", LocalDateTime.now(), "brief note", "content text");
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
-        NewsDaoImpl newsDaoImpl = (NewsDaoImpl) context.getBean("newsDaoImpl");
-        int result = newsDaoImpl.add(news);
+        News result = newsDaoImpl.add(news);
         assertEquals(0, result);
     }
 
-    //needs to be fixed
+
     @Test
-    @Ignore
     void update() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
-        NewsDaoImpl newsDaoImpl = (NewsDaoImpl) context.getBean("newsDaoImpl");
         News news = new News(1, "Singapur", LocalDateTime.now(), "brief note", "content about Singapur");
         newsDaoImpl.update(news);
         News updatedNews = (News) newsDaoImpl.get(1);
@@ -55,10 +55,8 @@ class NewsDaoImplTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {21})
+    @ValueSource(ints = {2})
     void delete(int id) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
-        NewsDaoImpl newsDaoImpl = (NewsDaoImpl) context.getBean("newsDaoImpl");
         newsDaoImpl.delete(id);
         News news = (News) newsDaoImpl.get(id);
         assertNull(news);

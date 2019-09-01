@@ -1,15 +1,17 @@
 package com.epam.news.dao;
 
+import com.epam.news.model.News;
+
 import java.util.List;
 
-public interface NewsDao<T> {
-    List<T> getAll();
+public interface NewsDao {
+    List<News> getAll();
 
-    T get(int id);
+    News get(int id);
 
-    int add(T news);
+    News add(News news);
 
-    void update(T news);
+    News update(News news);
 
     void delete(int id);
 }

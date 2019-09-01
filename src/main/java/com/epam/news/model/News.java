@@ -11,11 +11,11 @@ public class News {
 
     @Id
     @Column(name = "id")
+    @SequenceGenerator(name="news_seq", sequenceName="news_seq",allocationSize=1)
     private int id;
 
     @Column
     private String title;
-
 
     @Basic
     @Column(name = "date_creation")
@@ -28,6 +28,13 @@ public class News {
     private String content;
 
     public News() {
+    }
+
+    public News(int id, String title, LocalDateTime date, String brief) {
+        this.id = id;
+        this.title = title;
+        this.date = date;
+        this.brief = brief;
     }
 
     public News(String title, LocalDateTime date, String brief) {
@@ -111,8 +118,10 @@ public class News {
     @Override
     public boolean equals(Object obj) {
         News news = (News) obj;
-        return title == news.title &&
-                brief == news.brief &&
-                content  == news.content;
+        return  id == news.id &&
+                title.equals(news.title) &&
+                date.equals(news.date) &&
+                brief.equals(news.brief) &&
+                content.equals(news.content);
     }
 }

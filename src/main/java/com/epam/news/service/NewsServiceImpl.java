@@ -6,7 +6,7 @@ import com.epam.news.model.News;
 import java.util.List;
 
 
-public class NewsServiceImpl implements NewsService<News> {
+public class NewsServiceImpl implements NewsService {
 
     private NewsDao newsDao;
 
@@ -25,13 +25,13 @@ public class NewsServiceImpl implements NewsService<News> {
     }
 
     @Override
-    public int add(News news) {
+    public News add(News news) {
         return newsDao.add(news);
     }
 
     @Override
-    public void update(News news) {
-        newsDao.update(news);
+    public News update(News news) {
+        return newsDao.update(news);
     }
 
     @Override

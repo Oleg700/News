@@ -1,15 +1,17 @@
 package com.epam.news.service;
 
+import com.epam.news.model.News;
+
 import java.util.List;
 
-public interface NewsService<T> {
-    List<T> getAll();
+public interface NewsService{
+    List<News> getAll();
 
-    T get(int id);
+    News get(int id);
 
-    int add(T news);
+    News add(News news);
 
-    void update(T news);
+    News update(News news);
 
     void delete(int id);
 }
