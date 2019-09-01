@@ -1,0 +1,17 @@
+CREATE TABLE news(id NUMBER NOT NUll,
+title VARCHAR2(100 char) NOT NUll,
+date_creation BLOB NOT NUll,
+brief VARCHAR2(500 char) NOT NUll,
+content VARCHAR2(2048 char) NOT NUll,
+PRIMARY KEY(ID));
+
+CREATE SEQUENCE news_seq START WITH 1;
+
+CREATE OR REPLACE TRIGGER trigger_news
+ 	BEFORE INSERT ON news
+ 	FOR EACH ROW
+BEGIN
+ 	SELECT news_seq.nextval
+ 	INTO :new.id
+ 	FROM dual;
+END;

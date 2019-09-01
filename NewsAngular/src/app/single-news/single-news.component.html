@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Merriweather|Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <div class="language">
+                    <div class="well inline-headers">
+                        <h2>Russian</h2>
+                        <h2>English</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center">
+                <h1>BreakingNews 24</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container container-news">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8 news-title">
+                <p>{{news.title}}</p>
+            </div>
+            <div class="col-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-8 mx-auto news-img">
+                <img src="assets/images/business.jpg" class="img-fluid">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8 news-content">
+                <p>{{news.content}}</p>
+            </div>
+            <div class="col-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8 news-date">
+                <p>{{news.date}}</p>
+                <div class="col-2"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

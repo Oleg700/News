@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: CloisterBlack;
+    src: url(assets/font/CloisterBlack.ttf) format("opentype");
+  }
+
+  @font-face {
+    font-family: Chunk;
+    src: url(assets/font/Chunk.ttf) format("opentype");
+  }
+  
