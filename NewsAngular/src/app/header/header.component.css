@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+h1{
+    font-family: 'CloisterBlack';
+    font-size: 48px;
+}
+
+.language{
+    margin-top: 20px;
+    font-family: 'Roboto';
+}
+
+.language h2{
+    font-size: 11px !important;
+}
+
+.inline-headers h2{
+    display: inline-block;
+    vertical-align: baseline;
+    margin-right: 10px;
+}
+
+

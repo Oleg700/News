@@ -13,11 +13,9 @@
         <div class="row">
             <div class="col">
                 <form>
-                    Enter Title: <input type="text" class="form-control" [(ngModel)]="news.title" name="title" /><br />
-                    Enter Brief: <input type="text" class="form-control" [(ngModel)]="news.brief" name="brief" /><br />
-                    Enter Content: <input type="text" class="form-control" [(ngModel)]="news.content"
-                        name="content" /><br />
-                    <button (click)="addNews(news)" class="btn btn-primary">Add News</button>
+                    Enter name: <input type="text" class="form-control" [(ngModel)]="user.username" name="username" /><br />
+                    Enter password: <input type="password" class="form-control" [(ngModel)]="user.password" name="password" /><br />
+                    <button type="button" (click)="login(user)" class="btn btn-primary">Login</button>
                 </form>
             </div>
         </div>

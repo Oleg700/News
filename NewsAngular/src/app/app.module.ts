@@ -12,16 +12,22 @@ import { SingleNewsComponent } from './single-news/single-news.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminAddComponent } from './admin-add/admin-add.component';
 import { AdminUpdateComponent } from './admin-update/admin-update.component';
+import { HttpClientModule} from '@angular/common/http';
+import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './login/login.component';
+import { UserComponent } from './user/user.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent, NewsComponent, PageNotFoundComponent, SingleNewsComponent, AdminComponent, AdminAddComponent, AdminUpdateComponent
+    AppComponent, NewsComponent, PageNotFoundComponent, SingleNewsComponent, AdminComponent, AdminAddComponent, AdminUpdateComponent, HeaderComponent, LoginComponent, UserComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [NewsService],
   bootstrap: [AppComponent]

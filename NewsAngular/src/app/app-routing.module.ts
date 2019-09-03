@@ -6,12 +6,14 @@ import { SingleNewsComponent } from './single-news/single-news.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminAddComponent } from './admin-add/admin-add.component';
 import { AdminUpdateComponent } from './admin-update/admin-update.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
   {path : '', redirectTo: '/news', pathMatch: 'full'},
   {path : 'news', component: NewsComponent},
   {path : 'admin', component: AdminComponent},
+  {path : 'login', component: LoginComponent},
   {path:  'admin/add', component: AdminAddComponent},
   {path:  'admin/update/:id', component: AdminUpdateComponent},
   {path : 'news/:id', component: SingleNewsComponent},

@@ -1,43 +1,58 @@
-import { Http, RequestOptions, Response, Headers } from '@angular/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import {News} from './news';
+import { News } from './news';
 import { map } from 'rxjs/operators';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../user/user';
 
 
 
 @Injectable()
-export class NewsService{
+export class NewsService {
 
-    constructor(private _httpService: Http){}
+    private user: User = new User();
 
-    getNews():Observable<News[]>{
-        return this._httpService.get("http://localhost:8899/api/news")
-        .pipe(map((response: Response) => response.json()))  
+    constructor(private _http: HttpClient) { }
+
+    login(user: User) {
+        this.user = user;
     }
 
-    addNews(news: News){
+    getUser() {
+        return this.user;
+    }
+
+    getHeaders(): HttpHeaders {
+        return new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic ' + btoa(this.user.username + ':' + this.user.password)
+        })
+    }
+
+
+    getNews(): Observable<any> {
+
+        let httpOptions = {
+            headers: this.getHeaders()
+        };
+        return this._http.get("http://localhost:8899/api/news", httpOptions)
+    }
+
+    addNews(news: News) {
         let body = JSON.stringify(news);
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-        return this._httpService.post("http://localhost:8899/api/news", body, options);
+        return this._http.post("http://localhost:8899/api/news", body, this.httpOptions);
     }
 
-    deleteNews(newsId: number){
-        return this._httpService.delete("http://localhost:8899/api/news/" + newsId);
+    deleteNews(newsId: number) {
+        return this._http.delete("http://localhost:8899/api/news/" + newsId);
     }
 
-    getNewsById(newsId: number):Observable<News>{
-        return this._httpService.get("http://localhost:8899/api/news/"+newsId)
-        .pipe(map((response: Response) => response.json()));
+    getNewsById(newsId: number): Observable<any> {
+        return this._http.get("http://localhost:8899/api/news/" + newsId)
     }
 
-    updateNews(news: News):Observable<News>{
+    updateNews(news: News): Observable<any> {
         let body = JSON.stringify(news);
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-        return this._httpService.put("http://localhost:8899/api/news/"+news.id, body, options)
-        .pipe(map((response: Response) => response.json()));
+        return this._http.put("http://localhost:8899/api/news/" + news.id, body, this.httpOptions)
     }
 }
