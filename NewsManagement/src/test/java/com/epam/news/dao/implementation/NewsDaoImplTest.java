@@ -1,5 +1,6 @@
 package com.epam.news.dao.implementation;
 
+import com.epam.news.dao.news.NewsDaoImpl;
 import com.epam.news.model.News;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

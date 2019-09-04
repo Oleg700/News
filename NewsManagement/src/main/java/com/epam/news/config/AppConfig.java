@@ -1,9 +1,13 @@
 package com.epam.news.config;
 
-import com.epam.news.dao.NewsDao;
-import com.epam.news.dao.implementation.NewsDaoImpl;
-import com.epam.news.service.NewsService;
-import com.epam.news.service.NewsServiceImpl;
+import com.epam.news.dao.news.NewsDao;
+import com.epam.news.dao.news.NewsDaoImpl;
+import com.epam.news.dao.user.UserDao;
+import com.epam.news.dao.user.UserDaoImpl;
+import com.epam.news.service.news.NewsService;
+import com.epam.news.service.news.NewsServiceImpl;
+import com.epam.news.service.user.UserService;
+import com.epam.news.service.user.UserServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -53,21 +57,29 @@ public class AppConfig {
     }
 
     @Bean
-    public NewsDao newsDao() {
-        NewsDao newsDao = new NewsDaoImpl();
-        return newsDao;
-    }
-
-    @Bean
-    public NewsService newsService() {
-        NewsService newsService = new NewsServiceImpl(newsDao());
-        return newsService;
-    }
-
-    @Bean
     public JpaTransactionManager transactionManager() {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(localContainerEntityManagerFactoryBean().getObject());
         return jpaTransactionManager;
+    }
+
+    @Bean
+    public NewsDao newsDao() {
+        return new NewsDaoImpl();
+    }
+
+    @Bean
+    public NewsService newsService() {
+        return new NewsServiceImpl(newsDao());
+    }
+
+    @Bean
+    public UserDao userDao(){
+        return new UserDaoImpl();
+    }
+
+    @Bean
+    public UserService userService() {
+        return new UserServiceImpl(userDao());
     }
 }

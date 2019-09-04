@@ -1,6 +1,7 @@
-package com.epam.news.service;
+package com.epam.news.service.news;
 
-import com.epam.news.dao.NewsDao;
+import com.epam.news.dao.news.NewsDao;
+import com.epam.news.model.Authority;
 import com.epam.news.model.News;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,6 +18,17 @@ public class NewsServiceImpl implements NewsService {
         this.newsDao = newsDao;
     }
 
+
+
+    @Override
+    public List<Authority> getAllAuthorities(){return newsDao.getAllAuthorities();}
+    @Override
+    public Authority addAuthority(Authority authority) {
+        return newsDao.addAuthority(authority);
+    }
+
+
+
     @Override
     public List<News> getAll() {
         return newsDao.getAll();
@@ -26,6 +38,7 @@ public class NewsServiceImpl implements NewsService {
     public News get(long id) {
         return (News) newsDao.get(id);
     }
+
 
     @Override
     public News add(News news) {

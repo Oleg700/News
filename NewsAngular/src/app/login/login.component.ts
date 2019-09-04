@@ -10,19 +10,18 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-private user:User;
+private user:User= new User();;
 
 
 
   constructor(private _newsService: NewsService, private _router: Router) {
-    this.user = new User();
    }
 
   ngOnInit() {
   }
 
   login(user:User){
-      user.authorized=true;
+      user.enable=true;
       this._newsService.login(user);
       this.navigateToHomePage();
   }

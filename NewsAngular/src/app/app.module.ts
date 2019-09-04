@@ -16,18 +16,21 @@ import { HttpClientModule} from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    AppComponent, NewsComponent, PageNotFoundComponent, SingleNewsComponent, AdminComponent, AdminAddComponent, AdminUpdateComponent, HeaderComponent, LoginComponent, UserComponent,
+    AppComponent, NewsComponent, PageNotFoundComponent, SingleNewsComponent, AdminComponent, AdminAddComponent, AdminUpdateComponent, HeaderComponent, LoginComponent, UserComponent, RegistrationComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [NewsService],
   bootstrap: [AppComponent]
