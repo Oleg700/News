@@ -7,18 +7,19 @@
     </div>
 </div>
 <div class="row">
-    <div class="col">
+    <div class="col-4"></div>
+    <div class="col-4">
         <div class="text-center">
             <h1>BreakingNews 24</h1>
         </div>
     </div>
-</div>
-<div class="row">
-        <div class="col">
-              {{user.username}}
-              {{user.password}}
+    <div class="col-4 text-right login">
+        <div *ngIf="user.authorized else elseBlock">
+            <div>Welcome {{user.username}}</div>
+            <button class="btn btn-primary" (click)="logout()">Logout</button>
         </div>
-    <div class="col">
+        <ng-template #elseBlock>
             <button class="btn btn-primary" (click)="navigateToLogin()">Login</button>
+        </ng-template>
     </div>
 </div>

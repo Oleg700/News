@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
 
 private user:User;
 
+
+
   constructor(private _newsService: NewsService, private _router: Router) {
     this.user = new User();
    }
@@ -20,12 +22,13 @@ private user:User;
   }
 
   login(user:User){
+      user.authorized=true;
       this._newsService.login(user);
       this.navigateToHomePage();
   }
 
   navigateToHomePage(){
-    this._router.navigate(["news"]);
+    this._router.navigate(["admin"]);
   }
 
 

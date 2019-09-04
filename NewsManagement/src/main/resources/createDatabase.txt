@@ -5,7 +5,7 @@ brief VARCHAR2(500 char) NOT NUll,
 content VARCHAR2(2048 char) NOT NUll,
 PRIMARY KEY(ID));
 
-CREATE SEQUENCE news_seq START WITH 1;
+CREATE SEQUENCE news_seq START WITH 1 CACHE 2;
 
 CREATE OR REPLACE TRIGGER trigger_news
  	BEFORE INSERT ON news
@@ -15,3 +15,4 @@ BEGIN
  	INTO :new.id
  	FROM dual;
 END;
+/

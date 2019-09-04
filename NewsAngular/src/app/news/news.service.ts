@@ -18,41 +18,44 @@ export class NewsService {
         this.user = user;
     }
 
+    logout(){
+        this.user = new User();
+    }
+
     getUser() {
         return this.user;
     }
 
-    getHeaders(): HttpHeaders {
-        return new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa(this.user.username + ':' + this.user.password)
-        })
+    getHeaders(): any {
+        return  {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(this.user.username + ':' + this.user.password)
+            })
+        }
     }
 
 
     getNews(): Observable<any> {
-
-        let httpOptions = {
-            headers: this.getHeaders()
-        };
-        return this._http.get("http://localhost:8899/api/news", httpOptions)
+        return this._http.get("http://localhost:8899/api/news", this.getHeaders())
     }
 
-    addNews(news: News) {
-        let body = JSON.stringify(news);
-        return this._http.post("http://localhost:8899/api/news", body, this.httpOptions);
-    }
+     addNews(news: News) {
+         
+         let body = JSON.stringify(news);
+         return this._http.post("http://localhost:8899/api/news", body, this.getHeaders());
+     }
 
     deleteNews(newsId: number) {
-        return this._http.delete("http://localhost:8899/api/news/" + newsId);
+        return this._http.delete("http://localhost:8899/api/news/" + newsId, this.getHeaders());
     }
 
     getNewsById(newsId: number): Observable<any> {
-        return this._http.get("http://localhost:8899/api/news/" + newsId)
+        return this._http.get("http://localhost:8899/api/news/" + newsId, this.getHeaders())
     }
 
-    updateNews(news: News): Observable<any> {
-        let body = JSON.stringify(news);
-        return this._http.put("http://localhost:8899/api/news/" + news.id, body, this.httpOptions)
-    }
+     updateNews(news: News): Observable<any> {
+         let body = JSON.stringify(news);
+         return this._http.put("http://localhost:8899/api/news/" + news.id, body, this.getHeaders());
+     }
 }
