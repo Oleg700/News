@@ -16,11 +16,12 @@ import { HttpClientModule} from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent, NewsComponent, PageNotFoundComponent, SingleNewsComponent, AdminComponent, AdminAddComponent, AdminUpdateComponent, HeaderComponent, LoginComponent, UserComponent,
+    AppComponent, NewsComponent, PageNotFoundComponent, SingleNewsComponent, AdminComponent, AdminAddComponent, AdminUpdateComponent, HeaderComponent, LoginComponent, UserComponent, RegistrationComponent,
   ],
   imports: [
     BrowserModule,

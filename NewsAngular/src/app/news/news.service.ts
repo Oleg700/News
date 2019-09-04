@@ -14,48 +14,66 @@ export class NewsService {
 
     constructor(private _http: HttpClient) { }
 
-    login(user: User) {
-        this.user = user;
+    registerUser(user: User){
+        let body = JSON.stringify(user);
+        return this._http.post("http://localhost:8899/api/register", body, this.getHeaders());
     }
 
-    logout(){
-        this.user = new User();
+    login(user: User) {
+        this.user = user;
+        localStorage.setItem("user", JSON.stringify(this.user));
+    }
+
+    logout() {
+        localStorage.setItem("user", null);
+        window.location.reload();
     }
 
     getUser() {
-        return this.user;
+        var authorizedUser = JSON.parse(localStorage.getItem("user"));
+        if (authorizedUser != null && authorizedUser.username != null) {
+            return authorizedUser;
+        }
+        localStorage.setItem("user", JSON.stringify(this.user));
+        return JSON.parse(localStorage.getItem("user"));
     }
 
     getHeaders(): any {
+        var authorizedUser = JSON.parse(localStorage.getItem("user"));
+        if (authorizedUser != null && authorizedUser.username != null) {
+            return {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa(authorizedUser.username + ':' + authorizedUser.password)
+                })
+            }
+        }
         return  {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(this.user.username + ':' + this.user.password)
             })
         }
     }
 
-
     getNews(): Observable<any> {
-        return this._http.get("http://localhost:8899/api/news", this.getHeaders())
-    }
-
-     addNews(news: News) {
-         
-         let body = JSON.stringify(news);
-         return this._http.post("http://localhost:8899/api/news", body, this.getHeaders());
-     }
-
-    deleteNews(newsId: number) {
-        return this._http.delete("http://localhost:8899/api/news/" + newsId, this.getHeaders());
+        return this._http.get("http://localhost:8899/api/news", this.getHeaders());
     }
 
     getNewsById(newsId: number): Observable<any> {
         return this._http.get("http://localhost:8899/api/news/" + newsId, this.getHeaders())
     }
 
-     updateNews(news: News): Observable<any> {
-         let body = JSON.stringify(news);
-         return this._http.put("http://localhost:8899/api/news/" + news.id, body, this.getHeaders());
-     }
+    addNews(news: News) {
+        let body = JSON.stringify(news);
+        return this._http.post("http://localhost:8899/api/admin/news", body, this.getHeaders());
+    }
+
+    deleteNews(newsId: number) {
+        return this._http.delete("http://localhost:8899/api/admin/news/" + newsId, this.getHeaders());
+    }
+
+    updateNews(news: News): Observable<any> {
+        let body = JSON.stringify(news);
+        return this._http.put("http://localhost:8899/api/admin/news/" + news.id, body, this.getHeaders());
+    }
 }

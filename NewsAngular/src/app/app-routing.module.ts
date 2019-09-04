@@ -7,6 +7,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminAddComponent } from './admin-add/admin-add.component';
 import { AdminUpdateComponent } from './admin-update/admin-update.component';
 import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path : 'news', component: NewsComponent},
   {path : 'admin', component: AdminComponent},
   {path : 'login', component: LoginComponent},
+  {path : 'register', component: RegistrationComponent},
   {path:  'admin/add', component: AdminAddComponent},
   {path:  'admin/update/:id', component: AdminUpdateComponent},
   {path : 'news/:id', component: SingleNewsComponent},

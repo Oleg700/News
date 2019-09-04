@@ -22,6 +22,10 @@ export class HeaderComponent implements OnInit {
     this._router.navigate(["login"]);
   }
 
+  navigateToRegister(){
+    this._router.navigate(["register"]);
+  }
+
   logout(){
     this._newsService.logout();
   }
