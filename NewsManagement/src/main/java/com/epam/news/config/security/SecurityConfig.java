@@ -1,5 +1,6 @@
 package com.epam.news.config.security;
 
+import com.epam.news.config.security.privilege.CustomUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,31 +35,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }*/
 
-    protected void configure(AuthenticationManagerBuilder auth)  {
+  /*  protected void configure(AuthenticationManagerBuilder auth)  {
         try {
             auth.jdbcAuthentication().dataSource(dataSource)
-                    .passwordEncoder(new BCryptPasswordEncoder())
-                    .usersByUsernameQuery("select username, password, enabled  from users where username=?")
-                    .authoritiesByUsernameQuery("select username, authority from authorities where username=?");
+                    .passwordEncoder(new BCryptPasswordEncoder());
+                  *//*  .usersByUsernameQuery("select username, password, enabled  from users where username=?")
+                    .authoritiesByUsernameQuery("select username, role from user_roles where username=?");*//*
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e);
         }
-    }
+    }*/
 
 
 
-/*
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
+       /* auth.inMemoryAuthentication()
                 .passwordEncoder(passwordEncoder)
                 .withUser("user").password(passwordEncoder.encode("1"))
                 .roles("USER")
                 .and()
                 .withUser("admin").password(passwordEncoder.encode("1"))
-                .roles("USER", "ADMIN");
+                .roles("USER", "ADMIN");*/
+
+       auth.
+               userDetailsService(new CustomUserService());
     }
-*/
 
 
 

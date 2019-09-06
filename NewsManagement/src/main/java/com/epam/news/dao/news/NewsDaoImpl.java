@@ -19,7 +19,6 @@ public class NewsDaoImpl implements NewsDao {
     private EntityManager entityManager;
 
     public NewsDaoImpl() {
-
     }
 
     public List<Authority> getAllAuthorities(){
@@ -31,9 +30,6 @@ public class NewsDaoImpl implements NewsDao {
     public Authority addAuthority(Authority authority) {
         return entityManager.merge(authority);
     }
-
-
-
 
 
     public List<News> getAll() {

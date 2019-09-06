@@ -1,26 +1,38 @@
 package com.epam.news.model;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity(name = "Users")
 @Table
 public class User {
 
-    @Column
     @Id
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
+    private Long id;
+
+    @Column(name = "username")
     private String username;
 
     @Column
     private String password;
 
-    @PrePersist
-    private void prePersist() {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hash = passwordEncoder.encode(password);
-        password = hash;
-    }
+    @Column
+    private boolean enabled;
+
+
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
+
 
     public String getUsername() {
         return username;
@@ -30,11 +42,35 @@ public class User {
         this.username = username;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }

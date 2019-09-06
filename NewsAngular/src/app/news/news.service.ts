@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { News } from './news';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -29,13 +29,13 @@ export class NewsService {
         window.location.reload();
     }
 
-    getUser() {
+    getUser(): Observable<User> {
         var authorizedUser = JSON.parse(localStorage.getItem("user"));
         if (authorizedUser != null && authorizedUser.username != null) {
-            return authorizedUser;
+            return of(authorizedUser);
         }
         localStorage.setItem("user", JSON.stringify(this.user));
-        return JSON.parse(localStorage.getItem("user"));
+        return of(JSON.parse(localStorage.getItem("user")));
     }
 
     getHeaders(): any {

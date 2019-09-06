@@ -1,0 +1,32 @@
+{
+	"username": "john",
+	"password": "password",
+	"enabled": "1",
+}
+
+
+
+
+
+{
+    "id": 1,
+    "name": "ROLE_ADMIN",
+    "users": null,
+    "privileges": [
+        {
+            "id": 1,
+            "name": "READ_PRIVILEGE",
+            "roles": null
+        },
+        {
+            "id": 2,
+            "name": "WRITE_PRIVILEGE",
+            "roles": null
+        }
+    ]
+}
+
+
+
+
+

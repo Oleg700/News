@@ -8,5 +8,7 @@ public interface UserDao {
 
     List<User> getAll();
 
+    User getByName(String name);
+
     User add(User user);
 }

@@ -20,6 +20,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     @Transactional
+    public User getByName(String name) {
+        User user = (User) entityManager.createQuery("select c from Users c where c.username = :name").setParameter("name",name).getSingleResult();
+        return null;
+    }
+
+    @Override
+    @Transactional
     public User add(User user) {
         return entityManager.merge(user);
     }
