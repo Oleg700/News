@@ -4,6 +4,9 @@ import com.epam.news.dao.news.NewsDao;
 import com.epam.news.dao.news.NewsDaoImpl;
 import com.epam.news.dao.user.UserDao;
 import com.epam.news.dao.user.UserDaoImpl;
+import com.epam.news.model.repository.PrivilegeRepository;
+import com.epam.news.model.repository.RoleRepository;
+import com.epam.news.model.repository.UserRepository;
 import com.epam.news.service.news.NewsService;
 import com.epam.news.service.news.NewsServiceImpl;
 import com.epam.news.service.user.UserService;
@@ -82,4 +85,20 @@ public class AppConfig {
     public UserService userService() {
         return new UserServiceImpl(userDao());
     }
+
+    @Bean
+    public UserRepository userRepository(){
+        return new UserRepository();
+    }
+
+    @Bean
+    public RoleRepository roleRepository(){
+        return new RoleRepository();
+    }
+
+    @Bean
+    public PrivilegeRepository privilegeRepository(){
+        return new PrivilegeRepository();
+    }
+
 }

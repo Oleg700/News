@@ -9,19 +9,41 @@
 
 <body>
         <app-header></app-header>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <form>
-                    Enter Title: <input type="text" class="form-control" [(ngModel)]="news.title" name="title" /><br />
-                    Enter Brief: <input type="text" class="form-control" [(ngModel)]="news.brief" name="brief" /><br />
-                    Enter Content: <input type="text" class="form-control" [(ngModel)]="news.content"
-                        name="content" /><br />
-                    <button (click)="addNews(news)" class="btn btn-primary">Add News</button>
-                </form>
-            </div>
-        </div>
-    </div>
+        <form [formGroup]="myForm" novalidate>
+                <div class="form-group">
+                    <label>Enter Title</label>
+                    <input type="text" [(ngModel)]="news.title" class="form-control" [ngClass]="{
+                                'is-valid': title.valid && (title.dirty || title.touched) ,   
+                                'is-invalid': title.invalid && (title.dirty || title.touched)    
+                               }" formControlName="title">
+                    <div class="form-control-feedback"
+                        *ngIf="title.invalid && (title.dirty || title.touched)">
+                        <p>Title lenght must be more, than 100 symbols</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Enter Brief</label>
+                    <input type="brief" [(ngModel)]="news.brief" class="form-control" [ngClass]="{
+                                'is-valid': brief.valid && (brief.dirty || brief.touched) ,   
+                                'is-invalid': brief.invalid && (brief.dirty || brief.touched)    
+                               }" formControlName="brief">
+                    <div class="form-control-feedback"
+                        *ngIf="brief.invalid &&  brief.touched">
+                        <p>Brief lenght must be more, than 500 symbols</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label>Enter Content</label>
+                        <input type="content" [(ngModel)]="news.content" class="form-control" [ngClass]="{
+                                    'is-valid': content.valid && (content.dirty || content.touched) ,   
+                                    'is-invalid': content.invalid && (content.dirty || content.touched)    
+                                   }" formControlName="content">
+                        <div class="form-control-feedback"
+                        *ngIf="content.invalid && content.touched">
+                        <p>Brief lenght must be more, than 2048 symbols</p>
+                        </div>
+                    </div>
+            </form>
+            <button (click)="addNews(news)" class="btn btn-primary">Add News</button>
 </body>
-
 </html>
