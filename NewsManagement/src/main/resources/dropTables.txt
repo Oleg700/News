@@ -1,0 +1,28 @@
+drop table users_roles;
+
+drop table roles_privileges;
+
+drop table users;
+
+drop table roles;
+
+drop table privileges;
+
+drop sequence user_seq;
+
+drop sequence role_seq;
+
+drop sequence privilege_seq;
+
+
+{
+	"name": "ROLE_EDITOR",
+    "privileges": [{
+    		"id": 10,
+            "name": "PUT_PRIVILEGE"
+            },
+            {
+    		"id": 2,
+            "name": "READ_PRIVILEGE"
+            }]
+}

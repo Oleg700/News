@@ -1,26 +1,28 @@
 package com.epam.news.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity(name = "Roles")
 @Table
-public class Role {
+public class Role  implements GrantedAuthority {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
     @SequenceGenerator(name = "role_seq", sequenceName = "role_seq", allocationSize = 1)
     private Long id;
 
     @Column
     private String name;
 
-   /* @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;*/
+    /*private Collection<User> users;*/
 
     public Role() {
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(
@@ -28,6 +30,7 @@ public class Role {
             inverseJoinColumns = @JoinColumn(
                     name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
+
 
 
     public Role(String name) {
@@ -50,7 +53,7 @@ public class Role {
         this.name = name;
     }
 
-  /*  public Collection<User> getUsers() {
+    /*public Collection<User> getUsers() {
         return users;
     }
 
@@ -64,5 +67,10 @@ public class Role {
 
     public void setPrivileges(Collection<Privilege> privileges) {
         this.privileges = privileges;
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.getName();
     }
 }

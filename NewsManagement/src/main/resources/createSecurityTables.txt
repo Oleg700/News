@@ -1,3 +1,41 @@
+create table users(id NUMBER NOT NULL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password varchar(60) not null,
+    enabled NUMBER(1) DEFAULT 1 NOT NULL);
+
+CREATE SEQUENCE user_seq START WITH 1 CACHE 2;
+
+CREATE OR REPLACE TRIGGER trigger_user
+ 	BEFORE INSERT ON users
+ 	FOR EACH ROW
+BEGIN
+ 	SELECT user_seq.nextval
+ 	INTO :new.id
+ 	FROM dual;
+END;
+/
+
+*************************************
+
+
+create table roles(
+    id NUMBER NOT NUll primary key,
+    name VARCHAR2(100 char) NOT NUll);
+
+   CREATE SEQUENCE role_seq START WITH 1 CACHE 2;
+
+   CREATE OR REPLACE TRIGGER trigger_role
+    	BEFORE INSERT ON roles
+    	FOR EACH ROW
+   BEGIN
+    	SELECT role_seq.nextval
+    	INTO :new.id
+    	FROM dual;
+   END;
+   /
+*************************************
+
+
 create table privileges(
     id NUMBER NOT NUll primary key,
     name VARCHAR2(100 char) NOT NUll);
@@ -16,22 +54,7 @@ create table privileges(
 
 *************************************
 
-create table roles(
-    id NUMBER NOT NUll primary key,
-    name VARCHAR2(100 char) NOT NUll);
 
-   CREATE SEQUENCE role_seq START WITH 1 CACHE 2;
-
-   CREATE OR REPLACE TRIGGER trigger_role
-    	BEFORE INSERT ON roles
-    	FOR EACH ROW
-   BEGIN
-    	SELECT role_seq.nextval
-    	INTO :new.id
-    	FROM dual;
-   END;
-   /
-*************************************
 
 CREATE TABLE users_roles(
 user_id number(20) not null,
