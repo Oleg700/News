@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService{
     public List<User> getAll(){return userDao.getAll();}
 
     @Override
+    public User getByName(String name){
+        return userDao.getByName(name);
+    }
+
+    @Override
     public User add(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hash = passwordEncoder.encode(user.getPassword());

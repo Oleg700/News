@@ -1,13 +1,10 @@
 package com.epam.news.model.repository;
 
-import com.epam.news.model.News;
 import com.epam.news.model.Privilege;
-
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 
 public class PrivilegeRepository {
 

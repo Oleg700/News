@@ -2,13 +2,18 @@ package com.epam.news.config;
 
 import com.epam.news.dao.news.NewsDao;
 import com.epam.news.dao.news.NewsDaoImpl;
+import com.epam.news.dao.privilege.PrivilegeDao;
+import com.epam.news.dao.privilege.PrivilegeDaoImpl;
+import com.epam.news.dao.role.RoleDao;
+import com.epam.news.dao.role.RoleDaoImpl;
 import com.epam.news.dao.user.UserDao;
 import com.epam.news.dao.user.UserDaoImpl;
-import com.epam.news.model.repository.PrivilegeRepository;
-import com.epam.news.model.repository.RoleRepository;
-import com.epam.news.model.repository.UserRepository;
 import com.epam.news.service.news.NewsService;
 import com.epam.news.service.news.NewsServiceImpl;
+import com.epam.news.service.privilege.PrivilegeService;
+import com.epam.news.service.privilege.PrivilegeServiceImpl;
+import com.epam.news.service.role.RoleService;
+import com.epam.news.service.role.RoleServiceImpl;
 import com.epam.news.service.user.UserService;
 import com.epam.news.service.user.UserServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -86,19 +91,30 @@ public class AppConfig {
         return new UserServiceImpl(userDao());
     }
 
+
     @Bean
-    public UserRepository userRepository(){
-        return new UserRepository();
+    public RoleDao roleDao(){
+        return new RoleDaoImpl();
     }
 
     @Bean
-    public RoleRepository roleRepository(){
-        return new RoleRepository();
+    public RoleService roleService() {
+        return new RoleServiceImpl(roleDao());
+    }
+
+
+    @Bean
+    public PrivilegeDao privilegeDao(){
+        return  new PrivilegeDaoImpl();
     }
 
     @Bean
-    public PrivilegeRepository privilegeRepository(){
-        return new PrivilegeRepository();
+    public PrivilegeService privilegeService(){
+        return new PrivilegeServiceImpl(privilegeDao());
     }
+
+
+
+
 
 }

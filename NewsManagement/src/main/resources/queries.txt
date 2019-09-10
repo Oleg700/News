@@ -14,12 +14,12 @@
     "users": null,
     "privileges": [
         {
-            "id": 10,
+            "id": 1,
             "name": "READ_PRIVILEGE",
             "roles": null
         },
         {
-            "id": 12,
+            "id": 2,
             "name": "WRITE_PRIVILEGE",
             "roles": null
         }

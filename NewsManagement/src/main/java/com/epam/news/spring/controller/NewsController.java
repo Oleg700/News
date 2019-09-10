@@ -7,6 +7,7 @@ import com.epam.news.service.news.NewsService;
 import com.epam.news.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -29,6 +30,23 @@ public class NewsController {
 
     @Autowired
     private UserService userService;
+
+    @PostAuthorize("hasAuthority('READ_PRIVILEGE')")
+    @GetMapping(value = "/news")
+    public ResponseEntity<List<News>> getAll() {
+        List<News> newsList = newsService.getAll();
+        return ResponseEntity.ok().body(newsList);
+    }
+
+
+
+    @GetMapping(value = "/news1")
+    public ResponseEntity<User> getByName() {
+        User user = userService.getByName("john");
+        System.out.println("user ="+user);
+        return ResponseEntity.ok().body(user);
+    }
+
 
     @GetMapping(value = "/users")
     public ResponseEntity<List<User>> getAllUsers() {
@@ -67,17 +85,15 @@ public class NewsController {
         return ResponseEntity.ok().body(authority1);
     }
 
-    @GetMapping(value = "/news")
-    public ResponseEntity<List<News>> getAll() {
-        List<News> newsList = newsService.getAll();
-        return ResponseEntity.ok().body(newsList);
-    }
+
+
 
     @GetMapping(value = "/news/{id}")
     public ResponseEntity<News> get(@PathVariable("id") long id) {
         News news = newsService.get(id);
         return ResponseEntity.ok().body(news);
     }
+
 
     @PostMapping(value = "admin/news")
     public ResponseEntity<News> add(@RequestBody News news) {

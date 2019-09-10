@@ -1,7 +1,5 @@
 package com.epam.news.model;
 
-
-
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -14,7 +12,7 @@ public class User {
     private Long id;
 
     @Column(name = "username")
-    private String name;
+    private String username;
 
     @Column
     private String password;
@@ -23,7 +21,7 @@ public class User {
     private boolean enabled;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
@@ -31,12 +29,24 @@ public class User {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
-    public String getName() {
-        return name;
+
+
+
+    public User() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public User(String username, String password, Collection<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Long getId() {
@@ -69,5 +79,17 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
+                '}';
     }
 }

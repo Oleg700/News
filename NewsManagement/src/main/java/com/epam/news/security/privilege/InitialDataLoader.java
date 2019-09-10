@@ -1,5 +1,5 @@
 /*
-package com.epam.news.config.security.privilege;
+package com.epam.news.security.privilege;
 
 import com.epam.news.model.Privilege;
 import com.epam.news.model.Role;
