@@ -1,8 +1,6 @@
 package com.epam.news.dao.news;
 
-import com.epam.news.model.Authority;
 import com.epam.news.model.News;
-import com.epam.news.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,21 +17,7 @@ public class NewsDaoImpl implements NewsDao {
     private EntityManager entityManager;
 
     public NewsDaoImpl() {
-
     }
-
-    public List<Authority> getAllAuthorities(){
-        List<Authority> newsList = entityManager.createQuery("from Authorities").getResultList();
-        return newsList;
-    }
-
-    @Transactional
-    public Authority addAuthority(Authority authority) {
-        return entityManager.merge(authority);
-    }
-
-
-
 
 
     public List<News> getAll() {

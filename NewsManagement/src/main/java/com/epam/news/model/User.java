@@ -1,6 +1,6 @@
 package com.epam.news.model;
 
-
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -9,12 +9,13 @@ import java.util.Collection;
 @Table
 public class User {
 
+
     @Id
     @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "username")
-    private String name;
+    private String username;
 
     @Column
     private String password;
@@ -23,7 +24,11 @@ public class User {
     private boolean enabled;
 
 
-    @ManyToMany
+    /*@ManyToMany(mappedBy = "users")*/
+
+
+
+    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
@@ -31,12 +36,24 @@ public class User {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
-    public String getName() {
-        return name;
+
+
+
+    public User() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public User(String username, String password, Collection<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Long getId() {
@@ -69,5 +86,20 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+        for (Role role : roles) {
+            role.addUser(this);
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
+                '}';
     }
 }

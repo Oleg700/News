@@ -1,4 +1,4 @@
-package com.epam.news.config.security;
+package com.epam.news.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
