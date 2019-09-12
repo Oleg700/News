@@ -1,9 +1,12 @@
 package com.epam.news.spring.controller;
 
-import com.epam.news.model.*;
-import com.epam.news.model.repository.PrivilegeRepository;
-import com.epam.news.model.repository.RoleRepository;
+import com.epam.news.model.News;
+import com.epam.news.model.Privilege;
+import com.epam.news.model.Role;
+import com.epam.news.model.User;
 import com.epam.news.service.news.NewsService;
+import com.epam.news.service.privilege.PrivilegeService;
+import com.epam.news.service.role.RoleService;
 import com.epam.news.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,15 +26,15 @@ public class NewsController {
     private NewsService newsService;
 
     @Autowired
-    PrivilegeRepository privilegeRepository;
+    PrivilegeService privilegeService;
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleService roleService;
 
     @Autowired
     private UserService userService;
 
-    @PostAuthorize("hasAuthority('READ_PRIVILEGE')")
+   /* @PostAuthorize("hasAuthority('READ_PRIVILEGE')")*/
     @GetMapping(value = "/news")
     public ResponseEntity<List<News>> getAll() {
         List<News> newsList = newsService.getAll();
@@ -56,15 +59,17 @@ public class NewsController {
 
     @PostMapping(value = "/privileges")
     public ResponseEntity<Privilege> addPrivilege(@RequestBody Privilege privilege) {
-        Privilege privilege1 = privilegeRepository.save(privilege);
+        Privilege privilege1 = privilegeService.add(privilege);
         return ResponseEntity.ok().body(privilege1);
     }
 
+
     @PostMapping(value = "/roles")
     public ResponseEntity<Role> addRole(@RequestBody Role role) {
-        Role role1 = roleRepository.save(role);
+        Role role1 = roleService.add(role);
         return ResponseEntity.ok().body(role1);
     }
+
 
 
     @PostMapping(value = "/register")
@@ -72,20 +77,6 @@ public class NewsController {
         User userAdded = userService.add(user);
         return ResponseEntity.ok().body(userAdded);
     }
-
-    @GetMapping(value = "/authority")
-    public ResponseEntity<List<Authority>> getAllAuthorities() {
-        List<Authority> newsList = newsService.getAllAuthorities();
-        return ResponseEntity.ok().body(newsList);
-    }
-
-    @PostMapping(value = "/authority")
-    public ResponseEntity<Authority> addAuthority(@RequestBody Authority authority) {
-        Authority authority1 = newsService.addAuthority(authority);
-        return ResponseEntity.ok().body(authority1);
-    }
-
-
 
 
     @GetMapping(value = "/news/{id}")

@@ -87,8 +87,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .antMatchers("/api/news/**").permitAll()
-                .antMatchers("/api/news/comments").hasRole("USER")
-                .antMatchers("/**/admin/**").hasRole("ADMIN")
+                //.antMatchers("/api/news/comments").hasRole("USER")
+                //.antMatchers("/**/admin/**").hasRole("ADMIN")
                 .and().formLogin().defaultSuccessUrl("/api/news", true)
                 .and().httpBasic().and().csrf().disable();
     }

@@ -4,6 +4,7 @@ import com.epam.news.model.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 public class RoleDaoImpl implements RoleDao{
 
@@ -11,7 +12,13 @@ public class RoleDaoImpl implements RoleDao{
     private EntityManager entityManager;
 
     @Override
+    @Transactional
     public Role add(Role role) {
         return entityManager.merge(role);
+    }
+
+    @Override
+    public Role getByName(String name) {
+        return (Role) entityManager.createQuery("select r from Roles r where r.name = :name").setParameter("name",name).getSingleResult();
     }
 }

@@ -1,11 +1,14 @@
 package com.epam.news.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity(name = "Users")
 @Table
 public class User {
+
 
     @Id
     @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
@@ -19,6 +22,10 @@ public class User {
 
     @Column
     private boolean enabled;
+
+
+    /*@ManyToMany(mappedBy = "users")*/
+
 
 
     @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
@@ -79,6 +86,9 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+        for (Role role : roles) {
+            role.addUser(this);
+        }
     }
 
 

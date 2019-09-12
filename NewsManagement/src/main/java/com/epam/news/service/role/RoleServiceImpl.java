@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class RoleServiceImpl implements RoleService{
 
 
-    RoleDao roleDao;
+    private RoleDao roleDao;
 
     @Autowired
     public RoleServiceImpl(RoleDao roleDao) {
@@ -17,5 +17,10 @@ public class RoleServiceImpl implements RoleService{
     @Override
     public Role add(Role role) {
         return roleDao.add(role);
+    }
+
+    @Override
+    public Role getByName(String name) {
+        return roleDao.getByName(name);
     }
 }

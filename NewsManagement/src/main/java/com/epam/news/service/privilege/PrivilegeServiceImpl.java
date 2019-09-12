@@ -18,4 +18,9 @@ public class PrivilegeServiceImpl implements PrivilegeService{
     public Privilege add(Privilege privilege) {
         return privilegeDao.add(privilege);
     }
+
+    @Override
+    public Privilege getByName(String name) {
+        return privilegeDao.getByName(name);
+    }
 }

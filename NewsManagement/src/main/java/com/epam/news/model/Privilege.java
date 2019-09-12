@@ -18,7 +18,6 @@ public class Privilege  implements GrantedAuthority {
     private String name;
 
     @ManyToMany(mappedBy = "privileges")
-    @JsonIgnore
     private Collection<Role> roles;
 
     public Privilege() {

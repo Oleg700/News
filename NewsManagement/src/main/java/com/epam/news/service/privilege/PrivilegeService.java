@@ -5,4 +5,6 @@ import com.epam.news.model.Privilege;
 public interface PrivilegeService {
 
     Privilege add(Privilege privilege);
+
+    Privilege getByName(String name);
 }
