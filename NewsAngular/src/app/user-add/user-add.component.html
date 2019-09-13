@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Merriweather|Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <app-header></app-header>
+    <div class="container">
+        <div class="row news-wrapper">
+            <div class="col-10">
+                <p>Enter name</p>
+                <input type="text" class="formControl" [(ngModel)]="user.username">
+            </div>
+            <div class="col-10">
+                    <p>Enter password</p>
+                    <input type="text" class="formControl" [(ngModel)]="user.password">
+                </div>
+            <div class="col-10">
+                <button type="button" class="btn btn-primary" (click)="addUser(user)">ADD USER</button>
+            </div>
+        </div>
+        <div *ngFor="let role of listRoles">
+            <div class="col-10">
+                <input type="checkbox" class="checks" (change)="selectionChange($event.srcElement, dataItem)"
+                    value={{role.name}}> {{role.name}}<Br>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngFor="let role of listCheckedRoles">
+           <p>{{role.name}}</p>
+        </div>
+
+
+
+</body>
+</html>

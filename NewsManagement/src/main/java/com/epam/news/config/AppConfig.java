@@ -1,5 +1,7 @@
 package com.epam.news.config;
 
+import com.epam.news.dao.comment.CommentDao;
+import com.epam.news.dao.comment.CommentDaoImpl;
 import com.epam.news.dao.news.NewsDao;
 import com.epam.news.dao.news.NewsDaoImpl;
 import com.epam.news.dao.privilege.PrivilegeDao;
@@ -8,6 +10,8 @@ import com.epam.news.dao.role.RoleDao;
 import com.epam.news.dao.role.RoleDaoImpl;
 import com.epam.news.dao.user.UserDao;
 import com.epam.news.dao.user.UserDaoImpl;
+import com.epam.news.service.comment.CommentService;
+import com.epam.news.service.comment.CommentServiceImpl;
 import com.epam.news.service.news.NewsService;
 import com.epam.news.service.news.NewsServiceImpl;
 import com.epam.news.service.privilege.PrivilegeService;
@@ -21,11 +25,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.jpa.JpaDialect;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -115,7 +117,14 @@ public class AppConfig {
         return new PrivilegeServiceImpl(privilegeDao());
     }
 
+    @Bean
+    public CommentDao commentDao(){return new CommentDaoImpl();
+    }
 
+    @Bean
+    public CommentService commentService(){
+        return new CommentServiceImpl(commentDao());
+    }
 
 
 

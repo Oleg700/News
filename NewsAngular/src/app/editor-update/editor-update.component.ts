@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsService } from '../news/news.service';
 import { News } from '../news/news';
+import { NewsService } from '../news/news.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-update',
-  templateUrl: './admin-update.component.html',
-  styleUrls: ['./admin-update.component.css']
+  selector: 'app-editor-update',
+  templateUrl: './editor-update.component.html',
+  styleUrls: ['./editor-update.component.css']
 })
-export class AdminUpdateComponent implements OnInit {
+export class EditorUpdateComponent implements OnInit {
 
-news: News;
+  news: News;
 
   constructor(private _newsService: NewsService, private _route: ActivatedRoute, private _router: Router) { }
 
@@ -35,7 +35,7 @@ news: News;
  }
 
  navigateToAdminPage(){
-  this._router.navigate(["admin"]);
+  this._router.navigate(["editor"]);
  }
 
 }

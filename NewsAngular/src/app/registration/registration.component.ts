@@ -48,7 +48,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   registerUser(user: User) {
-    this._newsService.registerUser(user).subscribe((response) => { console.log(response); });
+    this._newsService.addUser(user).subscribe((response) => { console.log(response); });
     this.navigateToNews();
   }
 

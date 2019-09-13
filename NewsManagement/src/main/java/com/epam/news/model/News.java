@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Table
 @Entity(name = "News")
@@ -11,8 +12,12 @@ public class News {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "news_seq")
     @SequenceGenerator(name = "news_seq", sequenceName = "news_seq", allocationSize = 1)
     private long id;
+
+    @OneToMany(mappedBy="news", fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 
     @Column
     private String title;
@@ -73,6 +78,14 @@ public class News {
 
     private void setTime() {
 
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     public long getId() {

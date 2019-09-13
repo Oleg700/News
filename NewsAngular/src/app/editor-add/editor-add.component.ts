@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsService } from '../news/news.service';
 import { News } from '../news/news';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NewsService } from '../news/news.service';
 import { Router } from '@angular/router';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-admin-add',
-  templateUrl: './admin-add.component.html',
-  styleUrls: ['./admin-add.component.css']
+  selector: 'app-editor-add',
+  templateUrl: './editor-add.component.html',
+  styleUrls: ['./editor-add.component.css']
 })
-export class AdminAddComponent implements OnInit {
+export class EditorAddComponent implements OnInit {
 
   private news: News;
   private myForm: FormGroup;
@@ -52,12 +52,12 @@ export class AdminAddComponent implements OnInit {
     this._newsService.addNews(this.news)
     .subscribe((response) =>
     {console.log(response);
-     this.navigateToAdminPage();
+     this.navigateToEditorPage();
       })
   }
 
-  navigateToAdminPage(){
-    this._router.navigate(["admin"]);
+  navigateToEditorPage(){
+    this._router.navigate(["editor"]);
    }
 
 }

@@ -57,39 +57,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       /* auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser("user").password(passwordEncoder.encode("1"))
-                .roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder.encode("1"))
-                .roles("USER", "ADMIN");*/
-
-       auth.
-               userDetailsService(new CustomUserService(userService));
+       auth.userDetailsService(new CustomUserService(userService));
     }
 
 
-
     protected void configure(HttpSecurity http) throws Exception {
-
         http
         .cors().and()
-
-       /* .authorizeRequests()
-                .antMatchers("/")
-                .permitAll()
-                .anyRequest()
-                //.permitAll()
-                .fullyAuthenticated()
-                .and().httpBasic().and().csrf().disable();
-*/
-
                 .authorizeRequests()
                 .antMatchers("/api/news/**").permitAll()
-                //.antMatchers("/api/news/comments").hasRole("USER")
-                //.antMatchers("/**/admin/**").hasRole("ADMIN")
-                .and().formLogin().defaultSuccessUrl("/api/news", true)
+                /*.and().formLogin().defaultSuccessUrl("/api/news", true)*/
                 .and().httpBasic().and().csrf().disable();
     }
 }

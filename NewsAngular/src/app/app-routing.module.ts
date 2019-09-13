@@ -4,10 +4,17 @@ import { NewsComponent } from './news/news.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SingleNewsComponent } from './single-news/single-news.component';
 import { AdminComponent } from './admin/admin.component';
-import { AdminAddComponent } from './admin-add/admin-add.component';
-import { AdminUpdateComponent } from './admin-update/admin-update.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { PrivilegeComponent } from './privilege/privilege.component';
+import { PrivilegeAddComponent } from './privilege-add/privilege-add.component';
+import { RoleComponent } from './role/role.component';
+import { RoleAddComponent } from './role-add/role-add.component';
+import { EditorComponent } from './editor/editor.component';
+import { EditorAddComponent } from './editor-add/editor-add.component';
+import { EditorUpdateComponent } from './editor-update/editor-update.component';
+import { UserComponent } from './user/user.component';
+import { UserAddComponent } from './user-add/user-add.component';
 
 
 const routes: Routes = [
@@ -16,9 +23,16 @@ const routes: Routes = [
   {path : 'admin', component: AdminComponent},
   {path : 'login', component: LoginComponent},
   {path : 'register', component: RegistrationComponent},
-  {path:  'admin/add', component: AdminAddComponent},
-  {path:  'admin/update/:id', component: AdminUpdateComponent},
   {path : 'news/:id', component: SingleNewsComponent},
+  {path : 'privileges', component: PrivilegeComponent},
+  {path : 'privileges/add', component: PrivilegeAddComponent},
+  {path : 'roles', component: RoleComponent},
+  {path : 'roles/add', component: RoleAddComponent},
+  {path : 'editor', component: EditorComponent},
+  {path : 'editor/add', component: EditorAddComponent},
+  {path : 'editor/update/:id', component: EditorUpdateComponent},
+  {path : 'users', component: UserComponent},
+  {path : 'users/add', component: UserAddComponent},
   {path : '**', component: PageNotFoundComponent},
 ];
 

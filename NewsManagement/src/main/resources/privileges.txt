@@ -1,0 +1,22 @@
+1 admin admin
+
+2 editor editor
+
+3 user user
+
+
+ROLE_ADMIN 1 2 3 4
+
+ROLE_EDITOR 1 2 3 4
+
+ROLE_USER 1 2
+
+
+
+1 PRIVELEGE_READ
+
+2 PRIVELEGE_WRITE
+
+3 PRIVELEGE_UPDATE
+
+4 PRIVELEGE_DELETE

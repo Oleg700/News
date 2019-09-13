@@ -5,35 +5,6 @@ create table users(id NUMBER NOT NULL PRIMARY KEY,
 
 CREATE SEQUENCE user_seq START WITH 1 CACHE 2;
 
-CREATE OR REPLACE TRIGGER trigger_user
- 	BEFORE INSERT ON users
- 	FOR EACH ROW
-BEGIN
- 	SELECT user_seq.nextval
- 	INTO :new.id
- 	FROM dual;
-END;
-/
-
-*************************************
-
-
-create table privileges(
-    id NUMBER NOT NUll primary key,
-    name VARCHAR2(100 char) NOT NUll);
-
-   CREATE SEQUENCE privilege_seq START WITH 1 CACHE 2;
-
-   CREATE OR REPLACE TRIGGER trigger_privilege
-    	BEFORE INSERT ON privileges
-    	FOR EACH ROW
-   BEGIN
-    	SELECT privilege_seq.nextval
-    	INTO :new.id
-    	FROM dual;
-   END;
-   /
-
 *************************************
 
 create table roles(
@@ -42,15 +13,14 @@ create table roles(
 
    CREATE SEQUENCE role_seq START WITH 1 CACHE 2;
 
-   CREATE OR REPLACE TRIGGER trigger_role
-    	BEFORE INSERT ON roles
-    	FOR EACH ROW
-   BEGIN
-    	SELECT role_seq.nextval
-    	INTO :new.id
-    	FROM dual;
-   END;
-   /
+*************************************
+
+create table privileges(
+    id NUMBER NOT NUll primary key,
+    name VARCHAR2(100 char) NOT NUll);
+
+   CREATE SEQUENCE privilege_seq START WITH 1 CACHE 2;
+
 *************************************
 
 CREATE TABLE users_roles(
@@ -68,3 +38,15 @@ privilege_id number(20) not null,
 PRIMARY KEY(role_id, privilege_id),
 CONSTRAINT FK_ROLE FOREIGN KEY (role_id) REFERENCES roles(id),
 CONSTRAINT FK_PRIVILEGES FOREIGN KEY (privilege_id) REFERENCES privileges(id));
+
+**************************************
+
+CREATE TABLE comments(
+id NUMBER NOT NUll primary key,
+content VARCHAR2(100 char) NOT NUll,
+news_id NUMBER NOT NUll,
+user_id NUMBER NOT NUll,
+CONSTRAINT comment_news_cstr FOREIGN KEY (news_id) REFERENCES news (id),
+CONSTRAINT comment_user_cstr FOREIGN KEY (user_id) REFERENCES users (id));
+
+CREATE SEQUENCE comments_seq START WITH 1 CACHE 2;

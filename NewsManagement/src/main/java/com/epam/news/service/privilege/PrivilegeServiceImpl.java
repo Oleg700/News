@@ -4,6 +4,9 @@ import com.epam.news.dao.privilege.PrivilegeDao;
 import com.epam.news.model.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
+import java.util.Collection;
+
 public class PrivilegeServiceImpl implements PrivilegeService{
 
 
@@ -15,12 +18,21 @@ public class PrivilegeServiceImpl implements PrivilegeService{
     }
 
     @Override
-    public Privilege add(Privilege privilege) {
-        return privilegeDao.add(privilege);
+    public Collection<Privilege> getAll() {
+        return privilegeDao.getAll();
     }
 
     @Override
     public Privilege getByName(String name) {
         return privilegeDao.getByName(name);
     }
+
+    @Override
+    @Transactional
+    public Privilege add(Privilege privilege) {
+        return privilegeDao.add(privilege);
+    }
+
+
+
 }

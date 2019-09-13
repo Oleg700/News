@@ -1,6 +1,5 @@
 package com.epam.news.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -11,13 +10,14 @@ import java.util.Collection;
 public class Role  implements GrantedAuthority {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
     @SequenceGenerator(name = "role_seq", sequenceName = "role_seq", allocationSize = 1)
     private Long id;
 
     @Column
     private String name;
 
-    private Collection<User> users;
+    /*private Collection<User> users;*/
 
     public Role() {
     }
@@ -53,13 +53,13 @@ public class Role  implements GrantedAuthority {
         this.name = name;
     }
 
-    public Collection<User> getUsers() {
+    /*public Collection<User> getUsers() {
         return users;
     }
 
     public void setUsers(Collection<User> users) {
         this.users = users;
-    }
+    }*/
 
     public Collection<Privilege> getPrivileges() {
         return privileges;
