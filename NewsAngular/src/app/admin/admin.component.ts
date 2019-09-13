@@ -12,43 +12,25 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
 
-  private listNews;
-  private news;
+
 
   constructor(private _newsService: NewsService, private _router: Router, private _route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getNews();
-    this.news = new News();
+   
   }
 
-  getNews(){
-    this._newsService.getNews()
-    .subscribe((newsData) => { this.listNews = newsData},
-                (error) => {console.log(error)});   
+  private navigateToUserPage(){
+    this._router.navigate(["users"]);
   }
 
-  deleteNews(id: number){
-    this._newsService.deleteNews(id)
-    .subscribe((response) =>
-     {console.log(response);
-      this.getNews();}); 
+  private navigateToRolePage(){
+    this._router.navigate(["roles"]);
   }
 
-  navigateToAddNews(){
-    this._router.navigate(["add"],{relativeTo: this._route});
+  private navigateToPrivilegePage(){
+    this._router.navigate(["privileges"]);
   }
-
-  navigateToUpdateNews(news: News){
-    this._router.navigate(["update/" + news.id], {relativeTo: this._route});
-  }
-
-  navigateToSingleNews(news){
-    this._router.navigate(["news",news.id]);
-   }
-
-   navigateToAdminPage(){
-    this._router.navigate(["admin"]);
-   }
+ 
 
 }

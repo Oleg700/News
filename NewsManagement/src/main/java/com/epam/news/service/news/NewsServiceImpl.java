@@ -1,9 +1,10 @@
 package com.epam.news.service.news;
 
 import com.epam.news.dao.news.NewsDao;
-import com.epam.news.model.News;
+import com.epam.news.model.news.News;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -30,16 +31,19 @@ public class NewsServiceImpl implements NewsService {
 
 
     @Override
+    @Transactional
     public News add(News news) {
         return newsDao.add(news);
     }
 
     @Override
+    @Transactional
     public News update(News news) {
         return newsDao.update(news);
     }
 
     @Override
+    @Transactional
     public void delete(long id) {
         newsDao.delete(id);
     }

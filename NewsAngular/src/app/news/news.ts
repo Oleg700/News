@@ -4,4 +4,6 @@ export class News{
     date: string;
     brief: string;
     content: string;
+
+    comments: Comment[];
 }

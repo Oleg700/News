@@ -1,9 +1,13 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { News } from './news';
+import { Privilege } from '../privilege/privilege';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../user/user';
+import { Role } from '../role/role';
+import { Comment } from '../comment/comment';
+import { CommentRequest } from '../comment/comment-request';
 
 
 
@@ -13,11 +17,6 @@ export class NewsService {
     private user: User = new User();
 
     constructor(private _http: HttpClient) { }
-
-    registerUser(user: User){
-        let body = JSON.stringify(user);
-        return this._http.post("http://localhost:8899/api/register", body, this.getHeaders());
-    }
 
     login(user: User) {
         this.user = user;
@@ -29,13 +28,22 @@ export class NewsService {
         window.location.reload();
     }
 
-    getUser(): Observable<User> {
+    getUserObservable(): Observable<User> {
         var authorizedUser = JSON.parse(localStorage.getItem("user"));
         if (authorizedUser != null && authorizedUser.username != null) {
             return of(authorizedUser);
         }
         localStorage.setItem("user", JSON.stringify(this.user));
         return of(JSON.parse(localStorage.getItem("user")));
+    }
+
+    getUser() {
+        var authorizedUser = JSON.parse(localStorage.getItem("user"));
+        if (authorizedUser != null && authorizedUser.username != null) {
+            return authorizedUser;
+        }
+        localStorage.setItem("user", JSON.stringify(this.user));
+        return JSON.parse(localStorage.getItem("user"));
     }
 
     getHeaders(): any {
@@ -54,6 +62,9 @@ export class NewsService {
             })
         }
     }
+    
+
+    // NEWS
 
     getNews(): Observable<any> {
         return this._http.get("http://localhost:8899/api/news", this.getHeaders());
@@ -65,15 +76,71 @@ export class NewsService {
 
     addNews(news: News) {
         let body = JSON.stringify(news);
-        return this._http.post("http://localhost:8899/api/admin/news", body, this.getHeaders());
+        return this._http.post("http://localhost:8899/api/news", body, this.getHeaders());
     }
 
     deleteNews(newsId: number) {
-        return this._http.delete("http://localhost:8899/api/admin/news/" + newsId, this.getHeaders());
+        return this._http.delete("http://localhost:8899/api/news/" + newsId, this.getHeaders());
     }
 
     updateNews(news: News): Observable<any> {
         let body = JSON.stringify(news);
-        return this._http.put("http://localhost:8899/api/admin/news/" + news.id, body, this.getHeaders());
+        return this._http.put("http://localhost:8899/api/news/" + news.id, body, this.getHeaders());
     }
+
+
+
+    //USERS
+
+    requestUserRoles(user: User): Observable<any>{
+        let body = JSON.stringify(user);
+        return this._http.post("http://localhost:8899/api/get-role", body, this.getHeaders());
+    }
+
+    getAllUsers(): Observable<any>{
+        return this._http.get("http://localhost:8899/api/users", this.getHeaders());
+    }
+
+    addUser(user: User){
+        let body = JSON.stringify(user);
+        return this._http.post("http://localhost:8899/api/users", body, this.getHeaders());
+    }
+
+
+    //ROLES
+
+    getRoles(): Observable<any> {
+        return this._http.get("http://localhost:8899/api/roles", this.getHeaders());
+    }
+
+    addRole(role: Role) {
+        let body = JSON.stringify(role);
+        return this._http.post("http://localhost:8899/api/roles", body, this.getHeaders());
+    }
+
+
+
+    // PRIVILEGES
+
+    getPrivileges(): Observable<any> {
+        return this._http.get("http://localhost:8899/api/privileges", this.getHeaders());
+    }
+
+    addPrivilege(privilege: Privilege) {
+        let body = JSON.stringify(privilege);
+        return this._http.post("http://localhost:8899/api/privileges", body, this.getHeaders());
+    }
+
+    //COMMENT
+
+    addComment(comment: Comment) {
+        const user =this.getUser();
+        const commentRequest: CommentRequest = new CommentRequest;
+        commentRequest.comment = comment;
+        commentRequest.username = user.username;
+
+        return this._http.post("http://localhost:8899/api/comments", commentRequest, this.getHeaders());
+    }
+
+   
 }

@@ -1,10 +1,11 @@
 package com.epam.news.dao.user;
 
-import com.epam.news.model.User;
+import com.epam.news.model.user.Role;
+import com.epam.news.model.user.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
@@ -13,15 +14,14 @@ public class UserDaoImpl implements UserDao {
     private EntityManager entityManager;
 
     @Override
-    public List<User> getAll(){
+    public List<User> getAll() {
         List<User> newsList = entityManager.createQuery("from Users").getResultList();
         return newsList;
     }
 
     @Override
-    @Transactional
     public User getByName(String name) {
-        User user = (User) entityManager.createQuery("select c from Users c where c.username = :name").setParameter("name",name).getSingleResult();
+        User user = (User) entityManager.createQuery("select c from Users c where c.username = :name").setParameter("name", name).getSingleResult();
         System.out.println("myuser = " + user);
 
         return (User) user;
@@ -29,9 +29,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    @Transactional
     public User add(User user) {
         return entityManager.merge(user);
     }
 
+    @Override
+    public Collection<Role> getRoleByUsername(String username) {
+        return getByName(username).getRoles();
+    }
 }

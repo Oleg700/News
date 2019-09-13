@@ -1,5 +1,7 @@
 package com.epam.news.config;
 
+import com.epam.news.dao.comment.CommentDao;
+import com.epam.news.dao.comment.CommentDaoImpl;
 import com.epam.news.dao.news.NewsDao;
 import com.epam.news.dao.news.NewsDaoImpl;
 import com.epam.news.dao.privilege.PrivilegeDao;
@@ -8,6 +10,8 @@ import com.epam.news.dao.role.RoleDao;
 import com.epam.news.dao.role.RoleDaoImpl;
 import com.epam.news.dao.user.UserDao;
 import com.epam.news.dao.user.UserDaoImpl;
+import com.epam.news.service.comment.CommentService;
+import com.epam.news.service.comment.CommentServiceImpl;
 import com.epam.news.service.news.NewsService;
 import com.epam.news.service.news.NewsServiceImpl;
 import com.epam.news.service.privilege.PrivilegeService;
@@ -17,26 +21,29 @@ import com.epam.news.service.role.RoleServiceImpl;
 import com.epam.news.service.user.UserService;
 import com.epam.news.service.user.UserServiceImpl;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.jpa.JpaDialect;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 @Configuration
+@PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 @ComponentScans(value = {
         @ComponentScan("com.epam.news")
 })
 public class AppConfig {
+
+    @Autowired
+    private Environment environment;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() {
@@ -50,10 +57,10 @@ public class AppConfig {
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-        dataSource.setUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
-        dataSource.setUsername("oleg");
-        dataSource.setPassword("password");
+        dataSource.setDriverClassName(environment.getProperty("db.driver"));
+        dataSource.setUrl(environment.getProperty("db.url"));
+        dataSource.setUsername(environment.getProperty("db.user"));
+        dataSource.setPassword(environment.getProperty("db.password"));
         return dataSource;
     }
 
@@ -62,7 +69,6 @@ public class AppConfig {
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         ((HibernateJpaVendorAdapter) jpaVendorAdapter).setShowSql(true);
         ((HibernateJpaVendorAdapter) jpaVendorAdapter).setGenerateDdl(false);
-    /*    ((HibernateJpaVendorAdapter) jpaVendorAdapter).setDatabasePlatform("org.hibernate.dialect.Oracle10gDialect");*/
         return jpaVendorAdapter;
     }
 
@@ -71,6 +77,12 @@ public class AppConfig {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(localContainerEntityManagerFactoryBean().getObject());
         return jpaTransactionManager;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder;
     }
 
     @Bean
@@ -84,7 +96,7 @@ public class AppConfig {
     }
 
     @Bean
-    public UserDao userDao(){
+    public UserDao userDao() {
         return new UserDaoImpl();
     }
 
@@ -95,7 +107,7 @@ public class AppConfig {
 
 
     @Bean
-    public RoleDao roleDao(){
+    public RoleDao roleDao() {
         return new RoleDaoImpl();
     }
 
@@ -106,17 +118,24 @@ public class AppConfig {
 
 
     @Bean
-    public PrivilegeDao privilegeDao(){
-        return  new PrivilegeDaoImpl();
+    public PrivilegeDao privilegeDao() {
+        return new PrivilegeDaoImpl();
     }
 
     @Bean
-    public PrivilegeService privilegeService(){
+    public PrivilegeService privilegeService() {
         return new PrivilegeServiceImpl(privilegeDao());
     }
 
+    @Bean
+    public CommentDao commentDao() {
+        return new CommentDaoImpl();
+    }
 
-
+    @Bean
+    public CommentService commentService() {
+        return new CommentServiceImpl(commentDao());
+    }
 
 
 }
