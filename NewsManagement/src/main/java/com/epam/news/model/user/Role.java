@@ -17,7 +17,6 @@ public class Role implements GrantedAuthority {
     @Column
     private String name;
 
-    /*private Collection<User> users;*/
 
     public Role() {
     }
@@ -52,13 +51,6 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    /*public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }*/
 
     public Collection<Privilege> getPrivileges() {
         return privileges;

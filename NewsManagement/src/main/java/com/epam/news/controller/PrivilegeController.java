@@ -31,7 +31,7 @@ public class PrivilegeController {
     @PostAuthorize("hasAuthority('PRIVILEGE_WRITE_PRIVILEGE')")
     @PostMapping(value = "/privileges")
     public ResponseEntity<Privilege> addPrivilege(@RequestBody Privilege privilege) {
-        Privilege privilege1 = privilegeService.add(privilege);
-        return ResponseEntity.ok().body(privilege1);
+        Privilege savedPrivilege = privilegeService.add(privilege);
+        return ResponseEntity.ok().body(savedPrivilege);
     }
 }

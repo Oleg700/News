@@ -24,6 +24,7 @@ class CommentControllerTest {
 
     private final static long NEWS_ID = 1;
     private final static String USER_NAME = "admin";
+    private final static String COMMENT_CONTENT = "admin";
 
     @Autowired
     CommentService commentService;
@@ -38,8 +39,8 @@ class CommentControllerTest {
     @Test
     void addComment() {
         News news = newsService.get(NEWS_ID);
-        User user = userService.getByName("admin");
-        Comment comment = new Comment("user Comment", news, user);
+        User user = userService.getByName(USER_NAME);
+        Comment comment = new Comment(COMMENT_CONTENT, news, user);
         CommentRequest commentRequest = new CommentRequest(comment, user.getUsername());
         Comment commentResult = commentService.add(commentRequest);
         assertNotNull( commentResult);

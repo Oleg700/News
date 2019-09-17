@@ -16,7 +16,7 @@ public class CommentController {
 
     @PostAuthorize("hasAuthority('PRIVILEGE_WRITE_COMMENT')")
     @PostMapping(value = "/comments")
-    public ResponseEntity<Comment> addPrivilege(@RequestBody CommentRequest commentRequest) {
+    public ResponseEntity<Comment> addComment(@RequestBody CommentRequest commentRequest) {
         Comment comment = commentService.add(commentRequest);
         return ResponseEntity.ok().body(comment);
     }
