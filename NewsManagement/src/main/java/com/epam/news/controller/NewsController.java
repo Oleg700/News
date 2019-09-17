@@ -4,6 +4,7 @@ import com.epam.news.model.news.News;
 import com.epam.news.service.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -31,12 +32,14 @@ public class NewsController {
         return ResponseEntity.ok().body(news);
     }
 
+    @PostAuthorize("hasAuthority('PRIVILEGE_WRITE_NEWS')")
     @PostMapping(value = "/news")
     public ResponseEntity<News> addNews(@RequestBody News news) {
         News newsAdded = newsService.add(news);
         return ResponseEntity.ok().body(newsAdded);
     }
 
+    @PostAuthorize("hasAuthority('PRIVILEGE_UPDATE_NEWS')")
     @PutMapping(value = "/news/{id}")
     public ResponseEntity<News> updateNews(@PathVariable("id") long id, @RequestBody News news) {
         news.setId(id);
@@ -44,6 +47,7 @@ public class NewsController {
         return ResponseEntity.ok().body(newsUpdated);
     }
 
+    @PostAuthorize("hasAuthority('PRIVILEGE_DELETE_NEWS')")
     @DeleteMapping("/news/{id}")
     public ResponseEntity<String> deleteNews(@PathVariable("id") long id) {
         newsService.delete(id);
