@@ -15,9 +15,6 @@
                 <input type="text" class="formControl" [(ngModel)]="role.name">
 
             </div>
-            <div class="col-10">
-                <button type="button" class="btn btn-primary" (click)="addRole(role)">ADD ROLE</button>
-            </div>
         </div>
 
         <div *ngFor="let privilege of listPrivileges">
@@ -26,7 +23,9 @@
                     value={{privilege.name}}> {{privilege.name}}<Br>
             </div>
         </div>
-        <button class="btn btn-primary" (click)="getValueFromCheckboxes()">get Length</button>
+        <div class="col-10">
+            <button type="button" class="btn btn-primary" (click)="addRole(role)">ADD ROLE</button>
+        </div>
     </div>
 
   

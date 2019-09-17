@@ -1,25 +1,19 @@
 package com.epam.news.service.user;
 
 import com.epam.news.dao.user.UserDao;
-import com.epam.news.model.User;
-import com.epam.news.service.privilege.PrivilegeService;
-import com.epam.news.service.role.RoleService;
+import com.epam.news.model.user.Role;
+import com.epam.news.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
-
-    @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private PrivilegeService privilegeService;
 
     @Autowired
     public UserServiceImpl(UserDao userDao) {
@@ -27,10 +21,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAll(){return userDao.getAll();}
+    public List<User> getAll() {
+        return userDao.getAll();
+    }
 
     @Override
-    public User getByName(String name){
+    public User getByName(String name) {
         return userDao.getByName(name);
     }
 
@@ -42,7 +38,13 @@ public class UserServiceImpl implements UserService{
         return userDao.add(user);
     }
 
-    private String encodePassword(String password){
+    @Override
+    public Collection<Role> getRoleByUsername(String username) {
+
+        return userDao.getRoleByUsername(username);
+    }
+
+    private String encodePassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hash = passwordEncoder.encode(password);
         return hash;

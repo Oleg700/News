@@ -1,10 +1,9 @@
 package com.epam.news.dao.news;
 
-import com.epam.news.model.News;
+import com.epam.news.model.news.News;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -30,17 +29,17 @@ public class NewsDaoImpl implements NewsDao {
         return entityManager.find(News.class, id);
     }
 
-    @Transactional
+
     public News add(News news) {
         return entityManager.merge(news);
     }
 
-    @Transactional
+
     public News update(News news) {
         return entityManager.merge(news);
     }
 
-    @Transactional
+
     public void delete(long id) {
         News news = entityManager.find(News.class, id);
         entityManager.remove(news);

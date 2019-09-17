@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   constructor(private _newsService: NewsService, private _router: Router) { }
 
   ngOnInit() {
-     this._newsService.getUser().subscribe(user=>this.user =user);
+     this._newsService.getUserObservable().subscribe(user=>this.user =user);
   }
 
   navigateToLogin(){

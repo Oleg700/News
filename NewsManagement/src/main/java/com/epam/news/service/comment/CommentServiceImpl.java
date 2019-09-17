@@ -1,9 +1,9 @@
 package com.epam.news.service.comment;
 
 import com.epam.news.dao.comment.CommentDao;
-import com.epam.news.model.Comment;
-import com.epam.news.model.CommentRequest;
-import com.epam.news.model.User;
+import com.epam.news.model.news.Comment;
+import com.epam.news.model.news.CommentRequest;
+import com.epam.news.model.user.User;
 import com.epam.news.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 

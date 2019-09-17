@@ -25,72 +25,11 @@ content varchar2(100 char) not null,
 news_id number not null,
 CONSTRAINT fk_comment_news FOREIGN KEY (news_id) REFERENCES news (id));
 
-
 CREATE SEQUENCE comment_seq START WITH 1 CACHE 2;
 
-CREATE OR REPLACE TRIGGER trigger_comment
- 	BEFORE INSERT ON comments
- 	FOR EACH ROW
-BEGIN
- 	SELECT comment_seq.nextval
- 	INTO :new.id
- 	FROM dual;
-END;
-/
 
-
-
-
-
-user user $2a$10$mJ48Zze.mCtuZ3d0e.GF7uA1WG00XaCVKKU4GPrfC5fLUumYj6JdK
-oleg oleg $2a$10$y7EE6QxalUkGF.iIVzUpIuEdorpeU/rZ5X8H7HvzODJVV30QbkmzC
+user $2a$10$mJ48Zze.mCtuZ3d0e.GF7uA1WG00XaCVKKU4GPrfC5fLUumYj6JdK
+oleg $2a$10$y7EE6QxalUkGF.iIVzUpIuEdorpeU/rZ5X8H7HvzODJVV30QbkmzC
 admin $2a$10$pVd7N2aKGoFzdfGC0XwGJO9QB.kjGHmpH7oIpMADTKZAXWYUhMeja
 
-create table users(id NUMBER NOT NULL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password varchar(60) not null,
-    enabled NUMBER(1) DEFAULT 1 NOT NULL);
 
-CREATE SEQUENCE user_seq START WITH 1 CACHE 2;
-
-CREATE OR REPLACE TRIGGER trigger_user
- 	BEFORE INSERT ON users
- 	FOR EACH ROW
-BEGIN
- 	SELECT user_seq.nextval
- 	INTO :new.id
- 	FROM dual;
-END;
-/
-
-
-
- create table authorities (
-     id NUMBER NOT NULL PRIMARY KEY,
-     username varchar(50) not null,
-     authority varchar(50) not null,
-     constraint fk_authorities_users foreign key(username) references users(username));
-
-
-CREATE SEQUENCE auth_seq START WITH 1 CACHE 2;
-
-CREATE OR REPLACE TRIGGER trigger_auth
- 	BEFORE INSERT ON authorities
- 	FOR EACH ROW
-BEGIN
- 	SELECT auth_seq.nextval
- 	INTO :new.id
- 	FROM dual;
-END;
-/
-
-
-
-create unique index ix_auth_username on authorities (username,authority);
-
-
- insert into users values ('oleg', 'oleg',1);
- insert into authorities values('oleg','ROLE_USER');
-
-   delete from authorities where username = 'oleg';
-   delete from users where username = 'oleg';

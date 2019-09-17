@@ -28,13 +28,22 @@ export class NewsService {
         window.location.reload();
     }
 
-    getUser(): Observable<User> {
+    getUserObservable(): Observable<User> {
         var authorizedUser = JSON.parse(localStorage.getItem("user"));
         if (authorizedUser != null && authorizedUser.username != null) {
             return of(authorizedUser);
         }
         localStorage.setItem("user", JSON.stringify(this.user));
         return of(JSON.parse(localStorage.getItem("user")));
+    }
+
+    getUser() {
+        var authorizedUser = JSON.parse(localStorage.getItem("user"));
+        if (authorizedUser != null && authorizedUser.username != null) {
+            return authorizedUser;
+        }
+        localStorage.setItem("user", JSON.stringify(this.user));
+        return JSON.parse(localStorage.getItem("user"));
     }
 
     getHeaders(): any {
@@ -83,6 +92,11 @@ export class NewsService {
 
     //USERS
 
+    requestUserRoles(user: User): Observable<any>{
+        let body = JSON.stringify(user);
+        return this._http.get("http://localhost:8899/api/users/"+user.username+"/roles", this.getHeaders());
+    }
+
     getAllUsers(): Observable<any>{
         return this._http.get("http://localhost:8899/api/users", this.getHeaders());
     }
@@ -120,11 +134,10 @@ export class NewsService {
     //COMMENT
 
     addComment(comment: Comment) {
-        const username ="levi";
-        const body1 = {comment, username};
+        const user =this.getUser();
         const commentRequest: CommentRequest = new CommentRequest;
         commentRequest.comment = comment;
-        commentRequest.username = username
+        commentRequest.username = user.username;
 
         return this._http.post("http://localhost:8899/api/comments", commentRequest, this.getHeaders());
     }

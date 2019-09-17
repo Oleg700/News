@@ -49,4 +49,4 @@ user_id NUMBER NOT NUll,
 CONSTRAINT comment_news_cstr FOREIGN KEY (news_id) REFERENCES news (id),
 CONSTRAINT comment_user_cstr FOREIGN KEY (user_id) REFERENCES users (id));
 
-CREATE SEQUENCE comments_seq START WITH 1 CACHE 2;
+CREATE SEQUENCE comment_seq START WITH 1 CACHE 2;

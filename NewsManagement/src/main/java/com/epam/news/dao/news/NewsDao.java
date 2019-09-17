@@ -1,11 +1,10 @@
 package com.epam.news.dao.news;
 
-import com.epam.news.model.News;
+import com.epam.news.model.news.News;
 
 import java.util.List;
 
 public interface NewsDao {
-
 
 
     List<News> getAll();

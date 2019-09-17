@@ -1,6 +1,8 @@
 package com.epam.news.dao.privilege;
 
-import com.epam.news.model.Privilege;
+import com.epam.news.model.user.Privilege;
+
+import java.util.Collection;
 
 import java.util.Collection;
 

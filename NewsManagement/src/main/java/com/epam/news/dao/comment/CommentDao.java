@@ -1,6 +1,6 @@
 package com.epam.news.dao.comment;
 
-import com.epam.news.model.Comment;
+import com.epam.news.model.news.Comment;
 
 public interface CommentDao {
 

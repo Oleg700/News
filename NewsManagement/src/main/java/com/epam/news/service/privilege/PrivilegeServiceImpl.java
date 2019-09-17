@@ -1,13 +1,13 @@
 package com.epam.news.service.privilege;
 
 import com.epam.news.dao.privilege.PrivilegeDao;
-import com.epam.news.model.Privilege;
+import com.epam.news.model.user.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
 
-public class PrivilegeServiceImpl implements PrivilegeService{
+public class PrivilegeServiceImpl implements PrivilegeService {
 
 
     private PrivilegeDao privilegeDao;
@@ -32,7 +32,6 @@ public class PrivilegeServiceImpl implements PrivilegeService{
     public Privilege add(Privilege privilege) {
         return privilegeDao.add(privilege);
     }
-
 
 
 }

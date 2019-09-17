@@ -1,4 +1,4 @@
-package com.epam.news.model;
+package com.epam.news.model.user;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -22,7 +22,7 @@ public class User {
     @Column
     private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(

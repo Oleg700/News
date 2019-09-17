@@ -1,7 +1,6 @@
-package com.epam.news.security.privilege;
+package com.epam.news.model.user;
 
-import com.epam.news.model.Role;
-import com.epam.news.model.User;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,21 +21,14 @@ public class MyUserPrincipal implements UserDetails {
 
         List<GrantedAuthority> authorities
                 = new ArrayList<>();
-        for (Role role: user.getRoles()) {
+        for (Role role : user.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
             role.getPrivileges().stream()
                     .map(p -> new SimpleGrantedAuthority(p.getName()))
                     .forEach(authorities::add);
         }
-
-        System.out.println("authorities ...");
         authorities.stream().forEach(System.out::println);
-
         return authorities;
-
-
-
-        /*return (Collection<? extends GrantedAuthority>) user.getRoles();*/
     }
 
     @Override

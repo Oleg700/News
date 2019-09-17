@@ -1,10 +1,10 @@
 package com.epam.news.service.news;
 
-import com.epam.news.model.News;
+import com.epam.news.model.news.News;
 
 import java.util.List;
 
-public interface NewsService{
+public interface NewsService {
 
     List<News> getAll();
 
