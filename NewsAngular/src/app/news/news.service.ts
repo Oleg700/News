@@ -94,7 +94,7 @@ export class NewsService {
 
     requestUserRoles(user: User): Observable<any>{
         let body = JSON.stringify(user);
-        return this._http.post("http://localhost:8899/api/get-role", body, this.getHeaders());
+        return this._http.get("http://localhost:8899/api/users/"+user.username+"/roles", this.getHeaders());
     }
 
     getAllUsers(): Observable<any>{

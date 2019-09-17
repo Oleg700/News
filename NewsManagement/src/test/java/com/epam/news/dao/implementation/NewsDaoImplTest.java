@@ -1,22 +1,15 @@
 package com.epam.news.dao.implementation;
 
 import com.epam.news.config.AppConfig;
-import com.epam.news.config.NewsWebAppInitializer;
-import com.epam.news.config.WebConfig;
 import com.epam.news.dao.news.NewsDao;
-import com.epam.news.dao.news.NewsDaoImpl;
 import com.epam.news.model.news.News;
-import com.epam.news.service.news.NewsService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.time.LocalDateTime;
@@ -24,8 +17,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringJUnitConfig({AppConfig.class})
+/*@RunWith(SpringJUnit4ClassRunner.class)
+@SpringJUnitWebConfig(classes = {AppConfig.class, NewsWebAppInitializer.class, WebConfig.class})*/
+
+
+@ExtendWith(SpringExtension.class)
+@WebAppConfiguration
+@ContextConfiguration(classes = AppConfig.class)
 class NewsDaoImplTest {
 
     @Autowired
@@ -48,7 +46,7 @@ class NewsDaoImplTest {
     void add() {
         News news = new News("Praga", LocalDateTime.now(), "brief note", "content text");
         News result = newsDao.add(news);
-        assertEquals(0, result);
+        assertNotNull( result);
     }
 
 

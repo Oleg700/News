@@ -27,7 +27,6 @@ public class MyUserPrincipal implements UserDetails {
                     .map(p -> new SimpleGrantedAuthority(p.getName()))
                     .forEach(authorities::add);
         }
-        System.out.println("authorities ...");
         authorities.stream().forEach(System.out::println);
         return authorities;
     }

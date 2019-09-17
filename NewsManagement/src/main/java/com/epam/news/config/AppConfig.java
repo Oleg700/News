@@ -20,6 +20,8 @@ import com.epam.news.service.role.RoleService;
 import com.epam.news.service.role.RoleServiceImpl;
 import com.epam.news.service.user.UserService;
 import com.epam.news.service.user.UserServiceImpl;
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -44,6 +46,12 @@ public class AppConfig {
 
     @Autowired
     private Environment environment;
+
+    @Bean
+    public Module datatypeHibernateModule() {
+        return new Hibernate4Module();
+    }
+
 
     @Bean
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() {

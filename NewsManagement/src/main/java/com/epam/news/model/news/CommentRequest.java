@@ -6,6 +6,11 @@ public class CommentRequest {
 
     private String username;
 
+    public CommentRequest(Comment comment, String username) {
+        this.comment = comment;
+        this.username = username;
+    }
+
     public Comment getComment() {
         return comment;
     }

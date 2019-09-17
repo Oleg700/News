@@ -16,12 +16,21 @@
         <jackson.version>2.9.4</jackson.version>
         <org.spring.hibernate.version>1.2.9</org.spring.hibernate.version>
         <common.dbcp.version>1.4</common.dbcp.version>
-        <servlet.version>2.5</servlet.version>
+        <servlet.version>3.0.1</servlet.version>
         <mockito.version>1.9.5</mockito.version>
         <junit.jupiter.version>5.4.2</junit.jupiter.version>
 
     </properties>
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate4 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate4</artifactId>
+            <version>2.9.9</version>
+        </dependency>
+
+
 
         <!-- Spring Security Core -->
         <dependency>
@@ -127,8 +136,8 @@
         <!-- Servlet -->
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet.version}</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

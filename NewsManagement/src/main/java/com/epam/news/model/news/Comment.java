@@ -3,6 +3,7 @@ package com.epam.news.model.news;
 import com.epam.news.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -27,6 +28,15 @@ public class Comment {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    public Comment(String content, News news, User user) {
+        this.content = content;
+        this.news = news;
+        this.user = user;
+    }
+
+    public Comment() {
+    }
 
     public Long getId() {
         return id;
