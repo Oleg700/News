@@ -5,7 +5,7 @@ import com.epam.news.model.user.User;
 import com.epam.news.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/users/{username}/roles")
     public ResponseEntity<Collection<Role>> getRoleByUsername(@PathVariable("username") String username) {
         Collection<Role> roles = userService.getRoleByUsername(username);
@@ -30,7 +30,7 @@ public class UserController {
 
 
 
-    @PostAuthorize("hasAuthority('PRIVILEGE_READ_USER')")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_USER')")
     @GetMapping(value = "/users")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> newsList = userService.getAll();
@@ -38,7 +38,7 @@ public class UserController {
     }
 
 
-    @PostAuthorize("hasAuthority('PRIVILEGE_WRITE_USER')")
+    @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_USER')")
     @PostMapping(value = "/users")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         User userAdded = userService.add(user);

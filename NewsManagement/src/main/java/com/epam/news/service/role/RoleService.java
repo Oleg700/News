@@ -4,8 +4,6 @@ import com.epam.news.model.user.Role;
 
 import java.util.Collection;
 
-import java.util.Collection;
-
 public interface RoleService {
 
     Collection<Role> getAll();

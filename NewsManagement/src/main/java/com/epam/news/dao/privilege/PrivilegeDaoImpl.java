@@ -13,7 +13,8 @@ public class PrivilegeDaoImpl implements PrivilegeDao {
 
     @Override
     public Collection<Privilege> getAll() {
-        return entityManager.createQuery("from Privileges").getResultList();
+        return entityManager.createQuery("from Privileges")
+                .getResultList();
     }
 
     @Override

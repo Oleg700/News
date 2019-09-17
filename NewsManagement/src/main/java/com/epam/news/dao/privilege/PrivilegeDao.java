@@ -4,8 +4,6 @@ import com.epam.news.model.user.Privilege;
 
 import java.util.Collection;
 
-import java.util.Collection;
-
 
 public interface PrivilegeDao {
 

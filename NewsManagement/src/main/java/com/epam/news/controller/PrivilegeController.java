@@ -4,7 +4,7 @@ import com.epam.news.model.user.Privilege;
 import com.epam.news.service.privilege.PrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -20,7 +20,7 @@ public class PrivilegeController {
     private PrivilegeService privilegeService;
 
 
-    @PostAuthorize("hasAuthority('PRIVILEGE_READ_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_PRIVILEGE')")
     @GetMapping(value = "/privileges")
     public ResponseEntity<List<Privilege>> getAllPrivileges() {
         List<Privilege> listPrivileges = (List<Privilege>) privilegeService.getAll();
@@ -28,7 +28,7 @@ public class PrivilegeController {
     }
 
 
-    @PostAuthorize("hasAuthority('PRIVILEGE_WRITE_PRIVILEGE')")
+    @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_PRIVILEGE')")
     @PostMapping(value = "/privileges")
     public ResponseEntity<Privilege> addPrivilege(@RequestBody Privilege privilege) {
         Privilege savedPrivilege = privilegeService.add(privilege);
