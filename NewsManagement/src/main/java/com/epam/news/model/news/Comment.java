@@ -3,7 +3,6 @@ package com.epam.news.model.news;
 import com.epam.news.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 

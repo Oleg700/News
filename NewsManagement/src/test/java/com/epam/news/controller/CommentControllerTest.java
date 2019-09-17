@@ -22,6 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = AppConfig.class)
 class CommentControllerTest {
 
+    private final static long NEWS_ID = 1;
+    private final static String USER_NAME = "admin";
+
     @Autowired
     CommentService commentService;
 
@@ -34,8 +37,8 @@ class CommentControllerTest {
 
     @Test
     void addComment() {
-        News news = newsService.get(1);
-        User user = userService.getByName("user");
+        News news = newsService.get(NEWS_ID);
+        User user = userService.getByName("admin");
         Comment comment = new Comment("user Comment", news, user);
         CommentRequest commentRequest = new CommentRequest(comment, user.getUsername());
         Comment commentResult = commentService.add(commentRequest);

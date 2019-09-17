@@ -5,7 +5,6 @@ import com.epam.news.model.news.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.List;
 
 
@@ -26,7 +25,6 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    @Transactional
     public News get(long id) {
         return (News) newsDao.get(id);
     }
