@@ -15,11 +15,15 @@ export class HeaderComponent implements OnInit {
   constructor(private _newsService: NewsService, private _router: Router) { }
 
   ngOnInit() {
-    this.user = this._newsService.getUser();
+     this._newsService.getUserObservable().subscribe(user=>this.user =user);
   }
 
   navigateToLogin(){
     this._router.navigate(["login"]);
+  }
+
+  navigateToRegister(){
+    this._router.navigate(["register"]);
   }
 
   logout(){

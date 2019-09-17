@@ -39,7 +39,15 @@
                 <div class="col-2"></div>
             </div>
         </div>
+
+
+        <div class="col-10 news-date"  *ngFor="let comment of comments">
+            <p>{{comment.content}}</p>
+        </div>
+
+
     </div>
+    <app-comment></app-comment>
 </body>
 
 </html>

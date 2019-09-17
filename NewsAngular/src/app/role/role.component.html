@@ -1,0 +1,30 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Merriweather|Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <app-header></app-header>
+    <div class="col">
+            <button class="btn btn-primary" (click)="navigateToAddRole()">Add ROLE</button>
+        </div>
+    <div  *ngFor="let role of listRoles ">
+            <div class="container">
+                <div class="row news-wrapper">
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="col-10 news-brief">
+                                <h6>{{role.id}} {{role.name}}</h6>
+                                <div *ngFor="let privilege of role.privileges">
+                                    <p>{{privilege.name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

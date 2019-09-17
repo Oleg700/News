@@ -16,3 +16,20 @@ BEGIN
  	FROM dual;
 END;
 /
+
+
+
+
+CREATE TABLE comments(id number not null,
+content varchar2(100 char) not null,
+news_id number not null,
+CONSTRAINT fk_comment_news FOREIGN KEY (news_id) REFERENCES news (id));
+
+CREATE SEQUENCE comment_seq START WITH 1 CACHE 2;
+
+
+user $2a$10$mJ48Zze.mCtuZ3d0e.GF7uA1WG00XaCVKKU4GPrfC5fLUumYj6JdK
+oleg $2a$10$y7EE6QxalUkGF.iIVzUpIuEdorpeU/rZ5X8H7HvzODJVV30QbkmzC
+admin $2a$10$pVd7N2aKGoFzdfGC0XwGJO9QB.kjGHmpH7oIpMADTKZAXWYUhMeja
+
+
