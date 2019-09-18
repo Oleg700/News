@@ -138,9 +138,11 @@ export class NewsService {
         const commentRequest: CommentRequest = new CommentRequest;
         commentRequest.comment = comment;
         commentRequest.username = user.username;
-
         return this._http.post("http://localhost:8899/api/comments", commentRequest, this.getHeaders());
     }
 
+    getCommentsByNewsId(newsId,page){
+        return this._http.get("http://localhost:8899/api/news"+newsId+"/comments/"+page, this.getHeaders());
+    }
    
 }

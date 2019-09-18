@@ -8,6 +8,7 @@ import com.epam.news.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 
 public class CommentServiceImpl implements CommentService {
 
@@ -30,5 +31,10 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRequest.getComment();
         comment.setUser(user);
         return commentDao.add(comment);
+    }
+
+    @Override
+    public Collection<Comment> getCommentsByNewsId(long id, int page) {
+        return commentDao.getCommentsByNewsId(id,page);
     }
 }

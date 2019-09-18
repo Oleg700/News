@@ -15,16 +15,12 @@ export class CommentComponent implements OnInit {
   news: News;
 
   constructor(private _newsService: NewsService , private _route: ActivatedRoute) {
-    this.news = new News();
     this.comment = new Comment();
-    this.comment.news = this.news;
    }
 
   ngOnInit() {
-    
     let id = parseInt(this._route.snapshot.paramMap.get('id'));
     this.getNewsById(id);
-   
   }
 
   getNewsById(newsId: number){
@@ -41,6 +37,4 @@ export class CommentComponent implements OnInit {
     {console.log(response);
       });
     }
-
-   
 }

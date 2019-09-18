@@ -4,7 +4,6 @@ import com.epam.news.model.user.Role;
 import com.epam.news.service.role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -30,7 +29,7 @@ public class RoleController {
     }
 
 
-    @PostAuthorize("hasAuthority('PRIVILEGE_WRITE_ROLE')")
+    @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_ROLE')")
     @PostMapping(value = "/roles")
     public ResponseEntity<Role> addRole(@RequestBody Role role) {
         Role role1 = roleService.add(role);
