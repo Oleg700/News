@@ -16,7 +16,7 @@ public class News {
     @SequenceGenerator(name = "news_seq", sequenceName = "news_seq", allocationSize = 1)
     private long id;
 
-    @OneToMany(mappedBy = "news", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "news", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private Set<Comment> comments;
 
     @Column
