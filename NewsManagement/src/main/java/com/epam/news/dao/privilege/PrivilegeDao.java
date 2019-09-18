@@ -9,8 +9,6 @@ public interface PrivilegeDao {
 
     Collection<Privilege> getAll();
 
-    Privilege getByName(String name);
-
     Privilege add(Privilege privilege);
 
 

@@ -135,10 +135,7 @@ export class NewsService {
 
     addComment(comment: Comment) {
         const user =this.getUser();
-        const commentRequest: CommentRequest = new CommentRequest;
-        commentRequest.comment = comment;
-        commentRequest.username = user.username;
-        return this._http.post("http://localhost:8899/api/comments", commentRequest, this.getHeaders());
+        return this._http.post("http://localhost:8899/api/comments/"+user.username, comment, this.getHeaders());
     }
 
     getCommentsByNewsId(newsId,page){

@@ -13,14 +13,11 @@ public class PrivilegeDaoImpl implements PrivilegeDao {
 
     @Override
     public Collection<Privilege> getAll() {
-        return entityManager.createQuery("from Privileges")
+        return entityManager.createNamedQuery("getAllPrivileges", Privilege.class)
                 .getResultList();
     }
 
-    @Override
-    public Privilege getByName(String name) {
-        return (Privilege) entityManager.createQuery("select p from Privileges p where p.name = :name").setParameter("name", name).getSingleResult();
-    }
+
 
     @Override
     public Privilege add(Privilege privilege) {

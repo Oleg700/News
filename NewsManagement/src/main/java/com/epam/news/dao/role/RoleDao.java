@@ -8,8 +8,6 @@ public interface RoleDao {
 
     Collection<Role> getAll();
 
-    Role getByName(String name);
-
     Role add(Role role);
 
 

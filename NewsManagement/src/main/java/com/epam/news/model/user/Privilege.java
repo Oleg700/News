@@ -6,6 +6,12 @@ import javax.persistence.*;
 
 @Table
 @Entity(name = "Privileges")
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllPrivileges",
+                query = "from Privileges"
+        )
+})
 public class Privilege implements GrantedAuthority {
 
     @Id

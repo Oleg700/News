@@ -7,6 +7,36 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Table
+/*@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "getAllNews",
+
+                select * from news full join ( select * from Comments where news_id = News.id ) on Comments.news_id = news.id;
+                *//*query = "select new News(n.id, n.title, n.date, n.brief ) from News n"*//*
+                query = "select * from News n " +
+                        "join (select * from Comments c where rownum < 3) ON c.news_id = n.id"
+                *//*query = "select n from News n  left join n.comments c "*//*
+        )*//*,
+        @NamedQuery(
+                name = "getNewsWithTwoRecentComments",
+                query = "select n from News n  join n.comments c "
+
+        )*//*
+})*/
+
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllNews",
+               /* query = "select new News(n.id, n.title, n.date, n.brief ) from News n"
+                query = "select n from News n join n.comments c where rownum < 3  "*/
+                query = "select n from News n  join fetch n.comments c "
+        ),
+        /*@NamedQuery(
+                name = "getNewsWithTwoRecentComments",
+                query = "select n from News n  join n.comments c "
+
+        )*/
+})
 @Entity(name = "News")
 public class News {
 
@@ -16,7 +46,7 @@ public class News {
     @SequenceGenerator(name = "news_seq", sequenceName = "news_seq", allocationSize = 1)
     private long id;
 
-    @OneToMany(mappedBy = "news", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "news", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private Set<Comment> comments;
 
     @Column
@@ -77,7 +107,6 @@ public class News {
     }
 
     private void setTime() {
-
     }
 
     public Set<Comment> getComments() {

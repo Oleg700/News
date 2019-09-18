@@ -7,6 +7,12 @@ import java.util.Collection;
 
 @Entity(name = "Roles")
 @Table
+@NamedQueries(
+        @NamedQuery(
+                name = "getAllRoles",
+                query = "from Roles"
+        )
+)
 public class Role implements GrantedAuthority {
 
     @Id

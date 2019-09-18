@@ -17,8 +17,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*@RunWith(SpringJUnit4ClassRunner.class)
-@SpringJUnitWebConfig(classes = {AppConfig.class, NewsWebAppInitializer.class, WebConfig.class})*/
 
 
 @ExtendWith(SpringExtension.class)

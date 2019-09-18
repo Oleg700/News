@@ -32,6 +32,11 @@ public class NewsController {
         return ResponseEntity.ok().body(news);
     }
 
+    @GetMapping(value = "/news/comment/{id}")
+    public ResponseEntity<News> getNewsWithTwoRecentComments(@PathVariable("id") long id) {
+        News news = newsService.getNewsWithTwoRecentComments(id);
+        return ResponseEntity.ok().body(news);
+    }
 
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_NEWS')")
     @PostMapping(value = "/news")

@@ -15,15 +15,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAll() {
-        List<User> newsList = entityManager.createQuery("from Users").getResultList();
+        List<User> newsList = entityManager.createNamedQuery("getAllUsers", User.class).getResultList();
         return newsList;
     }
 
     @Override
     public User getByName(String name) {
-        User user = (User) entityManager.createQuery("select c from Users c where c.username = :name").setParameter("name", name).getSingleResult();
-        System.out.println("myuser = " + user);
-
+        User user = (User) entityManager.createNamedQuery("getUserByName", User.class).setParameter("name", name).getSingleResult();
         return (User) user;
 
     }

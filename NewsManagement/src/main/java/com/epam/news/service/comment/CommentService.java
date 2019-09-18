@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface CommentService {
 
-    Comment add(CommentRequest commentRequest);
+    Comment add(Comment comment, String username);
 
     Collection<Comment> getCommentsByNewsId(long id, int page);
 }

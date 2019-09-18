@@ -29,6 +29,11 @@ public class NewsServiceImpl implements NewsService {
         return (News) newsDao.get(id);
     }
 
+    @Override
+    public News getNewsWithTwoRecentComments(long id) {
+        return newsDao.getNewsWithTwoRecentComments(id);
+    }
+
 
     @Override
     @Transactional

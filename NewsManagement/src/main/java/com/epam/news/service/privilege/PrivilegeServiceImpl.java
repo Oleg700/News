@@ -22,10 +22,6 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return privilegeDao.getAll();
     }
 
-    @Override
-    public Privilege getByName(String name) {
-        return privilegeDao.getByName(name);
-    }
 
     @Override
     @Transactional

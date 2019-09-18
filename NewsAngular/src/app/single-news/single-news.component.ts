@@ -25,6 +25,8 @@ export class SingleNewsComponent implements OnInit {
   getNewsById(newsId: number){
     this._newsService.getNewsById(newsId)
     .subscribe((newsData) =>
+    {this.news = newsData,
+      this.comments = this.news.comments},
     // {this.setPropertiesToNews(newsData)},
     (error) =>{console.log(error);})
 }
@@ -36,10 +38,10 @@ private setPropertiesToNews(newsData){
   this.news.content = newsData.content;
 }
 
-getCommentsByNewsId(){
-  this._newsService.getCommentsByNewsId(this.news.id, 2)
-  .subscribe((newsData) =>
-    {this.comments = newsData}, 
-    (error) =>{console.log(error);})
-}
+// getCommentsByNewsId(){
+//   this._newsService.getCommentsByNewsId(this.news.id, 2)
+//   .subscribe((newsData) =>
+//     {this.comments = newsData}, 
+//     (error) =>{console.log(error);})
+// }
 }

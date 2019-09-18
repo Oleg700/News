@@ -5,8 +5,18 @@ import java.util.Collection;
 
 @Entity(name = "Users")
 @Table
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllUsers",
+                query = "from Users"
+        ),
+        @NamedQuery(
+                name = "getUserByName",
+                query = "select c from Users c where c.username = :name"
+        )
+}
+)
 public class User {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")

@@ -25,10 +25,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public Comment add(CommentRequest commentRequest) {
-        String username = commentRequest.getUsername();
+    public Comment add(Comment comment, String username) {
         User user = userService.getByName(username);
-        Comment comment = commentRequest.getComment();
         comment.setUser(user);
         return commentDao.add(comment);
     }
