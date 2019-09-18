@@ -4,39 +4,43 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Set;
 
 @Table
 /*@NamedNativeQueries({
         @NamedNativeQuery(
                 name = "getAllNews",
-
+                *//*query = "select n from News n  "
                 select * from news full join ( select * from Comments where news_id = News.id ) on Comments.news_id = news.id;
-                *//*query = "select new News(n.id, n.title, n.date, n.brief ) from News n"*//*
-                query = "select * from News n " +
-                        "join (select * from Comments c where rownum < 3) ON c.news_id = n.id"
-                *//*query = "select n from News n  left join n.comments c "*//*
-        )*//*,
-        @NamedQuery(
-                name = "getNewsWithTwoRecentComments",
-                query = "select n from News n  join n.comments c "
 
-        )*//*
+                query = "select * from News n " +
+                        "join (select * from Comments c where rownum < 3) ON c.news_id = n.id"*//*
+                query = "select * from News n left join fetch  Comments c ON n.id=c.news_id "
+        )
+
 })*/
 
 @NamedQueries({
         @NamedQuery(
                 name = "getAllNews",
                /* query = "select new News(n.id, n.title, n.date, n.brief ) from News n"
-                query = "select n from News n join n.comments c where rownum < 3  "*/
-                query = "select n from News n  join fetch n.comments c "
-        ),
-        /*@NamedQuery(
+                query = "select n from News n join n.comments c where rownum < 3  "
+                query = "select n from News n  "*/
+                /*query = "select n from News n  join fetch n.comments c "*/
+                query = "select n from News n join fetch n.comments c where c.id = (SELECT MAX(c.id) from Comments c) "
+
+        )
+,
+  /*      @NamedQuery(
                 name = "getNewsWithTwoRecentComments",
                 query = "select n from News n  join n.comments c "
 
-        )*/
+        )
+*/
+
 })
+
 @Entity(name = "News")
 public class News {
 

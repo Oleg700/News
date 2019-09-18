@@ -17,7 +17,8 @@ public class NewsDaoImpl implements NewsDao {
 
     @Override
     public List<News> getAll() {
-        return entityManager.createNamedQuery("getAllNews", News.class).getResultList();
+        return entityManager.createNamedQuery("getAllNews").getResultList();
+        /*return entityManager.createNamedQuery("getAllNews", News.class).getResultList();*/
     }
 
     @Override
