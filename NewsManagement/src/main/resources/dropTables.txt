@@ -1,0 +1,20 @@
+drop table users_roles;
+
+drop table roles_privileges;
+
+drop table users;
+
+drop table roles;
+
+drop table privileges;
+
+drop sequence user_seq;
+
+drop sequence role_seq;
+
+drop sequence privilege_seq;
+
+
+drop table news;
+
+drop sequence news _seq;

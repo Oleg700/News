@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Merriweather|Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+        <app-header></app-header>
+        <form [formGroup]="myForm" novalidate>
+                <div class="form-group">
+                    <label>Enter Title</label>
+                    <input type="text" [(ngModel)]="news.title" class="form-control" [ngClass]="{
+                                'is-valid': title.valid && (title.dirty || title.touched) ,   
+                                'is-invalid': title.invalid && (title.dirty || title.touched)    
+                               }" formControlName="title">
+                    <div class="form-control-feedback"
+                        *ngIf="title.invalid && (title.dirty || title.touched)">
+                        <p>Title lenght must be more, than 100 symbols</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Enter Brief</label>
+                    <input type="brief" [(ngModel)]="news.brief" class="form-control" [ngClass]="{
+                                'is-valid': brief.valid && (brief.dirty || brief.touched) ,   
+                                'is-invalid': brief.invalid && (brief.dirty || brief.touched)    
+                               }" formControlName="brief">
+                    <div class="form-control-feedback"
+                        *ngIf="brief.invalid &&  brief.touched">
+                        <p>Brief lenght must be more, than 500 symbols</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label>Enter Content</label>
+                        <input type="content" [(ngModel)]="news.content" class="form-control" [ngClass]="{
+                                    'is-valid': content.valid && (content.dirty || content.touched) ,   
+                                    'is-invalid': content.invalid && (content.dirty || content.touched)    
+                                   }" formControlName="content">
+                        <div class="form-control-feedback"
+                        *ngIf="content.invalid && content.touched">
+                        <p>Brief lenght must be more, than 2048 symbols</p>
+                        </div>
+                    </div>
+            </form>
+            <button (click)="addNews(news)" class="btn btn-primary">Add News</button>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Merriweather|Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <app-header></app-header>
+    <div class="row">
+        <div class="col">
+            <form>
+                Enter Title: <input type="text" class="form-control" [(ngModel)]="news.title" name="title" /><br />
+                Enter Brief: <input type="text" class="form-control" [(ngModel)]="news.brief" name="brief" /><br />
+                Enter Content: <input type="text" class="form-control" [(ngModel)]="news.content"
+                    name="content" /><br />
+                <button (click)="updateNews(news)" class="btn btn-primary">Update News</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

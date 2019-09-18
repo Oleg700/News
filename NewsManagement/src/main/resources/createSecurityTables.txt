@@ -1,0 +1,52 @@
+create table users(id NUMBER NOT NULL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password varchar(60) not null,
+    enabled NUMBER(1) DEFAULT 1 NOT NULL);
+
+CREATE SEQUENCE user_seq START WITH 1 CACHE 2;
+
+*************************************
+
+create table roles(
+    id NUMBER NOT NUll primary key,
+    name VARCHAR2(100 char) NOT NUll);
+
+   CREATE SEQUENCE role_seq START WITH 1 CACHE 2;
+
+*************************************
+
+create table privileges(
+    id NUMBER NOT NUll primary key,
+    name VARCHAR2(100 char) NOT NUll);
+
+   CREATE SEQUENCE privilege_seq START WITH 1 CACHE 2;
+
+*************************************
+
+CREATE TABLE users_roles(
+user_id number(20) not null,
+role_id number(20) not null,
+PRIMARY KEY(user_id, role_id),
+CONSTRAINT FK_USERS FOREIGN KEY (user_id) REFERENCES users(id),
+CONSTRAINT FK_ROLES FOREIGN KEY (role_id) REFERENCES roles(id));
+
+*************************************
+
+CREATE TABLE roles_privileges(
+role_id number(20) not null,
+privilege_id number(20) not null,
+PRIMARY KEY(role_id, privilege_id),
+CONSTRAINT FK_ROLE FOREIGN KEY (role_id) REFERENCES roles(id),
+CONSTRAINT FK_PRIVILEGES FOREIGN KEY (privilege_id) REFERENCES privileges(id));
+
+**************************************
+
+CREATE TABLE comments(
+id NUMBER NOT NUll primary key,
+content VARCHAR2(100 char) NOT NUll,
+news_id NUMBER NOT NUll,
+user_id NUMBER NOT NUll,
+CONSTRAINT comment_news_cstr FOREIGN KEY (news_id) REFERENCES news (id),
+CONSTRAINT comment_user_cstr FOREIGN KEY (user_id) REFERENCES users (id));
+
+CREATE SEQUENCE comment_seq START WITH 1 CACHE 2;

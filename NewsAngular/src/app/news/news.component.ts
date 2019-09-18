@@ -11,9 +11,11 @@ import {Router, ActivatedRoute} from '@angular/router'
 })
 export class NewsComponent implements OnInit{
 
-listNews: News[];  
-news = new News();
-constructor(private _newsService: NewsService, private _router: Router, private _route: ActivatedRoute){}
+private listNews: News[];  
+private news: News;
+constructor(private _newsService: NewsService, private _router: Router, private _route: ActivatedRoute){
+    this.news = new News();
+}
 
 ngOnInit(): void{
     this.getNews();

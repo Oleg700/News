@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Merriweather|Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+        <app-header></app-header>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                
+                    <form [formGroup]="myForm" novalidate>
+                            <div class="form-group">
+                                <label>Enter Username</label>
+                                <input type="text" [(ngModel)]="user.username" class="form-control" [ngClass]="{
+                                            'is-valid': username.valid && (username.dirty || username.touched) ,   
+                                            'is-invalid': username.invalid && (username.dirty || username.touched)    
+                                           }" formControlName="username">
+                                <div class="form-control-feedback"
+                                    *ngIf="username.invalid && (username.dirty || username.touched)">
+                                    <p>Name lenght must be between 4 and 8 symbols</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Enter Password</label>
+                                <input type="password" [(ngModel)]="user.password" class="form-control" [ngClass]="{
+                                            'is-valid': password.valid && (password.dirty || password.touched) ,   
+                                            'is-invalid': password.invalid && (password.dirty || password.touched)    
+                                           }" formControlName="password">
+                                <div class="form-control-feedback"
+                                    *ngIf="password.invalid && (password.dirty || password.touched)    ">
+                                    <p>Password lenght must be between 4 and 8 symbols</p>
+                                </div>
+                            </div>
+                        </form>
+                    <button type="button" (click)="login(user)" class="btn btn-primary">Login</button>
+                
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

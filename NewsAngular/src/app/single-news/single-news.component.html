@@ -8,26 +8,7 @@
 </head>
 
 <body>
-    <div class="row">
-        <div class="col">
-            <div class="text-center">
-                <div class="language">
-                    <div class="well inline-headers">
-                        <h2>Russian</h2>
-                        <h2>English</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="text-center">
-                <h1>BreakingNews 24</h1>
-            </div>
-        </div>
-    </div>
-
+    <app-header></app-header>
     <div class="container container-news">
         <div class="row">
             <div class="col-2"></div>
@@ -58,7 +39,15 @@
                 <div class="col-2"></div>
             </div>
         </div>
+
+
+        <div class="col-10 news-date"  *ngFor="let comment of comments">
+            <p>{{comment.content}}</p>
+        </div>
+
+
     </div>
+    <app-comment></app-comment>
 </body>
 
 </html>

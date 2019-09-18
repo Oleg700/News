@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Arvo|Merriweather|Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <app-header></app-header>
+    <div class="container">
+        <div class="row news-wrapper">
+            <div class="col-10">
+                <p>Role name</p>
+                <input type="text" class="formControl" [(ngModel)]="role.name">
+
+            </div>
+        </div>
+
+        <div *ngFor="let privilege of listPrivileges">
+            <div class="col-10">
+                <input type="checkbox" class="checks" (change)="selectionChange($event.srcElement, dataItem)"
+                    value={{privilege.name}}> {{privilege.name}}<Br>
+            </div>
+        </div>
+        <div class="col-10">
+            <button type="button" class="btn btn-primary" (click)="addRole(role)">ADD ROLE</button>
+        </div>
+    </div>
+
+  
+
+
+
+</body>
+
+</html>

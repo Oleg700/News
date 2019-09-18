@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col">
+        <div class="language inline-headers text-center">
+            <h2>Russian</h2>
+            <h2>English</h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <div class="text-center">
+            <h1>BreakingNews 24</h1>
+        </div>
+    </div>
+    <div class="col-4 text-right login">
+        <div *ngIf="user.enable else elseBlock">
+            <div>Welcome {{user.username}}</div>
+            <button class="btn btn-primary" (click)="logout()">Logout</button>
+        </div>
+        <ng-template #elseBlock>
+            <button class="btn btn-primary login-button" (click)="navigateToLogin()">Login</button>
+            <button class="btn btn-primary" (click)="navigateToRegister()">Register</button>
+        </ng-template>
+    </div>
+</div>

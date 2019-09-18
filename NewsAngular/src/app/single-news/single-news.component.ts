@@ -11,6 +11,8 @@ import { NewsService } from '../news/news.service';
 export class SingleNewsComponent implements OnInit {
 
   private news: News;
+
+  private comments;
   
   constructor(private _newsService: NewsService , private _route: ActivatedRoute) { }
 
@@ -23,7 +25,21 @@ export class SingleNewsComponent implements OnInit {
   getNewsById(newsId: number){
     this._newsService.getNewsById(newsId)
     .subscribe((newsData) =>
-    {this.news = newsData}, 
+    // {this.setPropertiesToNews(newsData)},
+    (error) =>{console.log(error);})
+}
+
+private setPropertiesToNews(newsData){
+  this.news.title = newsData.title;
+  this.news.brief = newsData.brief;
+  this.news.date = newsData.date;
+  this.news.content = newsData.content;
+}
+
+getCommentsByNewsId(){
+  this._newsService.getCommentsByNewsId(this.news.id, 2)
+  .subscribe((newsData) =>
+    {this.comments = newsData}, 
     (error) =>{console.log(error);})
 }
 }
