@@ -92,7 +92,7 @@ public class AppConfig {
 
     @Bean
     public NewsService newsService() {
-        return new NewsServiceImpl(newsDao());
+        return new NewsServiceImpl(newsDao(),commentDao());
     }
 
     @Bean

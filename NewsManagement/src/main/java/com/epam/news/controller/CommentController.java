@@ -1,15 +1,12 @@
 package com.epam.news.controller;
 
 import com.epam.news.model.news.Comment;
-import com.epam.news.model.news.CommentRequest;
 import com.epam.news.service.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import java.util.Collection;
 
 @CrossOrigin("*")
 @RestController
@@ -27,9 +24,5 @@ public class CommentController {
         return ResponseEntity.ok().body(savedComment);
     }
 
-    @GetMapping(value = "/news/{id}/comments/{page}")
-    public ResponseEntity<Collection<Comment>> getCommentsByNewsId(@PathVariable("id") long id, @PathVariable("page") int page ) {
-        Collection<Comment>  commentCollection= commentService.getCommentsByNewsId(id, page);
-        return ResponseEntity.ok().body(commentCollection);
-    }
+
 }

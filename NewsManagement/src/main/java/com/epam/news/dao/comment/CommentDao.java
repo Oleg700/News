@@ -9,4 +9,6 @@ public interface CommentDao {
     Comment add(Comment comment);
 
     Collection<Comment> getCommentsByNewsId(long id, int page);
+
+
 }

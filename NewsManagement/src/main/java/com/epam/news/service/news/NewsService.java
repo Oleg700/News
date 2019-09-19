@@ -10,7 +10,7 @@ public interface NewsService {
 
     News get(long id);
 
-    News getNewsWithTwoRecentComments(long id);
+    News getNewsWithTwoRecentComments(long id, int page);
 
     News add(News news);
 

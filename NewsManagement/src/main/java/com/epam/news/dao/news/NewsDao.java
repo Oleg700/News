@@ -11,8 +11,6 @@ public interface NewsDao {
 
     News get(long id);
 
-    News getNewsWithTwoRecentComments(long id);
-
     News add(News news);
 
     News update(News news);

@@ -142,4 +142,9 @@ export class NewsService {
         return this._http.get("http://localhost:8899/api/news"+newsId+"/comments/"+page, this.getHeaders());
     }
    
+    getNewsWithTwoRecentComments(newsId, page): Observable<any> {
+        return this._http.get("http://localhost:8899/api/news/"+newsId+"/comments/"+page, this.getHeaders());
+    }
+
+
 }

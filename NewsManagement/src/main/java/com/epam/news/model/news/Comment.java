@@ -8,6 +8,12 @@ import javax.persistence.*;
 
 @Table
 @Entity(name = "Comments")
+@NamedQueries({
+        @NamedQuery(
+                name = "getCommentsByNewsId",
+                query = "select c from Comments c where news_id = :id ORDER BY c.id DESC"
+        )
+})
 public class Comment {
 
     @Id
@@ -71,5 +77,14 @@ public class Comment {
     @JsonProperty
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", news=" + news +
+                '}';
     }
 }

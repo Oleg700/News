@@ -13,35 +13,41 @@ export class SingleNewsComponent implements OnInit {
   private news: News;
 
   private comments;
+
+  private page;
   
   constructor(private _newsService: NewsService , private _route: ActivatedRoute) { }
 
   ngOnInit() {
     let id = parseInt(this._route.snapshot.paramMap.get('id'));
-    this.getNewsById(id);
+     this.page = 2;
+    this.getNewsWithTwoRecentComments(id, this.page);
     this.news = new News();
   }
 
-  getNewsById(newsId: number){
-    this._newsService.getNewsById(newsId)
-    .subscribe((newsData) =>
-    {this.news = newsData,
-      this.comments = this.news.comments},
-    // {this.setPropertiesToNews(newsData)},
-    (error) =>{console.log(error);})
-}
+  
 
-private setPropertiesToNews(newsData){
-  this.news.title = newsData.title;
-  this.news.brief = newsData.brief;
-  this.news.date = newsData.date;
-  this.news.content = newsData.content;
-}
-
-// getCommentsByNewsId(){
-//   this._newsService.getCommentsByNewsId(this.news.id, 2)
-//   .subscribe((newsData) =>
-//     {this.comments = newsData}, 
+//   getNewsById(newsId: number){
+//     this._newsService.getNewsById(newsId)
+//     .subscribe((newsData) =>
+//     {this.news = newsData,
+//       this.comments = this.news.comments},
+  
 //     (error) =>{console.log(error);})
 // }
+
+getNewsWithTwoRecentComments(newsId: number, page: number){
+  this._newsService.getNewsWithTwoRecentComments(newsId, page)
+  .subscribe((newsData) =>
+  {this.news = newsData,
+    this.comments = this.news.comments},
+  (error) =>{console.log(error);})
+}
+
+increasePageByTwo(){
+  this.page = this.page * 2;
+  console.log(this.page)
+  this.getNewsWithTwoRecentComments(this.news.id ,this.page)
+}
+
 }

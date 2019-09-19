@@ -22,6 +22,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class NewsControllerTest {
 
     private static final Logger LOGGER = Logger.getLogger(NewsControllerTest.class.getName());
+    private static final String NEWS_TITLE = "title_test";
+    private static final String NEWS_BRIEF = "brief_test";
+    private static final String NEWS_CONTENT = "content_test";
+    private static final int NEWS_ID = 11;
+    private static final int NEWS_ID_DELETE = 13;
 
     @Autowired
     NewsService newsService;
@@ -34,18 +39,38 @@ class NewsControllerTest {
     }
 
     @Test
+    void getNewsWithTwoRecentComments(){
+        News news = newsService.getNewsWithTwoRecentComments(11, 8);
+        System.out.println(news.getComments());
+        assertNotNull(news);
+    }
+
+    @Test
     void getNewsById() {
+        News news = newsService.get(NEWS_ID);
+        assertNotNull(news);
     }
 
     @Test
     void addNews() {
+        News news = new News(NEWS_TITLE, NEWS_BRIEF, NEWS_CONTENT);
+        News newsResult = newsService.add(news);
+        assertNotNull(newsResult);
     }
 
     @Test
     void updateNews() {
+        News news = newsService.get(NEWS_ID);
+        news.setTitle("Longon");
+        News newsResult = newsService.update(news);
+        assertNotNull(newsResult);
     }
 
     @Test
     void deleteNews() {
+        newsService.delete(NEWS_ID_DELETE);
+        News news = newsService.get(NEWS_ID_DELETE);
+        assertNull(news);
+
     }
 }

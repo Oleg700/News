@@ -17,8 +17,8 @@ public class NewsDaoImpl implements NewsDao {
 
     @Override
     public List<News> getAll() {
-        return entityManager.createNamedQuery("getAllNews").getResultList();
-        /*return entityManager.createNamedQuery("getAllNews", News.class).getResultList();*/
+        return entityManager.createNamedQuery("getAllNews")
+                .getResultList();
     }
 
     @Override
@@ -27,10 +27,6 @@ public class NewsDaoImpl implements NewsDao {
     }
 
 
-    @Override
-    public News getNewsWithTwoRecentComments(long id) {
-        return entityManager.createNamedQuery("getNewsWithTwoRecentComments", News.class).getSingleResult();
-    }
 
     @Override
     public News add(News news) {

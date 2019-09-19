@@ -1,46 +1,20 @@
 package com.epam.news.model.news;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Set;
+import java.util.Collection;
 
 @Table
-/*@NamedNativeQueries({
-        @NamedNativeQuery(
-                name = "getAllNews",
-                *//*query = "select n from News n  "
-                select * from news full join ( select * from Comments where news_id = News.id ) on Comments.news_id = news.id;
-
-                query = "select * from News n " +
-                        "join (select * from Comments c where rownum < 3) ON c.news_id = n.id"*//*
-                query = "select * from News n left join fetch  Comments c ON n.id=c.news_id "
-        )
-
-})*/
-
 @NamedQueries({
         @NamedQuery(
                 name = "getAllNews",
-               /* query = "select new News(n.id, n.title, n.date, n.brief ) from News n"
-                query = "select n from News n join n.comments c where rownum < 3  "
-                query = "select n from News n  "*/
-                /*query = "select n from News n  join fetch n.comments c "*/
-                query = "select n from News n join fetch n.comments c where c.id = (SELECT MAX(c.id) from Comments c) "
-
-        )
-,
-  /*      @NamedQuery(
-                name = "getNewsWithTwoRecentComments",
-                query = "select n from News n  join n.comments c "
-
-        )
-*/
+                query = "select  n from News n"),
 
 })
-
 @Entity(name = "News")
 public class News {
 
@@ -51,7 +25,8 @@ public class News {
     private long id;
 
     @OneToMany(mappedBy = "news", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    private Set<Comment> comments;
+    @Fetch(FetchMode.JOIN)
+    private Collection<Comment> comments;
 
     @Column
     private String title;
@@ -113,11 +88,11 @@ public class News {
     private void setTime() {
     }
 
-    public Set<Comment> getComments() {
+    public Collection<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(Collection<Comment> comments) {
         this.comments = comments;
     }
 

@@ -27,14 +27,14 @@ public class NewsController {
     }
 
     @GetMapping(value = "/news/{id}")
-    public ResponseEntity<News> getNewsById(@PathVariable("id") long id) {
+    public  ResponseEntity<News> getNewsById(@PathVariable("id") long id) {
         News news = newsService.get(id);
         return ResponseEntity.ok().body(news);
     }
 
-    @GetMapping(value = "/news/comment/{id}")
-    public ResponseEntity<News> getNewsWithTwoRecentComments(@PathVariable("id") long id) {
-        News news = newsService.getNewsWithTwoRecentComments(id);
+    @GetMapping(value = "/news/{id}/comments/{page}")
+    public ResponseEntity<News> getNewsWithTwoRecentComments(@PathVariable("id") long id, @PathVariable("page") int page) {
+        News news = newsService.getNewsWithTwoRecentComments(id, page);
         return ResponseEntity.ok().body(news);
     }
 
