@@ -8,6 +8,8 @@ import java.util.Collection;
 
 public class CommentDaoImpl implements CommentDao {
 
+    private final static int NUMBER_COMMENTS = 2;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -19,7 +21,8 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     public Collection<Comment> getCommentsByNewsId(long id, int page) {
         return (Collection<Comment>) entityManager.createNamedQuery("getCommentsByNewsId", Comment.class)
-                .setMaxResults(page)
+                .setMaxResults(NUMBER_COMMENTS)
+                .setFirstResult(page)
                 .setParameter("id", id)
                 .getResultList();
     }

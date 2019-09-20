@@ -1,3 +1,6 @@
+
+import {Comment} from '../comment/comment';
+
 export class News{
     id: number;
     title: string;
