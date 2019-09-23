@@ -35,7 +35,8 @@ public class NewsController {
     }
 
     @GetMapping(value = "/news/{id}/comments/{page}")
-    public ResponseEntity<News> getNewsWithTwoRecentComments(@PathVariable("id") long id, @PathVariable("page") int page) {
+    public ResponseEntity<News> getNewsWithTwoRecentComments(@PathVariable("id") long id,
+                                                             @PathVariable("page") int page) {
         News news = newsService.getNewsWithTwoRecentComments(id, page);
         return ResponseEntity.ok().body(news);
     }

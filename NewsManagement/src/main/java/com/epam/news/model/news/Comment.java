@@ -82,9 +82,12 @@ public class Comment {
     @Override
     public String toString() {
         return "Comment{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", news=" + news +
+                "id="
+                + id
+                + ", content='"
+                + content
+                + '\''
+                + ", news=" + news +
                 '}';
     }
 }
