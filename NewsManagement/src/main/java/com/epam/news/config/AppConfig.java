@@ -31,6 +31,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 
@@ -44,6 +45,11 @@ public class AppConfig {
 
     @Autowired
     private Environment environment;
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() {

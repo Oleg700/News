@@ -13,7 +13,7 @@ public class CommentServiceImpl implements CommentService {
 
     private CommentDao commentDao;
 
-    @Autowired
+
     private UserService userService;
 
     @Autowired

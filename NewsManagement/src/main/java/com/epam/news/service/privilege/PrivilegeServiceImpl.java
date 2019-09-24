@@ -28,6 +28,4 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     public Privilege add(Privilege privilege) {
         return privilegeDao.add(privilege);
     }
-
-
 }
