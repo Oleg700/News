@@ -1,14 +1,35 @@
 package com.epam.news.model.user;
 
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.Collection;
 
+/**
+ * Class is used for Spring Security authorization.
+ *
+ * @author Oleg Aliyev
+ * @see UserPrincipal
+ * @see org.springframework.security.core.userdetails.UserDetails
+ */
 @Entity(name = "Users")
 @Table
 @NamedQueries({
         @NamedQuery(
                 name = "getAllUsers",
-                query = "from Users"
+                query = "select u from Users u"
         ),
         @NamedQuery(
                 name = "getUserByName",
@@ -18,20 +39,36 @@ import java.util.Collection;
 )
 public class User {
 
+    /**
+     * userId is generated with sequence in database.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
+    @SequenceGenerator(name = "user_seq",
+            sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
+    /**
+     * username.
+     */
     @Column(name = "username")
     private String username;
 
+    /**
+     * user password.
+     */
     @Column
     private String password;
 
+    /**
+     * enabled, checks current user status.
+     */
     @Column
     private boolean enabled;
 
+    /**
+     * list of roles.
+     */
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -44,13 +81,14 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, Collection<Role> roles) {
+    public User(final String username,
+                final String password, final Collection<Role> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
 
-    public User(String username, String password) {
+    public User(final String username, final String password) {
         this.username = username;
         this.password = password;
     }
@@ -59,7 +97,7 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 
@@ -67,7 +105,7 @@ public class User {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -75,7 +113,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -83,7 +121,7 @@ public class User {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -91,18 +129,25 @@ public class User {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(final Collection<Role> roles) {
         this.roles = roles;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", roles=" + roles +
-                '}';
+        return "User{"
+                + "id="
+                + id
+                + ", username='"
+                + username
+                + '\''
+                + ", password='"
+                + password
+                + '\''
+                + ", enabled="
+                + enabled
+                + ", roles="
+                + roles
+                + '}';
     }
 }

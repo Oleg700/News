@@ -11,24 +11,36 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+/**
+ * Custom implementation of {@link WebSecurityConfigurerAdapter}
+ * to set rules for Spring Security access.
+ *
+ * @author Oleg Aliyev
+ */
 @Configuration
 @EnableWebSecurity
 @ComponentScan("com.epam.news")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * class is used to get username and password from database.
+     */
     @Autowired
     private UserService userService;
 
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth)
+            throws Exception {
         auth.userDetailsService(new CustomUserService(userService));
     }
 
-    protected void configure(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(final HttpSecurity http) throws Exception {
         http
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/api/news/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/news/**").permitAll()
                 .and().httpBasic().and().csrf().disable();
     }
 }

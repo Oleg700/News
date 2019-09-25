@@ -4,12 +4,28 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
 
-
+/**
+ * Provides ORM for table News in database.
+ *
+ * @author Oleg Aliyev
+ */
 @Table
 @NamedQueries({
         @NamedQuery(
@@ -20,19 +36,33 @@ import java.util.Collection;
 @Entity(name = "News")
 public class News {
 
+    /**
+     * news id.
+     */
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "news_seq")
-    @SequenceGenerator(name = "news_seq", sequenceName = "news_seq", allocationSize = 1)
+    @SequenceGenerator(name = "news_seq",
+            sequenceName = "news_seq", allocationSize = 1)
     private long id;
 
-    @OneToMany(mappedBy = "news", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    /**
+     * list of comments of news.
+     */
+    @OneToMany(mappedBy = "news",
+            fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @Fetch(FetchMode.JOIN)
     private Collection<Comment> comments;
 
+    /**
+     * news title.
+     */
     @Column
     private String title;
 
+    /**
+     * news date.
+     */
     @Column(name = "date_creation")
     private LocalDateTime date;
 
@@ -43,43 +73,55 @@ public class News {
         }
     }
 
+    /**
+     * news brief.
+     */
     @Column
     private String brief;
 
+    /**
+     * news content.
+     */
     @Column
     private String content;
 
     public News() {
     }
 
-    public News(long id, String title, LocalDateTime date, String brief) {
+    public News(final long id, final String title,
+                final LocalDateTime date, final String brief) {
         this.id = id;
         this.title = title;
         this.date = date;
         this.brief = brief;
     }
 
-    public News(String title, LocalDateTime date, String brief, String content) {
+    public News(final String title, final LocalDateTime date,
+                final String brief, final String content) {
         this.title = title;
         this.date = date;
         this.brief = brief;
         this.content = content;
     }
 
-    public News(long id, String title, String brief, String content) {
+    public News(final long id, final
+    String title, final String brief, final String content) {
         this.id = id;
         this.title = title;
         this.brief = brief;
         this.content = content;
     }
 
-    public News(String title, String brief, String content) {
+    public News(final String title,
+                final String brief, final String content) {
         this.title = title;
         this.brief = brief;
         this.content = content;
     }
 
-    public News(long id, String title, LocalDateTime date, String brief, String content) {
+    public News(final long id, final String title,
+                final LocalDateTime date,
+                final String brief, final String content) {
         this.id = id;
         this.title = title;
         this.date = date;
@@ -94,7 +136,7 @@ public class News {
         return comments;
     }
 
-    public void setComments(Collection<Comment> comments) {
+    public void setComments(final Collection<Comment> comments) {
         this.comments = comments;
     }
 
@@ -102,7 +144,7 @@ public class News {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -110,7 +152,7 @@ public class News {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -119,7 +161,7 @@ public class News {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(final LocalDateTime date) {
         this.date = date;
     }
 
@@ -127,7 +169,7 @@ public class News {
         return brief;
     }
 
-    public void setBrief(String brief) {
+    public void setBrief(final String brief) {
         this.brief = brief;
     }
 
@@ -135,28 +177,42 @@ public class News {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(final String content) {
         this.content = content;
     }
 
     @Override
     public String toString() {
-        return "News{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", date='" + date + '\'' +
-                ", brief='" + brief + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+        return "News{"
+                + "id="
+                + id
+                + ", title='"
+                + title
+                + '\''
+                + ", date='"
+                + date
+                + '\''
+                + ", brief='"
+                + brief
+                + '\''
+                + ", content='"
+                + content
+                + '\''
+                + '}';
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         News news = (News) obj;
-        return id == news.id &&
-                title.equals(news.title) &&
-                date.equals(news.date) &&
-                brief.equals(news.brief) &&
-                content.equals(news.content);
+        return id == news.id
+                && title.equals(news.title)
+                && date.equals(news.date)
+                && brief.equals(news.brief)
+                && content.equals(news.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) getId();
     }
 }
