@@ -7,6 +7,7 @@ import com.epam.news.model.user.User;
 import com.epam.news.service.comment.CommentService;
 import com.epam.news.service.news.NewsService;
 import com.epam.news.service.user.UserService;
+import com.epam.news.util.DatabaseInitialization;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ class CommentControllerTest {
     @Autowired
     NewsService newsService;
 
+    @Autowired
+    DatabaseInitialization databaseInitialization;
+
 
     @Test
     void addComment() {
@@ -42,6 +46,27 @@ class CommentControllerTest {
         Comment comment = new Comment(COMMENT_CONTENT, news, user);
         Comment commentResult = commentService.add(comment, user.getUsername());
         assertNotNull(commentResult);
+    }
+
+
+    @Test
+    void addPrivileges(){
+        databaseInitialization.createPrivileges();
+    }
+
+    @Test
+    void addRoles(){
+        databaseInitialization.addRoles();
+    }
+
+    @Test
+    void printPrivileges(){
+        databaseInitialization.printPrivileges();
+    }
+
+    @Test
+    void deleteFromPrivileges(){
+        databaseInitialization.deleteFromPrivileges();
     }
 
 }

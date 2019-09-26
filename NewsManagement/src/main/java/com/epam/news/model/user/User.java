@@ -48,6 +48,8 @@ public class User {
             sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
+
+
     /**
      * username.
      */

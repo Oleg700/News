@@ -1,29 +1,39 @@
 package com.epam.news.controller;
 
 import com.epam.news.config.AppConfig;
-import com.epam.news.config.NewsWebAppInitializer;
-import com.epam.news.config.WebConfig;
 import com.epam.news.model.news.News;
 import com.epam.news.service.news.NewsService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.http.client.support.BasicAuthenticationInterceptor;
-import org.springframework.http.client.support.BasicAuthorizationInterceptor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@ExtendWith(SpringExtension.class)
 @WebAppConfiguration
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {AppConfig.class})
 class NewsControllerTest {
 
@@ -40,6 +50,39 @@ class NewsControllerTest {
     @Autowired
     RestTemplate restTemplate;
 
+
+    @Autowired
+    private WebApplicationContext context;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private FilterChainProxy springSecurityFilterChain;
+
+    private MockMvc mockMvc;
+
+    @BeforeEach
+    public void setup() throws Exception {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+                .addFilters(this.springSecurityFilterChain)
+                .build();
+    }
+
+    @Test
+    void getAllNewsWithPort() throws Exception {
+        MvcResult result = this.mockMvc
+                .perform(get("http://localhost:8899/api/news")).andReturn();
+        String newsString = result.getResponse().getContentAsString();
+        ArrayList listNewsResult = objectMapper.readValue(newsString, new TypeReference<List<News>>(){});
+        List<News> listNews = newsService.getAll();
+
+        assertThat(listNews, containsInAnyOrder(listNewsResult.toArray()));
+    }
+
+
+
+
     @Test
     void getAllNews() {
         ResponseEntity<News> responce =
@@ -48,9 +91,6 @@ class NewsControllerTest {
                 LOGGER.info("newsList: "+responce.getStatusCode());
             }
         LOGGER.info("error");
-        /*Collection<News> newsList = newsService.getAll();
-       LOGGER.info("newsList: "+newsList.toString());
-       assertFalse(newsList.isEmpty());*/
     }
 
     @Test
@@ -72,17 +112,40 @@ class NewsControllerTest {
         }
     }
 
+
+    public static String transformToJSON(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
     @Test
-    void addNews() {
+    void addNews() throws Exception {
         News news = new News(NEWS_TITLE, NEWS_BRIEF, NEWS_CONTENT);
-        String username = "admin";
+
+        MvcResult result = this.mockMvc
+                .perform(post("http://localhost:8899/api/news")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(transformToJSON(news))
+                      /*.header(HttpHeaders.AUTHORIZATION,
+                                "Basic " + Base64Utils.encodeToString("editor123:editor".getBytes()))*/
+
+
+                )
+                .andReturn();
+     /*   System.out.println(result.getResponse().getContentAsString());*/
+     /*   String username = "admin";
         String password = "admin";
         String url = "http://localhost:8899/api/news";
         HttpHeaders headers = new HttpHeaders();
-        /*headers.setContentType(MediaType.ALL);*/
-        headers.setBasicAuth(username, password);
+        *//*headers.setContentType(MediaType.ALL);*//*
+        headers.setBasicAuth(username, password);*/
 
-        HttpEntity<String> request = new HttpEntity<String>(headers);
+     /*   HttpEntity<String> request = new HttpEntity<String>(headers);
         ResponseEntity<News> response = restTemplate.exchange(url, HttpMethod.POST, request, News.class);
 
         if(response.getStatusCode() == HttpStatus.OK){
@@ -90,7 +153,7 @@ class NewsControllerTest {
             assertNotNull(newsResult);
         }else {
             LOGGER.info("error " + response.getStatusCode());
-        }
+        }*/
 
         /*ResponseEntity<News> response =
                 restTemplate
@@ -123,6 +186,5 @@ class NewsControllerTest {
         newsService.delete(NEWS_ID_DELETE);
         News news = newsService.get(NEWS_ID_DELETE);
         assertNull(news);
-
     }
 }

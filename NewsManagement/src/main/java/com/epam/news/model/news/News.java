@@ -1,6 +1,10 @@
 package com.epam.news.model.news;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -63,6 +67,8 @@ public class News {
     /**
      * news date.
      */
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @Column(name = "date_creation")
     private LocalDateTime date;
 
@@ -206,7 +212,6 @@ public class News {
         News news = (News) obj;
         return id == news.id
                 && title.equals(news.title)
-                && date.equals(news.date)
                 && brief.equals(news.brief)
                 && content.equals(news.content);
     }
@@ -215,4 +220,6 @@ public class News {
     public int hashCode() {
         return (int) getId();
     }
+
 }
+
