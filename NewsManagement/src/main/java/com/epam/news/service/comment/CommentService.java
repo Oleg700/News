@@ -1,13 +1,24 @@
 package com.epam.news.service.comment;
 
 import com.epam.news.model.news.Comment;
-import com.epam.news.model.news.CommentRequest;
 
-import java.util.Collection;
-
+/**
+ * Service for wrapping {@link com.epam.news.dao.comment.CommentDao}.
+ *
+ * <p>
+ * Implementation {@link CommentServiceImpl}.
+ * <p>
+ *
+ * @author Oleg Aliyev
+ */
 public interface CommentService {
 
-    Comment add(CommentRequest commentRequest);
+    /**
+     * @param comment  to save
+     * @param username of authorized user
+     * @return added comment
+     */
+    Comment add(Comment comment, String username);
 
-    Collection<Comment> getCommentsByNewsId(long id, int page);
+
 }

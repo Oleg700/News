@@ -133,16 +133,15 @@ export class NewsService {
 
     //COMMENT
 
-    addComment(comment: Comment) {
-        const user =this.getUser();
-        const commentRequest: CommentRequest = new CommentRequest;
-        commentRequest.comment = comment;
-        commentRequest.username = user.username;
-        return this._http.post("http://localhost:8899/api/comments", commentRequest, this.getHeaders());
+    addComment(comment: Comment, newsId: number) {
+        return this._http.post("http://localhost:8899/api/news/"+ newsId + "/comments", comment, this.getHeaders());
     }
 
-    getCommentsByNewsId(newsId,page){
-        return this._http.get("http://localhost:8899/api/news"+newsId+"/comments/"+page, this.getHeaders());
-    }
    
+   
+    getNewsWithTwoRecentComments(newsId, page): Observable<any> {
+        return this._http.get("http://localhost:8899/api/news/"+newsId+"/comments/"+page, this.getHeaders());
+    }
+
+
 }

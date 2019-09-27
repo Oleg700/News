@@ -1,5 +1,8 @@
+
+import {Comment} from '../comment/comment';
+
 export class News{
-    id: BigInteger;
+    id: number;
     title: string;
     date: string;
     brief: string;

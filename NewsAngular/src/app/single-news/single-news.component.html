@@ -44,10 +44,9 @@
         <div class="col-10 news-date"  *ngFor="let comment of comments">
             <p>{{comment.content}}</p>
         </div>
-
-
+        <button class="btn btn-primary" (click)="increasePageByTwo()">Load more comments</button>
+           <app-comment></app-comment>
     </div>
-    <app-comment></app-comment>
 </body>
 
 </html>

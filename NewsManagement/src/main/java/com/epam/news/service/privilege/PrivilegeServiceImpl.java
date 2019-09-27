@@ -7,13 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.transaction.Transactional;
 import java.util.Collection;
 
+/**
+ * implementation of interface {@link PrivilegeService}.
+ *
+ * @author Oleg Aliyev
+ */
 public class PrivilegeServiceImpl implements PrivilegeService {
 
-
+    /**
+     * privilegeDao is used to process privilege objects in database.
+     */
     private PrivilegeDao privilegeDao;
 
+    /**
+     * constructor.
+     *
+     * @param privilegeDao is used to process privilege objects in database.
+     */
     @Autowired
-    public PrivilegeServiceImpl(PrivilegeDao privilegeDao) {
+    public PrivilegeServiceImpl(final PrivilegeDao privilegeDao) {
         this.privilegeDao = privilegeDao;
     }
 
@@ -22,16 +34,10 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return privilegeDao.getAll();
     }
 
-    @Override
-    public Privilege getByName(String name) {
-        return privilegeDao.getByName(name);
-    }
 
     @Override
     @Transactional
-    public Privilege add(Privilege privilege) {
+    public Privilege add(final Privilege privilege) {
         return privilegeDao.add(privilege);
     }
-
-
 }

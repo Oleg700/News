@@ -2,7 +2,6 @@ package com.epam.news.controller;
 
 import com.epam.news.config.AppConfig;
 import com.epam.news.model.news.Comment;
-import com.epam.news.model.news.CommentRequest;
 import com.epam.news.model.news.News;
 import com.epam.news.model.user.User;
 import com.epam.news.service.comment.CommentService;
@@ -15,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -38,12 +37,11 @@ class CommentControllerTest {
 
     @Test
     void addComment() {
-     /*   News news = newsService.get(NEWS_ID);
+        News news = newsService.get(NEWS_ID);
         User user = userService.getByName(USER_NAME);
         Comment comment = new Comment(COMMENT_CONTENT, news, user);
-        CommentRequest commentRequest = new CommentRequest(comment, user.getUsername());
-        Comment commentResult = commentService.add(commentRequest);
-        assertNotNull( commentResult);*/
+        Comment commentResult = commentService.add(comment, user.getUsername());
+        assertNotNull(commentResult);
     }
 
 }

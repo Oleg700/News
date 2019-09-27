@@ -7,14 +7,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-
+/**
+ * implementation of interface {@link RoleService}.
+ *
+ * @author Oleg Aliyev
+ */
 public class RoleServiceImpl implements RoleService {
 
-
+    /**
+     * roleDao is used to process privilege objects in database.
+     */
     private RoleDao roleDao;
 
+    /**
+     * constructor.
+     *
+     * @param roleDao is used to process privilege objects in database.
+     */
     @Autowired
-    public RoleServiceImpl(RoleDao roleDao) {
+    public RoleServiceImpl(final RoleDao roleDao) {
         this.roleDao = roleDao;
     }
 
@@ -25,12 +36,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public Role add(Role role) {
+    public Role add(final Role role) {
         return roleDao.add(role);
-    }
-
-    @Override
-    public Role getByName(String name) {
-        return roleDao.getByName(name);
     }
 }

@@ -9,16 +9,36 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class MyUserPrincipal implements UserDetails {
+/**
+ * Class is used for Spring Security authorization and authentication.
+ *
+ * <p>
+ * Overrides methods of inteface UserDetails
+ * for authorization in {@link com.epam.news.security.CustomUserService}.
+ * <p>
+ *
+ * @author Oleg Aliyev
+ * @see com.epam.news.security.CustomUserService
+ * @see org.springframework.security.core.userdetails.UserDetails
+ */
+public class UserPrincipal implements UserDetails {
+
+    /**
+     * UserPrincipal is used as wrapper for user class.
+     */
     private User user;
 
-    public MyUserPrincipal(User user) {
+    /**
+     * constructor.
+     *
+     * @param user UserPrincipal is used as wrapper for user class
+     */
+    public UserPrincipal(final User user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         List<GrantedAuthority> authorities
                 = new ArrayList<>();
         for (Role role : user.getRoles()) {

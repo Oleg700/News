@@ -32,7 +32,7 @@ export class CommentComponent implements OnInit {
 }
 
   addComment(comment: Comment){
-    this._newsService.addComment(comment)
+    this._newsService.addComment(comment, this.news.id)
     .subscribe((response) =>
     {console.log(response);
       });

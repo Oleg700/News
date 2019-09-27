@@ -2,28 +2,60 @@ package com.epam.news.model.user;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+/**
+ * Every role {@link Role} has a set of restricted privileges.
+ *
+ * <p>
+ * Privileges are established as restriction in controllers for every request
+ * <p>
+ *
+ * @author Oleg Aliyev
+ * @see com.epam.news.controller.NewsController
+ */
 @Table
 @Entity(name = "Privileges")
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllPrivileges",
+                query = "select p from Privileges p"
+        )
+})
 public class Privilege implements GrantedAuthority {
 
+    /**
+     * privilege id is generated with sequence.
+     */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "privilege_seq")
-    @SequenceGenerator(name = "privilege_seq", sequenceName = "privilege_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "privilege_seq")
+    @SequenceGenerator(name = "privilege_seq",
+            sequenceName = "privilege_seq", allocationSize = 1)
     private Long id;
 
+    /**
+     * privilege name.
+     */
     @Column
     private String name;
 
     public Privilege() {
     }
 
-    public Privilege(String name) {
+    public Privilege(final String name) {
         this.name = name;
     }
 
-    public Privilege(long i, String name) {
+    public Privilege(final long i, final String name) {
         this.id = i;
         this.name = name;
     }
@@ -32,7 +64,7 @@ public class Privilege implements GrantedAuthority {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -40,7 +72,7 @@ public class Privilege implements GrantedAuthority {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 

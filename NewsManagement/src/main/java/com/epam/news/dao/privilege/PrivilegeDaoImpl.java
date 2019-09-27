@@ -6,24 +6,29 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collection;
 
+/**
+ * Implemetation of interface {@link PrivilegeDao}.
+ *
+ * @author Oleg Aliyev
+ */
 public class PrivilegeDaoImpl implements PrivilegeDao {
 
+    /**
+     * entity manager is used for communication with database.
+     */
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public Collection<Privilege> getAll() {
-        return entityManager.createQuery("from Privileges")
+        return entityManager
+                .createNamedQuery("getAllPrivileges", Privilege.class)
                 .getResultList();
     }
 
-    @Override
-    public Privilege getByName(String name) {
-        return (Privilege) entityManager.createQuery("select p from Privileges p where p.name = :name").setParameter("name", name).getSingleResult();
-    }
 
     @Override
-    public Privilege add(Privilege privilege) {
+    public Privilege add(final Privilege privilege) {
         return entityManager.merge(privilege);
     }
 

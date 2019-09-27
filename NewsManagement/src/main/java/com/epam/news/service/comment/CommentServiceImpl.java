@@ -2,39 +2,50 @@ package com.epam.news.service.comment;
 
 import com.epam.news.dao.comment.CommentDao;
 import com.epam.news.model.news.Comment;
-import com.epam.news.model.news.CommentRequest;
 import com.epam.news.model.user.User;
 import com.epam.news.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
 
+/**
+ * implementation of interface {@link CommentService}.
+ *
+ * @author Oleg Aliyev
+ */
 public class CommentServiceImpl implements CommentService {
 
-
+    /**
+     * commentDao is used for connection with database.
+     */
     private CommentDao commentDao;
 
-    @Autowired
+    /**
+     * userService is used to get user by name.
+     */
     private UserService userService;
 
+    /**
+     * Constructor.
+     *
+     * @param commentDao  is used for connection with database.
+     * @param userService is used to get user by name.
+     */
     @Autowired
-    public CommentServiceImpl(CommentDao commentDao) {
+    public CommentServiceImpl(final CommentDao commentDao,
+                              final UserService userService) {
         this.commentDao = commentDao;
+        this.userService = userService;
     }
+
 
     @Override
     @Transactional
-    public Comment add(CommentRequest commentRequest) {
-        String username = commentRequest.getUsername();
+    public Comment add(final Comment comment, final String username) {
         User user = userService.getByName(username);
-        Comment comment = commentRequest.getComment();
         comment.setUser(user);
         return commentDao.add(comment);
     }
 
-    @Override
-    public Collection<Comment> getCommentsByNewsId(long id, int page) {
-        return commentDao.getCommentsByNewsId(id,page);
-    }
+
 }

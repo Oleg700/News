@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { News } from '../news/news';
 import { NewsService } from '../news/news.service';
+import {Comment} from '../comment/comment';
 
 @Component({
   selector: 'app-single-news',
@@ -12,34 +13,32 @@ export class SingleNewsComponent implements OnInit {
 
   private news: News;
 
-  private comments;
+  private comments: Comment[];
+
+  private page;
   
   constructor(private _newsService: NewsService , private _route: ActivatedRoute) { }
 
   ngOnInit() {
     let id = parseInt(this._route.snapshot.paramMap.get('id'));
-    this.getNewsById(id);
+     this.page = 2;
+    this.getNewsWithTwoRecentComments(id, this.page);
     this.news = new News();
+    this.comments = [];
   }
 
-  getNewsById(newsId: number){
-    this._newsService.getNewsById(newsId)
-    .subscribe((newsData) =>
-    // {this.setPropertiesToNews(newsData)},
-    (error) =>{console.log(error);})
-}
-
-private setPropertiesToNews(newsData){
-  this.news.title = newsData.title;
-  this.news.brief = newsData.brief;
-  this.news.date = newsData.date;
-  this.news.content = newsData.content;
-}
-
-getCommentsByNewsId(){
-  this._newsService.getCommentsByNewsId(this.news.id, 2)
+getNewsWithTwoRecentComments(newsId: number, page: number){
+  this._newsService.getNewsWithTwoRecentComments(newsId, page)
   .subscribe((newsData) =>
-    {this.comments = newsData}, 
-    (error) =>{console.log(error);})
+  {this.news = newsData,
+    this.comments =  this.comments.concat(this.news.comments)},
+  (error) =>{console.log(error);})
 }
+
+increasePageByTwo(){
+  this.page = this.page * 2;
+  console.log(this.page)
+  this.getNewsWithTwoRecentComments(this.news.id ,this.page)
+}
+
 }
