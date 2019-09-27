@@ -1,5 +1,6 @@
 package com.epam.news.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.CascadeType;
@@ -17,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Every user {@link User} can have many roles.
@@ -29,6 +31,7 @@ import java.util.Collection;
  */
 @Entity(name = "Roles")
 @Table
+@JsonIgnoreProperties(ignoreUnknown = true)
 @NamedQueries(
         @NamedQuery(
                 name = "getAllRoles",
@@ -103,5 +106,20 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return this.getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Objects.equals(id, role.id) &&
+                Objects.equals(name, role.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, privileges);
     }
 }

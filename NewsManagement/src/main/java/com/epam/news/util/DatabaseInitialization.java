@@ -9,11 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class DatabaseInitialization {
 
@@ -36,81 +34,51 @@ public class DatabaseInitialization {
     private static final String PRIVILEGE_READ_USER = "PRIVILEGE_READ_USER";
     private static final String PRIVILEGE_WRITE_USER = "PRIVILEGE_WRITE_USER";
 
-
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
-    public static void main(String[] args) {
-
+    public void initializeDatabase(){
+        createPrivileges();
+        createRoles();
+        createUsers();
     }
 
-    public void initializeDatabase(){
+    @Transactional
+    public void createUsers(){
 
         String adminPassword = passwordEncoder.encode(ADMIN_PASSWORD);
         String editorPassword = passwordEncoder.encode(EDITOR_PASSWORD);
         String userPassword = passwordEncoder.encode(USER_PASSWORD);
 
-        User admin = new User("admin", ADMIN_PASSWORD);
-        Role roleAdmin = new Role("ROLE_ADMIN");
+        Role roleAdmin = entityManager.createQuery("select r from Roles r where r.name = 'ROLE_ADMIN'",
+                Role.class).getSingleResult();
 
+        Role roleEditor = entityManager.createQuery("select r from Roles r where r.name = 'ROLE_EDITOR'",
+                Role.class).getSingleResult();
 
+        Role roleUser = entityManager.createQuery("select r from Roles r where r.name = 'ROLE_USER'",
+                Role.class).getSingleResult();
 
-        Privilege privilegeWriteComment = entityManager.createQuery("select p from privilege where name = PRIVILEGE_WRITE_COMMENT", Privilege.class).getSingleResult();
-        Privilege privilegeWriteNews = new Privilege("PRIVILEGE_WRITE_NEWS");
-        Privilege privilegeUpdateNews = new Privilege("PRIVILEGE_UPDATE_NEWS");
-        Privilege privilegeDeleteNews = new Privilege("PRIVILEGE_DELETE_NEWS");
-        Privilege privilegeReadPrivilege = new Privilege("PRIVILEGE_READ_PRIVILEGE");
-        Privilege privilegeWritePrivilege = new Privilege("PRIVILEGE_WRITE_PRIVILEGE");
-        Privilege privilegeReadRole= new Privilege("PRIVILEGE_READ_ROLE");
-        Privilege privilegeWriteRole = new Privilege("PRIVILEGE_WRITE_ROLE");
-        Privilege privilegeReadUser = new Privilege("PRIVILEGE_READ_USER");
-        Privilege privilegeWriteUser = new Privilege("PRIVILEGE_WRITE_USER");
-
-
-
-
-
-
-
-        Collection<Privilege> privilegesAdmin = new ArrayList();
-        privilegesAdmin.add(privilegeWriteComment);
-        privilegesAdmin.add(privilegeReadPrivilege);
-        privilegesAdmin.add(privilegeWritePrivilege);
-        privilegesAdmin.add(privilegeReadRole);
-        privilegesAdmin.add(privilegeWriteRole);
-        privilegesAdmin.add(privilegeReadUser);
-        privilegesAdmin.add(privilegeWriteUser);
-        roleAdmin.setPrivileges(privilegesAdmin);
+        User admin = new User("admin", adminPassword);
         admin.setRoles(Collections.singleton(roleAdmin));
 
-        entityManager.merge(privilegeWriteUser);
-        entityManager.merge(roleAdmin);
+        User editor = new User("editor", editorPassword);
+        editor.setRoles(Collections.singleton(roleEditor));
+
+        User user = new User("user", userPassword);
+        user.setRoles(Collections.singleton(roleUser));
+
         entityManager.merge(admin);
-    }
+        entityManager.merge(editor);
+        entityManager.merge(user);
 
-    public void printPrivilege(){
-        Privilege privilegeWriteComment = entityManager.createQuery("select p from Privileges p where p.name = 'PRIVILEGE_WRITE_COMMENT'", Privilege.class).getSingleResult();
-        System.out.println(privilegeWriteComment.getName());
-    }
-
-    public void printPrivileges(){
-        List<Privilege> privilegelist= entityManager.createQuery("select p from Privileges p ", Privilege.class).getResultList();
-        privilegelist.stream().forEach(p -> System.out.println(p.getName()));
     }
 
     @Transactional
-    public void deleteFromPrivileges() {
-        Query q3=  entityManager.
-                createQuery("delete from Roles ");
-        q3.executeUpdate();
-    }
-
-    @Transactional
-    public void addRoles() {
+    public void createRoles() {
         Privilege privilegeWriteComment = entityManager.
                 createQuery("select p from Privileges p where p.name = 'PRIVILEGE_WRITE_COMMENT'", Privilege.class).getSingleResult();
 
@@ -131,8 +99,6 @@ public class DatabaseInitialization {
         Role roleEditor = new Role(ROLE_EDITOR);
         roleEditor.setPrivileges(privilegesEditor);
         entityManager.merge(roleEditor);
-
-
 
         Privilege privilegeReadPrivilege = entityManager.
                 createQuery("select p from Privileges p where p.name = 'PRIVILEGE_READ_PRIVILEGE'", Privilege.class).getSingleResult();
@@ -169,7 +135,6 @@ public class DatabaseInitialization {
         entityManager.merge(roleUser);
     }
 
-
    @Transactional
    public void createPrivileges(){
        Privilege privilegeWriteComment = new Privilege(PRIVILEGE_WRITE_COMMENT);
@@ -194,6 +159,4 @@ public class DatabaseInitialization {
        entityManager.merge(privilegeReadUser);
        entityManager.merge(privilegeWriteUser);
    }
-
-
 }
