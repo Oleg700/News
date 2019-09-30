@@ -5,8 +5,6 @@ import com.epam.news.dao.news.NewsDao;
 import com.epam.news.model.news.Comment;
 import com.epam.news.model.news.News;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+
 class NewsServiceImplTest {
 
     private final static int NEWS_ID = 11;
