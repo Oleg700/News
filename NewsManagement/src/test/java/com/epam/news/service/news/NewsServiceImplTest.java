@@ -1,28 +1,23 @@
 package com.epam.news.service.news;
 
-import com.epam.news.config.AppConfig;
 import com.epam.news.dao.comment.CommentDao;
 import com.epam.news.dao.news.NewsDao;
 import com.epam.news.model.news.Comment;
 import com.epam.news.model.news.News;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = AppConfig.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 class NewsServiceImplTest {
 
     private final static int NEWS_ID = 11;
@@ -42,7 +37,7 @@ class NewsServiceImplTest {
         comments.add(new Comment((long) 2, "second comment"));
 
 
-        when(newsDao.get(13)).thenReturn(news);
+        when(newsDao.get(NEWS_ID)).thenReturn(news);
         when(commentDao.getCommentsByNewsId(NEWS_ID, PAGE))
                 .thenReturn(comments);
 
