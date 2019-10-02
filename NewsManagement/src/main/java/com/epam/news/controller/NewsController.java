@@ -61,13 +61,13 @@ public class NewsController {
 
     /**
      * To increase the interaction with database,
-     * we retrieve only by 2 comments, instead of the whole list of comments.
+     * we retrieve only by 2 comment, instead of the whole list of comment.
      *
      * @param id   to get news by id
      * @param page get current comment page
      * @return news
      */
-    @GetMapping(value = "/news/{id}/comments/{page}")
+    @GetMapping(value = "/news/{id}/comment/{page}")
     public ResponseEntity<News> getNewsWithTwoRecentComments(
             @PathVariable("id") final long id,
             @PathVariable("page") final int page) {

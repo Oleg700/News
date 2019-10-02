@@ -51,7 +51,7 @@ public class News {
     private long id;
 
     /**
-     * list of comments of news.
+     * list of comment of news.
      */
     @OneToMany(mappedBy = "news",
             fetch = FetchType.LAZY, cascade = {CascadeType.ALL})

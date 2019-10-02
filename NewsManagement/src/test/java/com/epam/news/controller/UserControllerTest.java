@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,8 +28,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -36,10 +36,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @WebAppConfiguration
 @ContextConfiguration(classes = AppConfig.class)
 class UserControllerTest {
-
-    private final static String USERNAME = "admin";
-    private final static String USERNAME_TEST = "test";
-    private final static String PASSWORD_TEST = "test";
 
     @Autowired
     private UserService userService;
@@ -63,7 +59,10 @@ class UserControllerTest {
     }
 
     @Test
-    void getAllUsers() throws Exception {
+    @Sql(scripts
+            = {"classpath:authorization/delete-authorization-tables.sql",
+            "classpath:user/create-admin.sql"})
+    void whenGetUriThenReturnAllUsers() throws Exception {
 
         //given
         Collection<User> listUsers = userService.getAll();
@@ -74,18 +73,20 @@ class UserControllerTest {
                         .header(HttpHeaders.AUTHORIZATION,
                                 "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
                 .andReturn();
+
+        //then
         String usersString = result.getResponse().getContentAsString();
         ArrayList listUsersResult = objectMapper.readValue(usersString, new TypeReference<List<User>>(){});
 
-        //then
+        listUsersResult.stream().forEach(s-> System.out.println(s));
         assertThat(listUsers, containsInAnyOrder(listUsersResult.toArray()));
     }
 
     @Test
-    void addUser() throws Exception {
+    void whenGetUriThenReturnAddUser() throws Exception {
 
         //given
-        User user = new User(USERNAME_TEST, PASSWORD_TEST);
+        User user = new User("test", "test");
 
         //when
         MvcResult result = this.mockMvc
@@ -95,10 +96,12 @@ class UserControllerTest {
                         .header(HttpHeaders.AUTHORIZATION,
                                 "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
                 .andReturn();
+
+        //then
         String userString = result.getResponse().getContentAsString();
         User userResult = objectMapper.readValue(userString, User.class);
 
-        //then
-        assertThat(null, not(userResult));
+        assertThat(userResult, is(not(nullValue())));
+        assertThat(userResult.getUsername(), equalTo(user.getUsername()));
     }
 }

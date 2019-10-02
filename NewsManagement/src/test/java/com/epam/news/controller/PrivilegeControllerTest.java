@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,8 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -51,6 +51,9 @@ class PrivilegeControllerTest {
     private MockMvc mockMvc;
 
     @BeforeEach
+    @Sql(scripts
+            = {"classpath:authorization/delete-authorization-tables.sql",
+            "classpath:user/create-admin.sql"})
     public void setup() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                 .addFilters(this.springSecurityFilterChain)
@@ -58,42 +61,53 @@ class PrivilegeControllerTest {
     }
 
     @Test
-    void getAllPrivileges() throws Exception {
+    void whenGetUriThenReturnAllPrivileges() throws Exception {
 
         //given
-        List<Privilege> listPrivileges = (List<Privilege>) privilegeService.getAll();
+        List<Privilege> listPrivileges = new ArrayList<>();
+        listPrivileges.add(new Privilege(1, "PRIVILEGE_WRITE_USER"));
+        listPrivileges.add(new Privilege(2, "PRIVILEGE_WRITE_ROLE"));
+        listPrivileges.add(new Privilege(3, "PRIVILEGE_WRITE_PRIVILEGE"));
+        listPrivileges.add(new Privilege(4, "PRIVILEGE_READ_USER"));
+        listPrivileges.add(new Privilege(5, "PRIVILEGE_READ_ROLE"));
+        listPrivileges.add(new Privilege(6, "PRIVILEGE_READ_PRIVILEGE"));
+        listPrivileges.add(new Privilege(7, "PRIVILEGE_WRITE_COMMENT"));
 
         //when
         MvcResult result = this.mockMvc
-                .perform(get("http://localhost:8899/api/privileges")
+                .perform(get("http://localhost:8899/api/privilege")
                         .header(HttpHeaders.AUTHORIZATION,
                                 "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
                 .andReturn();
-        String privilegesString = result.getResponse().getContentAsString();
-        ArrayList listPrivilegesResult = objectMapper.readValue(privilegesString, new TypeReference<List<Privilege>>(){});
 
         //then
-        assertThat(listPrivileges, containsInAnyOrder(listPrivilegesResult.toArray()));
+        String privilegesString = result.getResponse().getContentAsString();
+        System.out.println(privilegesString);
+        ArrayList listPrivilegesResult = objectMapper.readValue(privilegesString, new TypeReference<List<Privilege>>() {
+        });
+
+        assertThat(listPrivileges,equalTo(listPrivilegesResult));
     }
 
     @Test
-    void addPrivilege() throws Exception {
+    void whenGetUriThenReturnAddPrivilege() throws Exception {
 
         //given
         Privilege privilege = new Privilege("PRIVILEGE_TEST");
 
         //when
         MvcResult result = this.mockMvc
-                .perform(post("http://localhost:8899/api/privileges")
+                .perform(post("http://localhost:8899/api/privilege")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonConvertUtil.transformToJSON(privilege))
                         .header(HttpHeaders.AUTHORIZATION,
                                 "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
                 .andReturn();
-        String privilegeString = result.getResponse().getContentAsString();
-        Privilege privilegeResult = objectMapper.readValue(privilegeString, Privilege.class);
 
         //then
-        assertThat(null, not(privilegeResult));
+        String privilegeString = result.getResponse().getContentAsString();
+        Privilege privilegeResult = objectMapper.readValue(privilegeString, Privilege.class);
+        assertThat(privilegeResult, is(not(nullValue())));
+        assertThat(privilegeResult.getName(), equalTo(privilege.getName()));
     }
 }

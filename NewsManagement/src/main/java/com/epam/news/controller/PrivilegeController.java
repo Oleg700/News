@@ -33,13 +33,13 @@ public class PrivilegeController {
     private PrivilegeService privilegeService;
 
     /**
-     * returns list of privileges
+     * returns list of privilege
      * only users with role admin has access to this information.
      *
-     * @return list of privileges
+     * @return list of privilege
      */
     @PreAuthorize("hasAuthority('PRIVILEGE_READ_PRIVILEGE')")
-    @GetMapping(value = "/privileges")
+    @GetMapping(value = "/privilege")
     public ResponseEntity<List<Privilege>> getAllPrivileges() {
         List<Privilege> listPrivileges = (List<Privilege>)
                 privilegeService.getAll();
@@ -53,7 +53,7 @@ public class PrivilegeController {
      * @return privilege
      */
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_PRIVILEGE')")
-    @PostMapping(value = "/privileges")
+    @PostMapping(value = "/privilege")
     public ResponseEntity<Privilege> addPrivilege(
             @RequestBody final Privilege privilege) {
         Privilege savedPrivilege = privilegeService.add(privilege);

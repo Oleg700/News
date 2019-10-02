@@ -1,6 +1,7 @@
 package com.epam.news.controller;
 
 import com.epam.news.config.AppConfig;
+import com.epam.news.model.news.Comment;
 import com.epam.news.model.news.News;
 import com.epam.news.service.news.NewsService;
 import com.epam.news.util.JsonConvertUtil;
@@ -14,22 +15,21 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Base64Utils;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebAppConfiguration
@@ -37,19 +37,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ContextConfiguration(classes = {AppConfig.class})
 class NewsControllerTest {
 
-    private static final Logger LOGGER = Logger.getLogger(NewsControllerTest.class.getName());
-    private static final String NEWS_TITLE = "title_integration_test";
-    private static final String NEWS_BRIEF = "brief_test";
-    private static final String NEWS_CONTENT = "content_test";
-    private static final int NEWS_ID = 1;
-    private static final int NEWS_ID_DELETE = 2;
-
     @Autowired
     NewsService newsService;
-
-    @Autowired
-    RestTemplate restTemplate;
-
 
     @Autowired
     private WebApplicationContext context;
@@ -63,6 +52,9 @@ class NewsControllerTest {
     private MockMvc mockMvc;
 
     @BeforeEach
+    @Sql(scripts =
+            {"classpath:authorization/delete-authorization-tables.sql",
+                    "classpath:user/create-editor.sql"})
     public void setup() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                 .addFilters(this.springSecurityFilterChain)
@@ -70,82 +62,112 @@ class NewsControllerTest {
     }
 
     @Test
-    void getAllNews() throws Exception {
+    @Sql(scripts =
+            {"classpath:comment/delete-all-comments.sql",
+                    "classpath:news/delete-all-news.sql",
+                    "classpath:news/create-news.sql"})
+    void whenGetUriThenReturnListOfNews() throws Exception {
 
         //given
-        List<News> listNews = newsService.getAll();
+        News news1 = new News(1, "London", "brief", "content");
+        News news2 = new News(2, "Berlin", "brief", "content");
+
+        ArrayList<News> customlistNews = new ArrayList<>();
+        customlistNews.add(news1);
+        customlistNews.add(news2);
 
         //when
         MvcResult result = this.mockMvc
                 .perform(get("http://localhost:8899/api/news")).andReturn();
-        String newsString = result.getResponse().getContentAsString();
-        ArrayList listNewsResult = objectMapper.readValue(newsString, new TypeReference<List<News>>(){});
 
         //then
-        assertThat(listNews, containsInAnyOrder(listNewsResult.toArray()));
+        String newsString = result.getResponse().getContentAsString();
+        ArrayList listNewsResult = objectMapper.readValue(newsString, new TypeReference<List<News>>() {
+        });
+
+        assertThat(customlistNews, equalTo(listNewsResult));
     }
 
     @Test
-    void getNewsWithTwoRecentComments() throws Exception {
+    @Sql(scripts =
+            {"classpath:comment/delete-all-comments.sql",
+                    "classpath:news/delete-all-news.sql",
+                    "classpath:news/create-news.sql",
+                    "classpath:comment/create-comments.sql",
+            })
+    @Sql(scripts = "classpath:comment/delete-all-comments.sql", executionPhase = AFTER_TEST_METHOD)
+    void whenGetUriThenReturnNewsWithTwoRecentComments() throws Exception {
 
         //given
-        News news = newsService.getNewsWithTwoRecentComments(1, 1);
+        News news = new News(1, "London", "brief", "content");
+        Comment comment = new Comment((long) 1, "content");
+        List<Comment> listComments = new ArrayList();
+        listComments.add(comment);
+        news.setComments(listComments);
 
         //when
         MvcResult result = this.mockMvc
-                .perform(get("http://localhost:8899/api/news/1/comments/1")).andReturn();
-        String newsString = result.getResponse().getContentAsString();
-        News newsResult = objectMapper.readValue(newsString, News.class);
+                .perform(get("http://localhost:8899/api/news/1/comment/1")).andReturn();
 
         //then
+        String newsString = result.getResponse().getContentAsString();
+        News newsResult = objectMapper.readValue(newsString, News.class);
         assertThat(news, equalTo(newsResult));
     }
 
     @Test
-    void getNewsById() throws Exception {
+    @Sql(scripts =
+            {"classpath:news/delete-all-news.sql",
+                    "classpath:news/create-news.sql"})
+    void whenGetUriThenReturnNewsById() throws Exception {
 
         //given
-        News news = newsService.get(1);
+        News news = new News(1, "London", "brief", "content");
 
         //when
         MvcResult result = this.mockMvc
                 .perform(get("http://localhost:8899/api/news/1")).andReturn();
+
+        //then
         String newsString = result.getResponse().getContentAsString();
         News newsResult = objectMapper.readValue(newsString, News.class);
 
-        //then
         assertThat(news, equalTo(newsResult));
-
     }
 
     @Test
-    void addNews() throws Exception {
+    @Sql(scripts = {"classpath:news/delete-all-news.sql"})
+    void whenGetUriThenReturnAddNews() throws Exception {
 
         //given
-        News news = new News(NEWS_TITLE, NEWS_BRIEF, NEWS_CONTENT);
+        News news = new News(1, "title", "brief", "content");
 
         //when
         MvcResult result = this.mockMvc
                 .perform(post("http://localhost:8899/api/news")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonConvertUtil.transformToJSON(news))
-                      .header(HttpHeaders.AUTHORIZATION,
+                        .header(HttpHeaders.AUTHORIZATION,
                                 "Basic " + Base64Utils.encodeToString("editor:editor".getBytes())))
                 .andReturn();
-        String newsString = result.getResponse().getContentAsString();
-        News newsResult = objectMapper.readValue(newsString, News.class);
-        News newsAdded = newsService.get(newsResult.getId());
 
         //then
-        assertThat(newsAdded, equalTo(newsResult));
+        String newsString = result.getResponse().getContentAsString();
+        News newsResult = objectMapper.readValue(newsString, News.class);
+
+        assertThat(news.getTitle(), equalTo(newsResult.getTitle()));
+        assertThat(news.getBrief(), equalTo(newsResult.getBrief()));
+        assertThat(news.getContent(), equalTo(newsResult.getContent()));
     }
 
     @Test
-    void updateNews() throws Exception {
+    @Sql(scripts
+            = {"classpath:news/delete-all-news.sql",
+            "classpath:news/create-news.sql"})
+    void whenGetUriThenReturnUpdateNews() throws Exception {
 
         //given
-        News news = newsService.get(NEWS_ID);
-        news.setTitle("Longon");
+        News news = new News(1, "Berlin", "brief", "content");
 
         //when
         MvcResult result = this.mockMvc
@@ -155,28 +177,31 @@ class NewsControllerTest {
                         .header(HttpHeaders.AUTHORIZATION,
                                 "Basic " + Base64Utils.encodeToString("editor:editor".getBytes())))
                 .andReturn();
+
+        //then
         String newsString = result.getResponse().getContentAsString();
         News newsResult = objectMapper.readValue(newsString, News.class);
 
-        //then
         assertThat(news, equalTo(newsResult));
     }
 
     @Test
-    void deleteNews() throws Exception {
+    @Sql(scripts
+            = {"classpath:news/delete-all-news.sql",
+            "classpath:news/create-news.sql"})
+    void whenGetUriThenReturnDeleteNews() throws Exception {
 
         //when
         MvcResult result = this.mockMvc
                 .perform(delete("http://localhost:8899/api/news/"
-                        + NEWS_ID_DELETE)
+                        + 1)
                         .header(HttpHeaders.AUTHORIZATION,
                                 "Basic " + Base64Utils.encodeToString("editor:editor".getBytes())))
                 .andReturn();
-        News newsDeleted = newsService.get(NEWS_ID_DELETE);
 
         //then
-        assertThat(null, equalTo(newsDeleted));
+        News newsDeleted = newsService.get(1);
+
+        assertThat(newsDeleted, is(nullValue()));
     }
-
-
 }

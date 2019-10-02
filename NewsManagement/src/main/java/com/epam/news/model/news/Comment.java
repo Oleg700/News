@@ -18,7 +18,7 @@ import javax.persistence.Table;
 
 
 /**
- * Provides comments for entity {@link News}.
+ * Provides comment for entity {@link News}.
  *
  * <p>
  * Connected with class {@link News}

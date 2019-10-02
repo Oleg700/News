@@ -62,7 +62,7 @@ public class Role implements GrantedAuthority {
     }
 
     /**
-     * roles and privileges are connected with relation @ManyToMany.
+     * roles and privilege are connected with relation @ManyToMany.
      */
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -75,6 +75,11 @@ public class Role implements GrantedAuthority {
 
 
     public Role(final String name) {
+        this.name = name;
+    }
+
+    public Role(long id, String name) {
+        this.id = id;
         this.name = name;
     }
 

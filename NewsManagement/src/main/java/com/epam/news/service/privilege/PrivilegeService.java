@@ -16,9 +16,9 @@ import java.util.Collection;
 public interface PrivilegeService {
 
     /**
-     * Returns collection of privileges.
+     * Returns collection of privilege.
      *
-     * @return collection of privileges
+     * @return collection of privilege
      */
     Collection<Privilege> getAll();
 
