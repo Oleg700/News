@@ -69,12 +69,9 @@ class NewsControllerTest {
     void whenGetUriThenReturnListOfNews() throws Exception {
 
         //given
-        News news1 = new News(1, "London", "brief", "content");
-        News news2 = new News(2, "Berlin", "brief", "content");
-
         ArrayList<News> customlistNews = new ArrayList<>();
-        customlistNews.add(news1);
-        customlistNews.add(news2);
+        customlistNews.add(new News(1, "London", "brief", "content"));
+        customlistNews.add(new News(2, "Berlin", "brief", "content"));
 
         //when
         MvcResult result = this.mockMvc

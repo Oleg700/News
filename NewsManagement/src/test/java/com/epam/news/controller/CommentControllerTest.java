@@ -58,7 +58,6 @@ class CommentControllerTest {
     private MockMvc mockMvc;
 
     @BeforeEach
-
     public void setup() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                 .addFilters(this.springSecurityFilterChain)
