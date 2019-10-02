@@ -18,8 +18,6 @@ END;
 /
 
 
-
-
 CREATE TABLE comments(id number not null,
 content varchar2(100 char) not null,
 news_id number not null,

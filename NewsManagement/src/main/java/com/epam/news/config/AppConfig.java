@@ -24,7 +24,6 @@ import com.epam.news.service.role.RoleService;
 import com.epam.news.service.role.RoleServiceImpl;
 import com.epam.news.service.user.UserService;
 import com.epam.news.service.user.UserServiceImpl;
-import com.epam.news.util.DatabaseInitialization;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,11 +61,6 @@ import javax.sql.DataSource;
         @ComponentScan("com.epam.news")
 })
 public class AppConfig {
-
-    @Bean
-    DatabaseInitialization databaseInitialization(){
-        return new DatabaseInitialization();
-    }
 
     /**
      * environment for reading rows from property.
