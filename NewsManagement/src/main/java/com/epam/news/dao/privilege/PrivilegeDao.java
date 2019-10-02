@@ -12,9 +12,9 @@ import java.util.Collection;
 public interface PrivilegeDao {
 
     /**
-     * Returns collection of privilege.
+     * Returns collection of privileges.
      *
-     * @return collection of privilege
+     * @return collection of privileges
      */
     Collection<Privilege> getAll();
 

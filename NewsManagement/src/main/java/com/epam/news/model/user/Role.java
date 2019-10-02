@@ -62,7 +62,7 @@ public class Role implements GrantedAuthority {
     }
 
     /**
-     * roles and privilege are connected with relation @ManyToMany.
+     * roles and privileges are connected with relation @ManyToMany.
      */
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(

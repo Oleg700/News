@@ -14,7 +14,7 @@ import java.util.Collection;
 public class CommentDaoImpl implements CommentDao {
 
     /**
-     * number of last comment to retrieve from database.
+     * number of last comments to retrieve from database.
      */
     private static final int NUMBER_COMMENTS = 2;
 

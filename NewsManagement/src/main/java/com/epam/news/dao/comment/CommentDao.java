@@ -21,7 +21,7 @@ public interface CommentDao {
      * Returns comment by news id.
      *
      * @param id   news
-     * @param page current page of comment on frontend side
+     * @param page current page of comments on frontend side
      * @return comment by news id
      */
     Collection<Comment> getCommentsByNewsId(long id, int page);

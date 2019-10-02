@@ -67,7 +67,7 @@ public class NewsController {
      * @param page get current comment page
      * @return news
      */
-    @GetMapping(value = "/news/{id}/comment/{page}")
+    @GetMapping(value = "/news/{id}/comments/{page}")
     public ResponseEntity<News> getNewsWithTwoRecentComments(
             @PathVariable("id") final long id,
             @PathVariable("page") final int page) {

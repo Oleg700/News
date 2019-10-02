@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 /**
- * Every role {@link Role} has a set of restricted privilege.
+ * Every role {@link Role} has a set of restricted privileges.
  *
  * <p>
  * Privileges are established as restriction in controllers for every request

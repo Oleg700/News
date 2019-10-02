@@ -38,7 +38,7 @@ public class CommentController {
      * @return comment
      */
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_COMMENT')")
-    @PostMapping(value = "/news/{newsId}/comment")
+    @PostMapping(value = "/news/{newsId}/comments")
     public ResponseEntity<Comment>
     addComment(@RequestBody final Comment comment) {
         String username = getUsernameFromSession();

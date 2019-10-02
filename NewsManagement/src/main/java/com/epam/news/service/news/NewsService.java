@@ -29,7 +29,7 @@ public interface NewsService {
     News get(long id);
 
     /**
-     * Returns news with 2 comment.
+     * Returns news with 2 comments.
      *
      * @param id   news
      * @param page of current comment page on frontend side
