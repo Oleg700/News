@@ -19,6 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.context.WebApplicationContext;
@@ -31,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -83,7 +85,25 @@ class UserControllerTest {
     }
 
     @Test
-    void whenGetUriThenReturnAddUser() throws Exception {
+    @Sql(scripts
+            = {"classpath:authorization/delete-authorization-tables.sql"})
+    void whenGetUsersWithoutAuthorizationUriThenReturnErrorNotAuthorized()
+            throws Exception {
+
+        //when
+        ResultActions result = this.mockMvc
+                .perform(get("http://localhost:8899/api/users")
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Basic " + Base64Utils.encodeToString("editor:editor".getBytes())))
+
+                //then
+                .andExpect(status().is(401));
+
+    }
+
+
+    @Test
+    void whenPostUriThenReturnAddedUser() throws Exception {
 
         //given
         User user = new User("test", "test");
@@ -104,4 +124,7 @@ class UserControllerTest {
         assertThat(userResult, is(not(nullValue())));
         assertThat(userResult.getUsername(), equalTo(user.getUsername()));
     }
+
+
+
 }

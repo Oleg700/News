@@ -90,7 +90,7 @@ class PrivilegeControllerTest {
     }
 
     @Test
-    void whenGetUriThenReturnAddPrivilege() throws Exception {
+    void whenPostUriThenReturnAddedPrivilege() throws Exception {
 
         //given
         Privilege privilege = new Privilege("PRIVILEGE_TEST");

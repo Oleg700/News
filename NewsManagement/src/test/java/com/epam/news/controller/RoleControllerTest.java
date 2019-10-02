@@ -82,7 +82,7 @@ class RoleControllerTest {
     }
 
     @Test
-    void whenGetUriThenReturnAddRole() throws Exception {
+    void whenPostUriThenReturnAddedRole() throws Exception {
 
         //given
         Role role = new Role("ROLE_TEST");

@@ -69,7 +69,7 @@ class CommentControllerTest {
     @Sql(scripts =
             {"classpath:authorization/delete-authorization-tables.sql",
                     "classpath:user/create-editor.sql"})
-    void whenGetUriThenReturnAddComment() throws Exception {
+    void whenPostUriThenReturnAddedComment() throws Exception {
 
         //given
         News news = new News(1, "London", "brief", "content");

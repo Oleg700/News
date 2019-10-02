@@ -134,7 +134,7 @@ class NewsControllerTest {
 
     @Test
     @Sql(scripts = {"classpath:news/delete-all-news.sql"})
-    void whenGetUriThenReturnAddNews() throws Exception {
+    void whenPostUriThenReturnAddedNews() throws Exception {
 
         //given
         News news = new News(1, "title", "brief", "content");
@@ -161,7 +161,7 @@ class NewsControllerTest {
     @Sql(scripts
             = {"classpath:news/delete-all-news.sql",
             "classpath:news/create-news.sql"})
-    void whenGetUriThenReturnUpdateNews() throws Exception {
+    void whenPutUriThenReturnUpdatedNews() throws Exception {
 
         //given
         News news = new News(1, "Berlin", "brief", "content");
@@ -186,7 +186,7 @@ class NewsControllerTest {
     @Sql(scripts
             = {"classpath:news/delete-all-news.sql",
             "classpath:news/create-news.sql"})
-    void whenGetUriThenReturnDeleteNews() throws Exception {
+    void whenDeleteUriThenReturnDeletedNews() throws Exception {
 
         //when
         MvcResult result = this.mockMvc
