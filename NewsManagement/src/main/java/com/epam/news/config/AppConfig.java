@@ -1,7 +1,3 @@
-
-/**
- * package .config contains classes with bean instructions and web settings
- */
 package com.epam.news.config;
 
 import com.epam.news.dao.comment.CommentDao;
@@ -147,8 +143,7 @@ public class AppConfig {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 
     /**
@@ -262,7 +257,7 @@ public class AppConfig {
      * @return object mapper
      */
     @Bean
-    public ObjectMapper objectMapper(){
+    public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 

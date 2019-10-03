@@ -85,17 +85,16 @@ public class Privilege implements GrantedAuthority {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if(this == object){
+    public boolean equals(final Object object) {
+        if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass())
-        {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
         Privilege privilege = (Privilege) object;
-        return Objects.equals(id, privilege.id) &&
-                Objects.equals(name, privilege.name);
+        return Objects.equals(id, privilege.id)
+                && Objects.equals(name, privilege.name);
     }
 
     @Override

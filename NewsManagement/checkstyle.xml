@@ -78,10 +78,10 @@
 
         <!-- Checks for Javadoc comment.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
-        <module name="JavadocMethod"/>
+     <!--   <module name="JavadocMethod"/>
         <module name="JavadocType"/>
         <module name="JavadocVariable"/>
-        <module name="JavadocStyle"/>
+        <module name="JavadocStyle"/>-->
 
 
         <!-- Checks for Naming Conventions.                  -->

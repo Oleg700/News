@@ -208,9 +208,17 @@ public class News {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        News news = (News) obj;
-        return id == news.id
+    public boolean equals(final Object object) {
+
+        if (this == object) {
+            return true;
+        }
+
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        News news = (News) object;
+        return  id == news.id
                 && title.equals(news.title)
                 && brief.equals(news.brief)
                 && content.equals(news.content);

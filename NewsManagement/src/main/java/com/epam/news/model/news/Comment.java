@@ -80,7 +80,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Long id, String content) {
+    public Comment(final Long id, final String content) {
         this.id = id;
         this.content = content;
     }
