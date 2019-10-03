@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -85,7 +86,7 @@ public class NewsController {
      */
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_NEWS')")
     @PostMapping(value = "/news")
-    public ResponseEntity<News> addNews(@RequestBody final News news) {
+    public ResponseEntity<News> addNews(@RequestBody @Valid final News news) {
         News newsAdded = newsService.add(news);
         return ResponseEntity.ok().body(newsAdded);
     }
