@@ -1,4 +1,3 @@
-/*
 
 package com.epam.news.controller;
 
@@ -41,4 +40,3 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     }
 }
-*/
