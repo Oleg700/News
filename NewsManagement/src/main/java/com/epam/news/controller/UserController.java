@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class UserController {
      */
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_USER')")
     @PostMapping(value = "/users")
-    public ResponseEntity<User> addUser(@RequestBody final User user) {
+    public ResponseEntity<User> addUser(@RequestBody @Valid final User user) {
         User userAdded = userService.add(user);
         return ResponseEntity.ok().body(userAdded);
     }

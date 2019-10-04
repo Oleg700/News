@@ -36,9 +36,11 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
+import javax.validation.Validator;
 
 /**
  * Class for creating Spring beans with JavaConfig.
@@ -57,6 +59,11 @@ import javax.sql.DataSource;
         @ComponentScan("com.epam.news")
 })
 public class AppConfig {
+
+    @Bean
+    public Validator localValidatorFactoryBean() {
+        return new LocalValidatorFactoryBean();
+    }
 
     /**
      * environment for reading rows from property.

@@ -15,6 +15,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -52,6 +54,8 @@ public class Comment {
      * comment content.
      */
     @Column
+    @Size( max=300, message="content must be less than 300 characters")
+    @NotNull(message = "Please provide a content")
     private String content;
 
     /**

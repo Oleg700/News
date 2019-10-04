@@ -12,6 +12,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -49,6 +51,8 @@ public class Privilege implements GrantedAuthority {
      * privilege name.
      */
     @Column
+    @Size( max=100, message="name must be less than 100 characters")
+    @NotNull(message = "Please provide a name")
     private String name;
 
     public Privilege() {

@@ -21,8 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -64,6 +64,8 @@ public class News {
      * news title.
      */
     @Column
+    @NotNull(message = "Please provide a brief")
+    @Size( max=100, message="title must be less than 100 characters")
     private String title;
 
     /**
@@ -85,15 +87,16 @@ public class News {
      * news brief.
      */
     @Column
-    @NotBlank
-    @NotNull(message = "Please provide a name")
+    @NotNull(message = "Please provide a brief")
+    /*@Size( max=500, message="brief must be less than 100 characters")*/
     private String brief;
 
     /**
      * news content.
      */
-    @NotNull(message = "Please provide a name")
     @Column
+    @Size( max=2048, message="content must be less than 2048 characters")
+    @NotNull(message = "Please provide a content")
     private String content;
 
     public News() {

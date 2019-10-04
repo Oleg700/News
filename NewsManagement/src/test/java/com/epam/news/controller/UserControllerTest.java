@@ -124,7 +124,4 @@ class UserControllerTest {
         assertThat(userResult, is(not(nullValue())));
         assertThat(userResult.getUsername(), equalTo(user.getUsername()));
     }
-
-
-
 }
