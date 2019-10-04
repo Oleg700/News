@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -84,6 +85,7 @@ public class News {
      * news brief.
      */
     @Column
+    @NotBlank
     @NotNull(message = "Please provide a name")
     private String brief;
 

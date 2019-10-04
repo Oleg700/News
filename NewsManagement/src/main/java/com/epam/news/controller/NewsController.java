@@ -86,9 +86,11 @@ public class NewsController {
      */
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_NEWS')")
     @PostMapping(value = "/news")
-    public ResponseEntity<News> addNews(@RequestBody @Valid final News news) {
+    public ResponseEntity<News> addNews(@RequestBody @Valid  final News news) {
+
         News newsAdded = newsService.add(news);
         return ResponseEntity.ok().body(newsAdded);
+
     }
 
     /**
