@@ -20,10 +20,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
@@ -156,6 +159,60 @@ class NewsControllerTest {
         assertThat(news.getBrief(), equalTo(newsResult.getBrief()));
         assertThat(news.getContent(), equalTo(newsResult.getContent()));
     }
+
+
+    @Test
+    @Sql(scripts
+            = {"classpath:news/delete-all-news.sql",
+            "classpath:authorization/delete-authorization-tables.sql"})
+    void whenPostNewsWithoutAuthorizationUriThenReturnErrorNotAuthorized()
+            throws Exception {
+
+        //given
+        News news = new News(1, "title", "brief", "content");
+
+        //when
+        ResultActions result = this.mockMvc
+                .perform(post("http://localhost:8899/api/news")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonConvertUtil.transformToJSON(news))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Basic " + Base64Utils.encodeToString("anonym:anonym".getBytes())))
+
+                //then
+                //error 401
+                .andExpect(status().is(HttpServletResponse.SC_UNAUTHORIZED));
+    }
+
+    @Test
+    @Sql(scripts
+            = {"classpath:news/delete-all-news.sql",
+            "classpath:authorization/delete-authorization-tables.sql",
+            "classpath:user/create-admin.sql"})
+    void whenPostNewsWithoutAuthorizationUriThenReturnErrorNotAuthenticated()
+            throws Exception {
+
+        //given
+        News news = new News(1, "title", "brief", "content");
+
+        //when
+        ResultActions result = this.mockMvc
+                .perform(post("http://localhost:8899/api/news")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonConvertUtil.transformToJSON(news))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
+
+                //then
+                //error 403
+                .andExpect(status().is(HttpServletResponse.SC_FORBIDDEN));
+    }
+
+
+
+
+
+
 
     @Test
     @Sql(scripts
