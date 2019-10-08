@@ -2,6 +2,7 @@ package com.epam.news.controller;
 
 import com.epam.news.model.user.Role;
 import com.epam.news.model.user.User;
+import com.epam.news.model.user.UserDto;
 import com.epam.news.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -65,13 +66,14 @@ public class UserController {
     /**
      * request to save user to database.
      *
-     * @param user user to save
+     * @param userDto user to save
      * @return user
      */
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_USER')")
     @PostMapping(value = "/users")
-    public ResponseEntity<User> addUser(@RequestBody @Valid final User user) {
-        User userAdded = userService.add(user);
+    public ResponseEntity<User> addUser(@RequestBody @Valid
+                                            final UserDto userDto) {
+        User userAdded = userService.add(userDto.getUser());
         return ResponseEntity.ok().body(userAdded);
     }
 

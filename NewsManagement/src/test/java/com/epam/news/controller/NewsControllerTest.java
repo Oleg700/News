@@ -20,10 +20,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
@@ -155,6 +158,24 @@ class NewsControllerTest {
         assertThat(news.getTitle(), equalTo(newsResult.getTitle()));
         assertThat(news.getBrief(), equalTo(newsResult.getBrief()));
         assertThat(news.getContent(), equalTo(newsResult.getContent()));
+    }
+
+    @Test
+    @Sql(scripts = {"classpath:news/delete-all-news.sql"})
+    void whenPostNewsWithoutBriefUriThenReturnValidationError() throws Exception {
+
+        //given
+        News news = new News(1, "title", "content");
+
+        //when
+        ResultActions result = this.mockMvc
+                .perform(post("http://localhost:8899/api/news")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonConvertUtil.transformToJSON(news))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Basic " + Base64Utils.encodeToString("editor:editor".getBytes())))
+                //then
+                .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST));
     }
 
     @Test

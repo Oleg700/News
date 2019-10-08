@@ -1,3 +1,5 @@
+delete from comments
+
 delete from users_roles
 
 delete from roles_privileges

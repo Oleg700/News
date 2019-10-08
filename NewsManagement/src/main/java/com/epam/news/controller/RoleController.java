@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -53,7 +54,7 @@ public class RoleController {
      */
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_ROLE')")
     @PostMapping(value = "/roles")
-    public ResponseEntity<Role> addRole(@RequestBody final Role role) {
+    public ResponseEntity<Role> addRole(@RequestBody @Valid final Role role) {
         Role role1 = roleService.add(role);
         return ResponseEntity.ok().body(role1);
     }

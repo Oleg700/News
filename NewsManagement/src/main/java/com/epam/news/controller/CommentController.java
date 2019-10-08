@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.validation.Valid;
+
 /**
  * REST API controller for processing queries with entity {@link Comment}.
  *
@@ -40,7 +42,7 @@ public class CommentController {
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_COMMENT')")
     @PostMapping(value = "/news/{newsId}/comments")
     public ResponseEntity<Comment>
-    addComment(@RequestBody final Comment comment) {
+    addComment(@RequestBody final @Valid Comment comment) {
         String username = getUsernameFromSession();
         Comment savedComment = commentService.add(comment, username);
         return ResponseEntity.ok().body(savedComment);

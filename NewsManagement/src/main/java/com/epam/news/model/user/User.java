@@ -15,9 +15,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
@@ -59,18 +56,12 @@ public class User implements Serializable {
      * username.
      */
     @Column(name = "username")
-    @Size( max=100, message="name must be less than 100 characters")
-    @NotNull(message = "Please provide a name")
     private String username;
 
     /**
      * user password.
      */
     @Column
-    @Size( max=10, message="name must be less than 10 characters")
-    @NotNull(message = "Please provide a password")
-    @Pattern(regexp="^(?=.*[A-Z])(?=.*[0-9])[A-Z0-9]+$",
-            message = "password should contains one uppercase letter and one number")
     private String password;
 
     /**

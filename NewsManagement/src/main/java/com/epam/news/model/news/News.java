@@ -65,7 +65,7 @@ public class News {
      */
     @Column
     @NotNull(message = "Please provide a brief")
-    @Size( max=100, message="title must be less than 100 characters")
+    @Size(max = 100, message = "title must be less than 100 characters")
     private String title;
 
     /**
@@ -88,14 +88,14 @@ public class News {
      */
     @Column
     @NotNull(message = "Please provide a brief")
-    /*@Size( max=500, message="brief must be less than 100 characters")*/
+    @Size(max = 500, message = "brief must be less than 500 characters")
     private String brief;
 
     /**
      * news content.
      */
     @Column
-    @Size( max=2048, message="content must be less than 2048 characters")
+    @Size(max = 2048, message = "content must be less than 2048 characters")
     @NotNull(message = "Please provide a content")
     private String content;
 
@@ -115,6 +115,12 @@ public class News {
         this.title = title;
         this.date = date;
         this.brief = brief;
+        this.content = content;
+    }
+
+    public News(final long id, final String title, final String content) {
+        this.id = id;
+        this.title = title;
         this.content = content;
     }
 

@@ -54,7 +54,7 @@ public class Comment {
      * comment content.
      */
     @Column
-    @Size( max=300, message="content must be less than 300 characters")
+    @Size(max = 300, message = "content must be less than 300 characters")
     @NotNull(message = "Please provide a content")
     private String content;
 
@@ -87,6 +87,11 @@ public class Comment {
     public Comment(final Long id, final String content) {
         this.id = id;
         this.content = content;
+    }
+
+    public Comment(final News news, final User user) {
+        this.news = news;
+        this.user = user;
     }
 
     public Long getId() {
