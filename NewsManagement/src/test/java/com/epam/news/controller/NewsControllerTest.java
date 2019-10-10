@@ -136,7 +136,8 @@ class NewsControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:news/delete-all-news.sql"})
+    @Sql(scripts = {"classpath:news/delete-all-news.sql",
+            "classpath:user/create-editor.sql"})
     void whenPostUriThenReturnAddedNews() throws Exception {
 
         //given
@@ -161,7 +162,10 @@ class NewsControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:news/delete-all-news.sql"})
+    @Sql(scripts = {"classpath:news/delete-all-news.sql",
+            "classpath:authorization/delete-authorization-tables.sql",
+            "classpath:user/create-editor.sql"
+    })
     void whenPostNewsWithoutBriefUriThenReturnValidationError() throws Exception {
 
         //given
@@ -176,6 +180,7 @@ class NewsControllerTest {
                                 "Basic " + Base64Utils.encodeToString("editor:editor".getBytes())))
                 //then
                 .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST));
+
     }
 
     @Test

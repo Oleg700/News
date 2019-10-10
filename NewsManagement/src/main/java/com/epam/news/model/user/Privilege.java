@@ -51,8 +51,8 @@ public class Privilege implements GrantedAuthority {
      * privilege name.
      */
     @Column
-    @Size(max = 20, message = "name must be less than 20 characters")
-    @NotNull(message = "Please provide a name")
+    @Size(max = 20, message = "{validation.privilege.name.size}")
+    @NotNull(message = "{validation.privilege.name.notNull}")
     private String name;
 
     public Privilege() {
