@@ -64,8 +64,8 @@ public class News {
      * news title.
      */
     @Column
-    @NotNull(message = "Please provide a brief")
-    @Size(max = 100, message = "title must be less than 100 characters")
+    @NotNull(message = "{validation.news.title.notNull}")
+    @Size(max = 100, message = "{validation.news.title.size}")
     private String title;
 
     /**
@@ -87,16 +87,16 @@ public class News {
      * news brief.
      */
     @Column
-    @NotNull(message = "Please provide a brief")
-    @Size(max = 500, message = "brief must be less than 500 characters")
+    @NotNull(message = "{validation.news.brief.notNull}")
+    @Size(max = 500, message = "{validation.news.brief.size}")
     private String brief;
 
     /**
      * news content.
      */
     @Column
-    @Size(max = 2048, message = "content must be less than 2048 characters")
-    @NotNull(message = "Please provide a content")
+    @Size(max = 2048, message = "{validation.news.content.size}")
+    @NotNull(message = "{validation.news.content.notNull}")
     private String content;
 
     public News() {

@@ -55,8 +55,8 @@ public class Role implements GrantedAuthority {
      * role name.
      */
     @Column
-    @Size(max = 20, message = "name must be less than 20 characters")
-    @NotNull(message = "Please provide a name")
+    @Size(max = 20, message = "{validation.role.name.size}")
+    @NotNull(message = "{validation.role.name.notNull}")
     private String name;
 
     /**

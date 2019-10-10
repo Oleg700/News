@@ -65,6 +65,7 @@ public class AppConfig {
         return new LocalValidatorFactoryBean();
     }
 
+
     /**
      * environment for reading rows from property.
      */
@@ -126,7 +127,6 @@ public class AppConfig {
     }
 
 
-
     /**
      * Get transactionManager for creating transactions with database.
      *
@@ -138,7 +138,7 @@ public class AppConfig {
                 = new JpaTransactionManager();
         jpaTransactionManager
                 .setEntityManagerFactory(localContainerFactoryBean()
-                .getObject());
+                        .getObject());
         return jpaTransactionManager;
     }
 
@@ -261,6 +261,7 @@ public class AppConfig {
 
     /**
      * is used to get objects from MvcResult in integrations tests.
+     *
      * @return object mapper
      */
     @Bean

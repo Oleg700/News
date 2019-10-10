@@ -8,16 +8,14 @@ public class UserDto {
 
     private User user;
 
-    @Size(max = 100, message = "name must be less than 100 characters")
-    @NotNull(message = "Please provide a name")
+    @Size(max = 100, message = "{validation.userDto.name.size}")
+    @NotNull(message = "{validation.userDto.name.notNull}")
     private String username;
 
-    @Size(min = 8, message = "password must be at least 8 characters")
-    @NotNull(message = "Please provide a password")
+    @NotNull(message = "{validation.userDto.password.notNull}")
     @Pattern(regexp =
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
-            message = "password should contains " +
-                    "one upper and one lower letters, symbol and  number")
+            message = "{validation.userDto.password.pattern}")
     private String password;
 
     public UserDto(final String username, final String password) {
