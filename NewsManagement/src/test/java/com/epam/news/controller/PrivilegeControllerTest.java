@@ -78,7 +78,7 @@ class PrivilegeControllerTest {
 
         //when
         MvcResult result = this.mockMvc
-                .perform(get("http://localhost:8899/api/privilege")
+                .perform(get("http://localhost:8899/api/privileges")
                         .header(HttpHeaders.AUTHORIZATION,
                                 "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
                 .andReturn();

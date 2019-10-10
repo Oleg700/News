@@ -54,7 +54,7 @@ public class Comment {
      * comment content.
      */
     @Column
-    @Size(max = 300, message = "content must be less than 300 characters")
+    @Size(max = 300, message = "{validation.comment.content.size}")
     @NotNull(message = "Please provide a content")
     private String content;
 

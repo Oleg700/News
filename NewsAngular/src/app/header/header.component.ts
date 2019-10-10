@@ -12,10 +12,16 @@ export class HeaderComponent implements OnInit {
 
   private user:User;
 
+  private language:string;
+
   constructor(private _newsService: NewsService, private _router: Router) { }
 
   ngOnInit() {
      this._newsService.getUserObservable().subscribe(user=>this.user =user);
+  }
+
+  setLanguage(){
+    this._newsService.setLanguage(this.language);
   }
 
   navigateToLogin(){
