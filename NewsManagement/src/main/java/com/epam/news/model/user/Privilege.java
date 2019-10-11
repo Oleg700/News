@@ -1,5 +1,6 @@
 package com.epam.news.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.util.Objects;
 
 /**
  * Every role {@link Role} has a set of restricted privileges.
@@ -24,6 +26,7 @@ import javax.persistence.Table;
  */
 @Table
 @Entity(name = "Privileges")
+@JsonIgnoreProperties(ignoreUnknown = true)
 @NamedQueries({
         @NamedQuery(
                 name = "getAllPrivileges",
@@ -80,4 +83,25 @@ public class Privilege implements GrantedAuthority {
     public String getAuthority() {
         return this.getName();
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if(this == object){
+            return true;
+        }
+        if (object == null || getClass() != object.getClass())
+        {
+            return false;
+        }
+        Privilege privilege = (Privilege) object;
+        return Objects.equals(id, privilege.id) &&
+                Objects.equals(name, privilege.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 }
+
+

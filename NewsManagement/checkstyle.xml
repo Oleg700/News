@@ -76,7 +76,7 @@
         <!-- see http://checkstyle.sourceforge.net/config_annotation.html#SuppressWarningsHolder -->
         <module name="SuppressWarningsHolder"/>
 
-        <!-- Checks for Javadoc comments.                     -->
+        <!-- Checks for Javadoc comment.                     -->
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <module name="JavadocMethod"/>
         <module name="JavadocType"/>

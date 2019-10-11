@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Class is used for Spring Security authorization.
@@ -48,6 +49,8 @@ public class User {
             sequenceName = "user_seq", allocationSize = 1)
     private Long id;
 
+
+
     /**
      * username.
      */
@@ -79,6 +82,12 @@ public class User {
     private Collection<Role> roles;
 
     public User() {
+    }
+
+    public User(Long id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
     }
 
     public User(final String username,
@@ -149,5 +158,21 @@ public class User {
                 + ", roles="
                 + roles
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return enabled == user.enabled &&
+                Objects.equals(id, user.id) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, enabled);
     }
 }

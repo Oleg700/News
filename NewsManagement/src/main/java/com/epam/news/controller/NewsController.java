@@ -61,7 +61,7 @@ public class NewsController {
 
     /**
      * To increase the interaction with database,
-     * we retrieve only by 2 comments, instead of the whole list of comments.
+     * we retrieve only by 2 comments, instead of the whole list of comment.
      *
      * @param id   to get news by id
      * @param page get current comment page
