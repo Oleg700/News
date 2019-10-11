@@ -19,10 +19,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -77,7 +80,9 @@ class RoleControllerTest {
 
         //then
         String rolesString = result.getResponse().getContentAsString();
-        ArrayList listRoleResult = objectMapper.readValue(rolesString, new TypeReference<List<Role>>(){});
+        ArrayList listRoleResult = objectMapper
+                .readValue(rolesString, new TypeReference<List<Role>>() {
+                });
         assertThat(listRoles, equalTo(listRoleResult));
     }
 
@@ -102,5 +107,22 @@ class RoleControllerTest {
 
         assertThat(roleResult, is(not(nullValue())));
         assertThat(roleResult.getName(), equalTo(role.getName()));
+    }
+
+    @Test
+    void whenPostUriInvalidNameThenReturnValidationError() throws Exception {
+
+        //given
+        Role role = new Role("ROLE_TEST_MORE_THAN_20_CHAR");
+
+        //when
+        ResultActions result = this.mockMvc
+                .perform(post("http://localhost:8899/api/roles")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonConvertUtil.transformToJSON(role))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
+                //then
+                .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST));
     }
 }

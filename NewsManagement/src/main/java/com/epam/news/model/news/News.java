@@ -21,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -62,6 +64,8 @@ public class News {
      * news title.
      */
     @Column
+    @NotNull(message = "{validation.news.title.notNull}")
+    @Size(max = 100, message = "{validation.news.title.size}")
     private String title;
 
     /**
@@ -83,12 +87,16 @@ public class News {
      * news brief.
      */
     @Column
+    @NotNull(message = "{validation.news.brief.notNull}")
+    @Size(max = 500, message = "{validation.news.brief.size}")
     private String brief;
 
     /**
      * news content.
      */
     @Column
+    @Size(max = 2048, message = "{validation.news.content.size}")
+    @NotNull(message = "{validation.news.content.notNull}")
     private String content;
 
     public News() {
@@ -107,6 +115,12 @@ public class News {
         this.title = title;
         this.date = date;
         this.brief = brief;
+        this.content = content;
+    }
+
+    public News(final long id, final String title, final String content) {
+        this.id = id;
+        this.title = title;
         this.content = content;
     }
 
@@ -208,9 +222,17 @@ public class News {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        News news = (News) obj;
-        return id == news.id
+    public boolean equals(final Object object) {
+
+        if (this == object) {
+            return true;
+        }
+
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        News news = (News) object;
+        return  id == news.id
                 && title.equals(news.title)
                 && brief.equals(news.brief)
                 && content.equals(news.content);

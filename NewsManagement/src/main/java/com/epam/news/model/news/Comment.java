@@ -15,6 +15,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -52,6 +54,8 @@ public class Comment {
      * comment content.
      */
     @Column
+    @Size(max = 300, message = "{validation.comment.content.size}")
+    @NotNull(message = "Please provide a content")
     private String content;
 
     /**
@@ -80,9 +84,14 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Long id, String content) {
+    public Comment(final Long id, final String content) {
         this.id = id;
         this.content = content;
+    }
+
+    public Comment(final News news, final User user) {
+        this.news = news;
+        this.user = user;
     }
 
     public Long getId() {

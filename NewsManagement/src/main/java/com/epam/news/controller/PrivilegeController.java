@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -55,7 +56,7 @@ public class PrivilegeController {
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_PRIVILEGE')")
     @PostMapping(value = "/privileges")
     public ResponseEntity<Privilege> addPrivilege(
-            @RequestBody final Privilege privilege) {
+            @RequestBody final @Valid Privilege privilege) {
         Privilege savedPrivilege = privilegeService.add(privilege);
         return ResponseEntity.ok().body(savedPrivilege);
     }

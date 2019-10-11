@@ -1,7 +1,3 @@
-
-/**
- * package .config contains classes with bean instructions and web settings
- */
 package com.epam.news.config;
 
 import com.epam.news.dao.comment.CommentDao;
@@ -40,9 +36,11 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
+import javax.validation.Validator;
 
 /**
  * Class for creating Spring beans with JavaConfig.
@@ -61,6 +59,12 @@ import javax.sql.DataSource;
         @ComponentScan("com.epam.news")
 })
 public class AppConfig {
+
+    @Bean
+    public Validator localValidatorFactoryBean() {
+        return new LocalValidatorFactoryBean();
+    }
+
 
     /**
      * environment for reading rows from property.
@@ -123,7 +127,6 @@ public class AppConfig {
     }
 
 
-
     /**
      * Get transactionManager for creating transactions with database.
      *
@@ -135,7 +138,7 @@ public class AppConfig {
                 = new JpaTransactionManager();
         jpaTransactionManager
                 .setEntityManagerFactory(localContainerFactoryBean()
-                .getObject());
+                        .getObject());
         return jpaTransactionManager;
     }
 
@@ -147,8 +150,7 @@ public class AppConfig {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 
     /**
@@ -259,10 +261,11 @@ public class AppConfig {
 
     /**
      * is used to get objects from MvcResult in integrations tests.
+     *
      * @return object mapper
      */
     @Bean
-    public ObjectMapper objectMapper(){
+    public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 

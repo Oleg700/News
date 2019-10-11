@@ -22,19 +22,22 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpServletResponse;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = AppConfig.class)
 class CommentControllerTest {
-
 
 
     @Autowired
@@ -78,7 +81,7 @@ class CommentControllerTest {
 
         //when
         MvcResult result = this.mockMvc
-                .perform(post("http://localhost:8899/api/news/" + 1 + "/comment")
+                .perform(post("http://localhost:8899/api/news/" + 1 + "/comments")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonConvertUtil.transformToJSON(comment))
                         .header(HttpHeaders.AUTHORIZATION,
@@ -91,5 +94,30 @@ class CommentControllerTest {
 
         assertThat(commentResult, is(not(nullValue())));
         assertThat(commentResult.getContent(), equalTo(comment.getContent()));
+    }
+
+    @Test
+    @Sql(scripts = {"classpath:comment/delete-all-comments.sql"})
+    @Sql(scripts =
+            {"classpath:authorization/delete-authorization-tables.sql",
+                    "classpath:user/create-editor.sql"})
+    void whenPostUriWithoutContentThenReturnValidationError()
+            throws Exception {
+
+        //given
+        News news = new News(1, "London", "brief", "content");
+        User user = new User((long) 1, "editor",
+                "$2a$10$ImQ1cAL0JnXCMwojGnvGzOscT5adZrjEHqIIynGqfXhDRM.pN/2Ua");
+        Comment comment = new Comment(news, user);
+
+        //when
+        ResultActions result = this.mockMvc
+                .perform(post("http://localhost:8899/api/news/" + 1 + "/comments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonConvertUtil.transformToJSON(comment))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Basic " + Base64Utils.encodeToString("editor:editor".getBytes())))
+                //then
+                .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST));
     }
 }

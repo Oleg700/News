@@ -12,6 +12,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -49,6 +51,8 @@ public class Privilege implements GrantedAuthority {
      * privilege name.
      */
     @Column
+    @Size(max = 20, message = "{validation.privilege.name.size}")
+    @NotNull(message = "{validation.privilege.name.notNull}")
     private String name;
 
     public Privilege() {
@@ -85,17 +89,16 @@ public class Privilege implements GrantedAuthority {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if(this == object){
+    public boolean equals(final Object object) {
+        if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass())
-        {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
         Privilege privilege = (Privilege) object;
-        return Objects.equals(id, privilege.id) &&
-                Objects.equals(name, privilege.name);
+        return Objects.equals(id, privilege.id)
+                && Objects.equals(name, privilege.name);
     }
 
     @Override

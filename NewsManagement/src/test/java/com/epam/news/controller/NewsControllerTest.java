@@ -136,7 +136,8 @@ class NewsControllerTest {
     }
 
     @Test
-    @Sql(scripts = {"classpath:news/delete-all-news.sql"})
+    @Sql(scripts = {"classpath:news/delete-all-news.sql",
+            "classpath:user/create-editor.sql"})
     void whenPostUriThenReturnAddedNews() throws Exception {
 
         //given
@@ -213,6 +214,28 @@ class NewsControllerTest {
 
 
 
+
+    @Test
+    @Sql(scripts = {"classpath:news/delete-all-news.sql",
+            "classpath:authorization/delete-authorization-tables.sql",
+            "classpath:user/create-editor.sql"
+    })
+    void whenPostNewsWithoutBriefUriThenReturnValidationError() throws Exception {
+
+        //given
+        News news = new News(1, "title", "content");
+
+        //when
+        ResultActions result = this.mockMvc
+                .perform(post("http://localhost:8899/api/news")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonConvertUtil.transformToJSON(news))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Basic " + Base64Utils.encodeToString("editor:editor".getBytes())))
+                //then
+                .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST));
+
+    }
 
     @Test
     @Sql(scripts

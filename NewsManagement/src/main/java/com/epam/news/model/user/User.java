@@ -15,6 +15,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -38,7 +39,7 @@ import java.util.Objects;
         )
 }
 )
-public class User {
+public class User implements Serializable {
 
     /**
      * userId is generated with sequence in database.
@@ -84,7 +85,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String username, String password) {
+    public User(final Long id, final String username, final String password) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -161,14 +162,20 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return enabled == user.enabled &&
-                Objects.equals(id, user.id) &&
-                Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password);
+    public boolean equals(final Object object) {
+
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+
+        User user = (User) object;
+        return enabled == user.enabled
+                && Objects.equals(id, user.id)
+                && Objects.equals(username, user.username)
+                && Objects.equals(password, user.password);
     }
 
     @Override

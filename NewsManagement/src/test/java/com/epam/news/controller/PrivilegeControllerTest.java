@@ -19,10 +19,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
@@ -75,7 +78,7 @@ class PrivilegeControllerTest {
 
         //when
         MvcResult result = this.mockMvc
-                .perform(get("http://localhost:8899/api/privilege")
+                .perform(get("http://localhost:8899/api/privileges")
                         .header(HttpHeaders.AUTHORIZATION,
                                 "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
                 .andReturn();
@@ -83,10 +86,11 @@ class PrivilegeControllerTest {
         //then
         String privilegesString = result.getResponse().getContentAsString();
         System.out.println(privilegesString);
-        ArrayList listPrivilegesResult = objectMapper.readValue(privilegesString, new TypeReference<List<Privilege>>() {
-        });
+        ArrayList listPrivilegesResult = objectMapper
+                .readValue(privilegesString, new TypeReference<List<Privilege>>() {
+                });
 
-        assertThat(listPrivileges,equalTo(listPrivilegesResult));
+        assertThat(listPrivileges, equalTo(listPrivilegesResult));
     }
 
     @Test
@@ -97,7 +101,7 @@ class PrivilegeControllerTest {
 
         //when
         MvcResult result = this.mockMvc
-                .perform(post("http://localhost:8899/api/privilege")
+                .perform(post("http://localhost:8899/api/privileges")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonConvertUtil.transformToJSON(privilege))
                         .header(HttpHeaders.AUTHORIZATION,
@@ -106,8 +110,26 @@ class PrivilegeControllerTest {
 
         //then
         String privilegeString = result.getResponse().getContentAsString();
-        Privilege privilegeResult = objectMapper.readValue(privilegeString, Privilege.class);
+        Privilege privilegeResult = objectMapper
+                .readValue(privilegeString, Privilege.class);
         assertThat(privilegeResult, is(not(nullValue())));
         assertThat(privilegeResult.getName(), equalTo(privilege.getName()));
+    }
+
+    @Test
+    void whenPostUriInvalidNameThenReturnValidationError() throws Exception {
+
+        //given
+        Privilege privilege = new Privilege("PRIVILEGE_TEST_MORE_THAN_20_CHARS");
+
+        //when
+        ResultActions result = this.mockMvc
+                .perform(post("http://localhost:8899/api/privileges")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonConvertUtil.transformToJSON(privilege))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
+                //then
+                .andExpect(status().is(HttpServletResponse.SC_BAD_REQUEST));
     }
 }

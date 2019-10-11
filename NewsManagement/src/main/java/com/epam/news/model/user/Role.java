@@ -17,6 +17,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -53,6 +55,8 @@ public class Role implements GrantedAuthority {
      * role name.
      */
     @Column
+    @Size(max = 20, message = "{validation.role.name.size}")
+    @NotNull(message = "{validation.role.name.notNull}")
     private String name;
 
     /**
@@ -78,7 +82,7 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Role(long id, String name) {
+    public Role(final long id, final String name) {
         this.id = id;
         this.name = name;
     }
@@ -114,14 +118,17 @@ public class Role implements GrantedAuthority {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(final Object object) {
+
+        if (this == object) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return Objects.equals(id, role.id) &&
-                Objects.equals(name, role.name);
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Role role = (Role) object;
+        return Objects.equals(id, role.id)
+                && Objects.equals(name, role.name);
     }
 
     @Override
