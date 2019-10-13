@@ -10,6 +10,7 @@ import com.epam.news.dao.role.RoleDao;
 import com.epam.news.dao.role.RoleDaoImpl;
 import com.epam.news.dao.user.UserDao;
 import com.epam.news.dao.user.UserDaoImpl;
+import com.epam.news.security.RestResponseEntityExceptionHandler;
 import com.epam.news.service.comment.CommentService;
 import com.epam.news.service.comment.CommentServiceImpl;
 import com.epam.news.service.news.NewsService;
@@ -23,11 +24,13 @@ import com.epam.news.service.user.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -38,9 +41,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
+import java.util.Locale;
 
 /**
  * Class for creating Spring beans with JavaConfig.
@@ -59,6 +64,19 @@ import javax.validation.Validator;
         @ComponentScan("com.epam.news")
 })
 public class AppConfig {
+
+    /*@Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+       *//* messageSource.setDefaultEncoding("UTF-8");*//*
+        messageSource.addBasenames("classpath:SecurityExceptions");
+        return messageSource;
+    }*/
+
+    @Bean
+    public ResponseEntityExceptionHandler responseEntityExceptionHandler() {
+        return new RestResponseEntityExceptionHandler();
+    }
 
     @Bean
     public Validator localValidatorFactoryBean() {

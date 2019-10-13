@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
@@ -55,22 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
 
         http
+                .httpBasic().and().csrf().disable()
                 .cors().and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/news/**").permitAll();
-                /*.and()
-                .exceptionHandling()
-                .authenticationEntryPoint(new RestAuthenticationEntryPoint());*/
-               /* .and().httpBasic().and().csrf().disable();*/
-
     }
-
-/*
-    @Bean
-    public RestAuthenticationEntryPoint myEntryPoint() {
-        return new RestAuthenticationEntryPoint();
-    }
-*/
-
-
 }
