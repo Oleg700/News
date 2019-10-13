@@ -1,16 +1,12 @@
 package com.epam.news.security;
 
-
-import org.hibernate.Session;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -29,9 +25,18 @@ public class RestResponseEntityExceptionHandler
     public ResponseEntity<Object> handleForbiddenException(
             Exception ex, WebRequest request, Locale locale) {
 
-        String error = messageSource.getMessage("authentication.exception", new Object[]{}, locale);
+        String error = messageSource.getMessage("authentication.exception",
+                new Object[]{}, locale);
         return new ResponseEntity<Object>( error
                , new HttpHeaders(), HttpStatus.FORBIDDEN);
+    }
 
+    @ExceptionHandler({ AuthenticationException.class })
+    public ResponseEntity<Object> handleUnauthorizedException(
+            Exception ex, WebRequest request, Locale locale) {
+        String error = messageSource.getMessage("authorization.exception",
+                new Object[]{}, locale);
+        return new ResponseEntity<Object>( error,
+                new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
 }

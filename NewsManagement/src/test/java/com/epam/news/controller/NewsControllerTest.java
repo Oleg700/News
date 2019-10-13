@@ -210,38 +210,6 @@ class NewsControllerTest {
     }
 
     @Test
-    @Sql(scripts
-            = {"classpath:news/delete-all-news.sql",
-            "classpath:authorization/delete-authorization-tables.sql",
-            "classpath:user/create-admin.sql"})
-    void dwhenPostNewsWithoutAuthorizationUrisThenReturnErrorNotAuthenticated()
-            throws Exception {
-
-        //given
-        News news = new News(1, "title", "brief", "content");
-
-        //when
-        MvcResult result = this.mockMvc
-                .perform(post("http://localhost:8899/api/news")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(JsonConvertUtil.transformToJSON(news))
-                        .header(HttpHeaders.AUTHORIZATION,
-                                "Basic " + Base64Utils.encodeToString("admin:admin".getBytes())))
-
-                //then
-                //error 403
-            .andReturn();
-        String newsString = result.getResponse().getContentAsString();
-        System.out.println(newsString);
-    }
-
-
-
-
-
-
-
-    @Test
     @Sql(scripts = {"classpath:news/delete-all-news.sql",
             "classpath:authorization/delete-authorization-tables.sql",
             "classpath:user/create-editor.sql"

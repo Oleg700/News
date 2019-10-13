@@ -25,11 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -45,7 +41,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.sql.DataSource;
 import javax.validation.Validator;
-import java.util.Locale;
 
 /**
  * Class for creating Spring beans with JavaConfig.
@@ -65,13 +60,16 @@ import java.util.Locale;
 })
 public class AppConfig {
 
-    /*@Bean
+    @Bean
     public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-       *//* messageSource.setDefaultEncoding("UTF-8");*//*
+        ReloadableResourceBundleMessageSource messageSource =
+                new ReloadableResourceBundleMessageSource();
+        messageSource.setCacheSeconds(3600);
+        messageSource.setDefaultEncoding("UTF-8");
         messageSource.addBasenames("classpath:SecurityExceptions");
+
         return messageSource;
-    }*/
+    }
 
     @Bean
     public ResponseEntityExceptionHandler responseEntityExceptionHandler() {
