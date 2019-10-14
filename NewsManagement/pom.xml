@@ -8,6 +8,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>5.1.2.RELEASE</spring.version>
         <spring.orm.version>5.1.6.RELEASE</spring.orm.version>
         <hibernate.version>4.3.11.Final</hibernate.version>
@@ -20,28 +21,8 @@
         <mockito.version>1.10.19</mockito.version>
         <junit.jupiter.version>5.4.2</junit.jupiter.version>
         <h2database.version>1.4.199</h2database.version>
-
     </properties>
     <dependencies>
-
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-autoconfigure -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>1.0.2.RELEASE</version>
-        </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20180813</version>
-        </dependency>
-
-
-
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
         <dependency>
             <groupId>javax.validation</groupId>
@@ -55,8 +36,6 @@
             <artifactId>jackson-datatype-hibernate4</artifactId>
             <version>2.9.9</version>
         </dependency>
-
-
 
         <!-- Spring Security Core -->
         <dependency>
