@@ -68,8 +68,6 @@ public class AppConfig {
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource =
                 new ReloadableResourceBundleMessageSource();
-        messageSource.setCacheSeconds(3600);
-
         messageSource.addBasenames("classpath:SecurityExceptions");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
