@@ -209,6 +209,7 @@ class NewsControllerTest {
                 .andExpect(status().is(HttpServletResponse.SC_FORBIDDEN));
     }
 
+
     @Test
     @Sql(scripts = {"classpath:news/delete-all-news.sql",
             "classpath:authorization/delete-authorization-tables.sql",

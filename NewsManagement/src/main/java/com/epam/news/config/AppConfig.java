@@ -25,7 +25,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -65,9 +69,9 @@ public class AppConfig {
         ReloadableResourceBundleMessageSource messageSource =
                 new ReloadableResourceBundleMessageSource();
         messageSource.setCacheSeconds(3600);
-        messageSource.setDefaultEncoding("UTF-8");
-        messageSource.addBasenames("classpath:SecurityExceptions");
 
+        messageSource.addBasenames("classpath:SecurityExceptions");
+        messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
 
