@@ -1,3 +1,4 @@
+/*
 
 package com.epam.news.validation;
 
@@ -39,3 +40,4 @@ public class CustomGlobalExceptionHandler
         return new ResponseEntity<>(body, headers, status);
     }
 }
+*/

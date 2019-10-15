@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -27,7 +26,6 @@ import java.util.List;
  */
 @CrossOrigin("*")
 @RestController
-@EnableWebMvc
 @RequestMapping(value = "/api")
 public class UserController {
 

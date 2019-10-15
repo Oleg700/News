@@ -1,5 +1,6 @@
 package com.epam.news.controller;
 
+import com.epam.news.dao.news.NewsRepository;
 import com.epam.news.model.news.News;
 import com.epam.news.service.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
  */
 @CrossOrigin("*")
 @RestController
-@EnableWebMvc
+
 @RequestMapping(value = "/api")
 public class NewsController {
 
@@ -41,11 +41,22 @@ public class NewsController {
      *
      * @return list of news
      */
+/*
     @GetMapping(value = "/news")
     public ResponseEntity<List<News>> getAllNews() {
         List<News> newsList = newsService.getAll();
         return ResponseEntity.ok().body(newsList);
     }
+*/
+    @Autowired
+    private NewsRepository newsRepository;
+
+    @GetMapping(value = "/news")
+    public ResponseEntity<List<News>> getAllNews() {
+        List news = newsRepository.findAll();
+        return ResponseEntity.ok().body(news);
+    }
+
 
     /**
      * get news by id

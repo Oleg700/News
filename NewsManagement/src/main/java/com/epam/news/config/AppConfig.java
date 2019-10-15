@@ -10,7 +10,6 @@ import com.epam.news.dao.role.RoleDao;
 import com.epam.news.dao.role.RoleDaoImpl;
 import com.epam.news.dao.user.UserDao;
 import com.epam.news.dao.user.UserDaoImpl;
-import com.epam.news.security.RestResponseEntityExceptionHandler;
 import com.epam.news.service.comment.CommentService;
 import com.epam.news.service.comment.CommentServiceImpl;
 import com.epam.news.service.news.NewsService;
@@ -34,7 +33,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.Validator;
 
@@ -43,7 +41,7 @@ import javax.validation.Validator;
  *
  * <p>
  * We don't create {@link org.springframework.context.ApplicationContext},
- * Spring do to throw interface, see {@link NewsWebAppInitializer}
+ * Spring do to throw interface, see {@link }
  * <p>
  *
  * @author Oleg Aliyev
@@ -65,10 +63,10 @@ public class AppConfig {
         return messageSource;
     }
 
-    @Bean
+/*    @Bean
     public ResponseEntityExceptionHandler responseEntityExceptionHandler() {
         return new RestResponseEntityExceptionHandler();
-    }
+    }*/
 
     @Bean
     public Validator localValidatorFactoryBean() {

@@ -1,4 +1,4 @@
-package com.epam.news.config;
+/*package com.epam.news.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,11 +13,11 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import java.util.Locale;
 
 
-/**
+*//**
  * Implementation of {@link WebMvcConfigurer}.
  *
  * @author Oleg Aliyev
- */
+ *//*
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.epam.news.controller"})
@@ -45,4 +45,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(localeInterceptor());
     }
 
-}
+}*/

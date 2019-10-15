@@ -1,3 +1,4 @@
+/*
 package com.epam.news.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,3 +57,4 @@ public class RestResponseEntityExceptionHandler
                 headers, HttpStatus.UNAUTHORIZED);
     }
 }
+*/
