@@ -210,11 +210,6 @@ class NewsControllerTest {
     }
 
 
-
-
-
-
-
     @Test
     @Sql(scripts = {"classpath:news/delete-all-news.sql",
             "classpath:authorization/delete-authorization-tables.sql",

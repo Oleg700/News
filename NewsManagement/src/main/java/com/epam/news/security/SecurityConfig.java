@@ -1,5 +1,7 @@
 package com.epam.news.security;
 
+
+
 import com.epam.news.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,6 +25,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     /**
      * class is used to get username and password from database.
      */
@@ -37,10 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
+
         http
+                .httpBasic().and().csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/news/**").permitAll()
-                .and().httpBasic().and().csrf().disable();
+                .antMatchers(HttpMethod.GET, "/api/news/**").permitAll();
     }
 }
