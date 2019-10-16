@@ -45,13 +45,14 @@ public class Privilege implements GrantedAuthority {
             generator = "privilege_seq")
     @SequenceGenerator(name = "privilege_seq",
             sequenceName = "privilege_seq", allocationSize = 1)
+
     private Long id;
 
     /**
      * privilege name.
      */
     @Column
-    @Size(max = 20, message = "{validation.privilege.name.size}")
+    @Size(max = 40, message = "{validation.privilege.name.size}")
     @NotNull(message = "{validation.privilege.name.notNull}")
     private String name;
 

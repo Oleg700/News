@@ -1,4 +1,4 @@
-package com.epam.news.dao.news;
+package com.epam.news.repository;
 
 import com.epam.news.model.news.News;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +11,7 @@ public  interface NewsRepository extends JpaRepository<News, Long> {
 
     @Override
     List<News> findAll();
+
+    @Override
+    News save(News news);
 }

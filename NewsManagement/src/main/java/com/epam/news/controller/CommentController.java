@@ -1,3 +1,4 @@
+/*
 package com.epam.news.controller;
 
 import com.epam.news.model.news.Comment;
@@ -15,28 +16,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+*/
 /**
  * REST API controller for processing queries with entity {@link Comment}.
  *
  * @author Oleg Aliyev
- */
+ *//*
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/api")
 public class CommentController {
 
-    /**
+    */
+/**
      * service is used to interact with database.
-     */
+     *//*
+
     @Autowired
     private CommentService commentService;
 
-    /**
+    */
+/**
      * Save comment to database.
      *
      * @param comment to save
      * @return comment
-     */
+     *//*
+
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_COMMENT')")
     @PostMapping(value = "/news/{newsId}/comments")
     public ResponseEntity<Comment>
@@ -46,11 +53,13 @@ public class CommentController {
         return ResponseEntity.ok().body(savedComment);
     }
 
-    /**
+    */
+/**
      * Retrieve authorize username from session.
      *
      * @return username
-     */
+     *//*
+
     private String getUsernameFromSession() {
         UserDetails user = (UserDetails)
                 SecurityContextHolder.getContext()
@@ -63,3 +72,4 @@ public class CommentController {
     }
 
 }
+*/

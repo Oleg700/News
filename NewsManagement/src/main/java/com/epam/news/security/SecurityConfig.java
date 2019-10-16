@@ -1,6 +1,4 @@
-/*
 package com.epam.news.security;
-
 
 
 import com.epam.news.service.user.UserService;
@@ -14,13 +12,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-*/
 /**
  * Custom implementation of {@link WebSecurityConfigurerAdapter}
  * to set rules for Spring Security access.
  *
  * @author Oleg Aliyev
- *//*
+ */
+
 
 @Configuration
 @EnableWebSecurity
@@ -29,10 +27,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    */
 /**
      * class is used to get username and password from database.
-     *//*
+     */
+
+
+
 
     @Autowired
     private UserService userService;
@@ -52,5 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/news/**").permitAll();
     }
+
 }
-*/
+

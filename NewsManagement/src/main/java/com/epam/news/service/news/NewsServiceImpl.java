@@ -1,13 +1,11 @@
 package com.epam.news.service.news;
 
 import com.epam.news.dao.comment.CommentDao;
-import com.epam.news.dao.news.NewsDao;
-import com.epam.news.model.news.Comment;
 import com.epam.news.model.news.News;
+import com.epam.news.repository.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -15,37 +13,38 @@ import java.util.List;
  *
  * @author Oleg Aliyev
  */
+@Service
 public class NewsServiceImpl implements NewsService {
 
     /**
      * newsDao is used to process news objects in database.
      */
-    private NewsDao newsDao;
+    private NewsRepository newsRepository;
 
     /**
      * commentDao is used to process comment objects in database.
      */
     private CommentDao commentDao;
 
-    /**
-     * constructor.
-     *
-     * @param newsDao    is used to process news objects in database.
-     * @param commentDao is used to process comment objects in database.
-     */
-    @Autowired
-    public NewsServiceImpl(final NewsDao newsDao, final CommentDao commentDao) {
-        this.newsDao = newsDao;
+
+   /* @Autowired
+    public NewsServiceImpl(final NewsDao newsRepository, final CommentDao commentDao) {
+        this.newsRepository = newsRepository;
         this.commentDao = commentDao;
+    }*/
+
+    @Autowired
+    public NewsServiceImpl(final NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
     }
 
 
     @Override
-    public List<News> getAll() {
-        return newsDao.getAll();
+    public List<News> findAll() {
+        return newsRepository.findAll();
     }
 
-    @Override
+   /* @Override
     public News get(final long id) {
         return (News) newsDao.get(id);
     }
@@ -76,5 +75,5 @@ public class NewsServiceImpl implements NewsService {
     @Transactional
     public void delete(final long id) {
         newsDao.delete(id);
-    }
+    }*/
 }

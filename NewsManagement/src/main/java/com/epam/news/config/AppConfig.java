@@ -1,26 +1,15 @@
 package com.epam.news.config;
 
 import com.epam.news.dao.comment.CommentDao;
-import com.epam.news.dao.comment.CommentDaoImpl;
-import com.epam.news.dao.news.NewsDao;
-import com.epam.news.dao.news.NewsDaoImpl;
-import com.epam.news.dao.privilege.PrivilegeDao;
-import com.epam.news.dao.privilege.PrivilegeDaoImpl;
 import com.epam.news.dao.role.RoleDao;
-import com.epam.news.dao.role.RoleDaoImpl;
 import com.epam.news.dao.user.UserDao;
 import com.epam.news.dao.user.UserDaoImpl;
-import com.epam.news.service.comment.CommentService;
-import com.epam.news.service.comment.CommentServiceImpl;
 import com.epam.news.service.news.NewsService;
-import com.epam.news.service.news.NewsServiceImpl;
 import com.epam.news.service.privilege.PrivilegeService;
-import com.epam.news.service.privilege.PrivilegeServiceImpl;
-import com.epam.news.service.role.RoleService;
-import com.epam.news.service.role.RoleServiceImpl;
 import com.epam.news.service.user.UserService;
 import com.epam.news.service.user.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,6 +17,13 @@ import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -47,12 +43,32 @@ import javax.validation.Validator;
  * @author Oleg Aliyev
  */
 @Configuration
-@PropertySource("classpath:db.properties")
+@PropertySource(value= {"classpath:application.properties"})
 @EnableTransactionManagement
 @ComponentScans(value = {
         @ComponentScan("com.epam.news")
 })
 public class AppConfig {
+
+    @Autowired
+    Environment environment;
+
+    @Bean(name = "dataSource")
+    public DriverManagerDataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
+        dataSource.setUrl(environment.getProperty("spring.datasource.url"));
+        dataSource.setUsername(environment.getProperty("spring.datasource.username"));
+        dataSource.setPassword(environment.getProperty("spring.datasource.password"));
+
+        // schema init
+        Resource initSchema = new ClassPathResource("authorization/delete-authorization-data.sql");
+        Resource initData = new ClassPathResource("roles-initialization/create-roles.sql");
+        DatabasePopulator databasePopulator = new ResourceDatabasePopulator(initSchema, initData);
+        DatabasePopulatorUtils.execute(databasePopulator, dataSource);
+
+        return dataSource;
+    }
 
     @Bean
     public MessageSource messageSource() {
@@ -62,6 +78,8 @@ public class AppConfig {
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
+
+
 
 /*    @Bean
     public ResponseEntityExceptionHandler responseEntityExceptionHandler() {
@@ -99,23 +117,23 @@ public class AppConfig {
      *
      * @return newsDaoImpl
      */
-    @Bean
+  /*  @Bean
     public NewsDao newsDao() {
         return new NewsDaoImpl();
     }
 
-    /**
+    *//**
      * Get NewsService for processing
      * with Entity {@link com.epam.news.model.news.News}.
      *
      * @return newsService
-     */
+     *//*
     @Bean
     public NewsService newsService() {
         return new NewsServiceImpl(newsDao(), commentDao());
     }
 
-    /**
+    *//**
      * Get UserDao, which will be used in service layer  {@link UserService}.
      *
      * @return userDao
@@ -140,65 +158,65 @@ public class AppConfig {
      * Get RoleDao, which will be used in service layer  {@link RoleDao}.
      *
      * @return roleDao
-     */
+     *//*
     @Bean
     public RoleDao roleDao() {
         return new RoleDaoImpl();
     }
 
-    /**
+    *//**
      * Get RoleService for
      * processing with Entity {@link com.epam.news.model.user.Role}.
      *
      * @return roleService
-     */
+     *//*
     @Bean
     public RoleService roleService() {
         return new RoleServiceImpl(roleDao());
     }
 
-    /**
+    *//**
      * Get RoleDao,
      * which will be used in service layer  {@link PrivilegeService}.
      *
      * @return privilegeDao
-     */
+     *//*
     @Bean
     public PrivilegeDao privilegeDao() {
         return new PrivilegeDaoImpl();
     }
 
-    /**
+    *//**
      * Get PrivilegeService for
      * processing with Entity {@link com.epam.news.model.user.Privilege}.
      *
      * @return privilegeService
-     */
+     *//*
     @Bean
     public PrivilegeService privilegeService() {
         return new PrivilegeServiceImpl(privilegeDao());
     }
 
-    /**
+    *//**
      * Get CommentDao, which will be used in service layer  {@link CommentDao}.
      *
      * @return commentDao
-     */
+     *//*
     @Bean
     public CommentDao commentDao() {
         return new CommentDaoImpl();
     }
 
-    /**
+    *//**
      * Get CommentService for
      * processing with Entity {@link com.epam.news.model.news.Comment}.
      *
      * @return commentService
-     */
+     *//*
     @Bean
     public CommentService commentService() {
         return new CommentServiceImpl(commentDao(), userService());
-    }
+    }*/
 
     /**
      * is used to get objects from MvcResult in integrations tests.

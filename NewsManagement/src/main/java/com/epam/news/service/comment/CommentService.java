@@ -2,6 +2,7 @@ package com.epam.news.service.comment;
 
 import com.epam.news.model.news.Comment;
 
+
 /**
  * Service for wrapping {@link com.epam.news.dao.comment.CommentDao}.
  *
@@ -11,6 +12,7 @@ import com.epam.news.model.news.Comment;
  *
  * @author Oleg Aliyev
  */
+
 public interface CommentService {
 
     /**

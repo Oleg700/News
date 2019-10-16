@@ -1,9 +1,7 @@
-/*
 package com.epam.news.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
-*/
 /**
  * Initialization of Spring Security.
  *
@@ -12,9 +10,8 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
  * <p>
  *
  * @author Oleg Aliyev
- *//*
+ */
 
 public class SpringSecurityInitializer
         extends AbstractSecurityWebApplicationInitializer {
 }
-*/

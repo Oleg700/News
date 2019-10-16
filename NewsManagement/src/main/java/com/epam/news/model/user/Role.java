@@ -3,7 +3,6 @@ package com.epam.news.model.user;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -55,7 +54,7 @@ public class Role implements GrantedAuthority {
      * role name.
      */
     @Column
-    @Size(max = 20, message = "{validation.role.name.size}")
+    @Size(max = 40, message = "{validation.role.name.size}")
     @NotNull(message = "{validation.role.name.notNull}")
     private String name;
 
@@ -68,7 +67,7 @@ public class Role implements GrantedAuthority {
     /**
      * roles and privileges are connected with relation @ManyToMany.
      */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(
