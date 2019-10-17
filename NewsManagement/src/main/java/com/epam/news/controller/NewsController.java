@@ -1,13 +1,13 @@
 package com.epam.news.controller;
 
 import com.epam.news.model.news.News;
-import com.epam.news.repository.NewsRepository;
 import com.epam.news.service.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,38 +37,27 @@ public class NewsController {
      *
      * @return list of news
      */
-/*
     @GetMapping(value = "/news")
-    public ResponseEntity<List<News>> getAllNews() {
-        List<News> newsList = newsService.getAll();
-        return ResponseEntity.ok().body(newsList);
-    }
-*/
-    @Autowired
-    private NewsRepository newsRepository;
-
-    @GetMapping(value = "/news")
-    public ResponseEntity<List<News>> getAllNews() {
-        System.out.println("get___");
+    public ResponseEntity<List<News>> findAllNews() {
         List news = newsService.findAll();
         return ResponseEntity.ok().body(news);
     }
 
 
-/*    *//**
+    /**
      * get news by id
      * responseEntity is allowed for all users.
      *
      * @param id to get news by id
      * @return news
-     *//*
+     */
     @GetMapping(value = "/news/{id}")
     public ResponseEntity<News> getNewsById(@PathVariable("id") final long id) {
-        News news = newsService.get(id);
+        News news = newsService.getById(id);
         return ResponseEntity.ok().body(news);
     }
 
-    *//**
+    /**
      * To increase the interaction with database,
      * we retrieve only by 2 comments, instead of the whole list of comment.
      *
@@ -84,7 +73,9 @@ public class NewsController {
         return ResponseEntity.ok().body(news);
     }
 
-    *//**
+    */
+
+    /**
      * Returns added news as a result of request,
      * only users with role editor are allowed to
      * save news.
@@ -95,7 +86,7 @@ public class NewsController {
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_NEWS')")
     @PostMapping(value = "/news")
     public ResponseEntity<News> addNews(@RequestBody @Valid final News news) {
-        News newsAdded = newsRepository.save(news);
+        News newsAdded = newsService.save(news);
         return ResponseEntity.ok().body(newsAdded);
     }
 

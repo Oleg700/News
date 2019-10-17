@@ -16,13 +16,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class CustomUserService implements UserDetailsService {
 
-/**
+    /**
      * userService is used to load username from database.
      */
 
     private UserService userService;
 
-/**
+    /**
      * @param userService is used to load username from database.
      */
 

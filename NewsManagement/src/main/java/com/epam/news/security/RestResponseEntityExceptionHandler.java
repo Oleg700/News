@@ -1,4 +1,3 @@
-/*
 package com.epam.news.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,9 @@ public class RestResponseEntityExceptionHandler
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler({ AccessDeniedException.class })
+    @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Object> handleForbiddenException(
-           final Exception ex, final WebRequest request, final Locale locale) {
+            final Exception ex, final WebRequest request, final Locale locale) {
 
         String error = messageSource.getMessage("authentication.exception",
                 new Object[]{}, locale);
@@ -39,10 +38,10 @@ public class RestResponseEntityExceptionHandler
         Map result = new HashMap<String, String>();
         result.put("message", error);
         return new ResponseEntity<Object>(result,
-               headers, HttpStatus.FORBIDDEN);
+                headers, HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler({ AuthenticationException.class })
+    @ExceptionHandler({AuthenticationException.class})
     public ResponseEntity<Object> handleUnauthorizedException(
             final Exception ex, final WebRequest request, final Locale locale) {
         String error = messageSource.getMessage("authorization.exception",
@@ -57,4 +56,3 @@ public class RestResponseEntityExceptionHandler
                 headers, HttpStatus.UNAUTHORIZED);
     }
 }
-*/

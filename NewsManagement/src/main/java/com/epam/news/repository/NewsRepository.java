@@ -7,11 +7,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public  interface NewsRepository extends JpaRepository<News, Long> {
+public interface NewsRepository extends JpaRepository<News, Long> {
 
     @Override
     List<News> findAll();
 
     @Override
     News save(News news);
+
+    /*@Query("SELECT n FROM News n WHERE n.id = id")*/
+    News getById(final long id);
 }

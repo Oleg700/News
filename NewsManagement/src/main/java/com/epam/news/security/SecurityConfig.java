@@ -27,13 +27,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-/**
+    /**
      * class is used to get username and password from database.
      */
-
-
-
-
     @Autowired
     private UserService userService;
 

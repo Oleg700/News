@@ -21,6 +21,16 @@ import java.util.List;
  * REST API controller for processing queries with entity {@link Privilege}.
  *
  * @author Oleg Aliyev
+ * <p>
+ * service is used to interact with database.
+ * <p>
+ * returns list of privileges
+ * only users with role admin has access to this information.
+ * @return list of privileges
+ * <p>
+ * request to save privilege to database.
+ * @param privilege to save
+ * @return privilege
  *//*
 
 @CrossOrigin("*")
@@ -30,19 +40,19 @@ public class PrivilegeController {
 
     */
 /**
-     * service is used to interact with database.
-     *//*
+ * service is used to interact with database.
+ *//*
 
     @Autowired
     private PrivilegeService privilegeService;
 
     */
 /**
-     * returns list of privileges
-     * only users with role admin has access to this information.
-     *
-     * @return list of privileges
-     *//*
+ * returns list of privileges
+ * only users with role admin has access to this information.
+ *
+ * @return list of privileges
+ *//*
 
     @PreAuthorize("hasAuthority('PRIVILEGE_READ_PRIVILEGE')")
     @GetMapping(value = "/privileges")
@@ -54,11 +64,11 @@ public class PrivilegeController {
 
     */
 /**
-     * request to save privilege to database.
-     *
-     * @param privilege to save
-     * @return privilege
-     *//*
+ * request to save privilege to database.
+ *
+ * @param privilege to save
+ * @return privilege
+ *//*
 
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_PRIVILEGE')")
     @PostMapping(value = "/privileges")

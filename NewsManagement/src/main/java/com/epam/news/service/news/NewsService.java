@@ -21,16 +21,16 @@ public interface NewsService {
      * @return list of news.
      */
     List<News> findAll();
-/*
-    *//**
+    /*
+     *//**
      * Returns news by id.
      *
      * @param id news
      * @return News
-     *//*
-    News get(long id);
+     */
+    News getById(long id);
 
-    *//**
+    /**
      * Returns news with 2 comments.
      *
      * @param id   news
@@ -44,10 +44,10 @@ public interface NewsService {
      *
      * @param news to save
      * @return news
-     *//*
-    News add(News news);
+     */
+    News save(News news);
 
-    *//**
+    /**
      * update news.
      *
      * @param news to update

@@ -22,6 +22,16 @@ import java.util.List;
  * REST API controller for processing queries with entity {@link Role}.
  *
  * @author Oleg Aliyev
+ * <p>
+ * service is used to interact with database.
+ * <p>
+ * returns list of roles
+ * only users with role admin has access to this information.
+ * @return list of roles
+ * <p>
+ * request to save role to database.
+ * @param role to save
+ * @return role
  *//*
 
 @CrossOrigin("*")
@@ -31,8 +41,8 @@ public class RoleController {
 
     */
 /**
-     * service is used to interact with database.
-     *//*
+ * service is used to interact with database.
+ *//*
 
     @Autowired
     private RoleService roleService;
@@ -41,11 +51,11 @@ public class RoleController {
     private RoleRepository roleRepository;
     */
 /**
-     * returns list of roles
-     * only users with role admin has access to this information.
-     *
-     * @return list of roles
-     *//*
+ * returns list of roles
+ * only users with role admin has access to this information.
+ *
+ * @return list of roles
+ *//*
 
     @PreAuthorize("hasAuthority('PRIVILEGE_READ_ROLE')")
     @GetMapping(value = "/roles")
@@ -56,11 +66,11 @@ public class RoleController {
 
     */
 /**
-     * request to save role to database.
-     *
-     * @param role to save
-     * @return role
-     *//*
+ * request to save role to database.
+ *
+ * @param role to save
+ * @return role
+ *//*
 
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_ROLE')")
     @PostMapping(value = "/roles")

@@ -25,12 +25,20 @@
     </properties>
     <dependencies>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-rest -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
-            <version>2.1.4.RELEASE</version>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.1.7.RELEASE</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.16.Final</version>
+        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
         <dependency>
@@ -38,17 +46,6 @@
             <artifactId>spring-boot-starter-security</artifactId>
             <version>2.1.6.RELEASE</version>
         </dependency>
-
-
-
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.4.2.Final</version>
-        </dependency>
-
-
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -85,27 +82,6 @@
             <version>2.9.9</version>
         </dependency>
 
-   <!--     &lt;!&ndash; Spring Security Core &ndash;&gt;
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        &lt;!&ndash; Spring Security Config &ndash;&gt;
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        &lt;!&ndash; Spring Security Web &ndash;&gt;
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>-->
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -117,77 +93,12 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-
-        <!--
-                <dependency>
-                    <groupId>org.hibernate.javax.persistence</groupId>
-                    <artifactId>hibernate-jpa-2.1-api</artifactId>
-                    <version>1.0.0.Final</version>
-                </dependency>
-                &lt;!&ndash; https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager &ndash;&gt;
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-entitymanager</artifactId>
-                    <version>${hibernate.version}</version>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.jboss.logging</groupId>
-                            <artifactId>jboss-logging</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-jdbc</artifactId>
-                    <version>${spring.version}</version>
-                </dependency>
-                &lt;!&ndash;spring mvc&ndash;&gt;
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-webmvc</artifactId>
-                    <version>${spring.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                    <version>${spring.version}</version>
-                </dependency>
-
-                &lt;!&ndash;spring core&ndash;&gt;
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-core</artifactId>
-                    <version>${spring.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context</artifactId>
-                    <version>${spring.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-core</artifactId>
-                    <version>${hibernate.version}</version>
-                </dependency>
-                &lt;!&ndash;spring hibernate data source&ndash;&gt;
-                <dependency>
-                    <groupId>commons-dbcp</groupId>
-                    <artifactId>commons-dbcp</artifactId>
-                    <version>${common.dbcp.version}</version>
-                </dependency>
-                &lt;!&ndash; Servlet &ndash;&gt;
-                <dependency>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>javax.servlet-api</artifactId>
-                    <version>3.1.0</version>
-                    <scope>provided</scope>
-                </dependency>-->
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc8</artifactId>
             <version>${oracle.jdbc.version}</version>
         </dependency>
+
         <!--Mockito-->
         <dependency>
             <groupId>org.mockito</groupId>
@@ -212,21 +123,6 @@
 
 
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.2.4.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>2.2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>2.2.4</version>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
@@ -372,8 +268,6 @@
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>3.0.0</version>
             </plugin>
-
-
             <plugin>
                 <groupId>org.basepom.maven</groupId>
                 <artifactId>duplicate-finder-maven-plugin</artifactId>
@@ -401,29 +295,15 @@
                     <useResultFile>true</useResultFile>
                     <resultFileMinClasspathCount>2</resultFileMinClasspathCount>
                     <resultFile>${project.build.directory}/duplicate-finder-result.xml</resultFile>
-
-                    <!-- Version 1.1.1+ -->
                     <includeBootClasspath>false</includeBootClasspath>
                     <bootClasspathProperty>sun.boot.class.path</bootClasspathProperty>
                     <useDefaultResourceIgnoreList>true</useDefaultResourceIgnoreList>
-                    <!-- Version 1.1.1+ -->
-
-                    <!-- Version 1.2.0+ -->
                     <includePomProjects>false</includePomProjects>
-                    <!-- Version 1.2.0+ -->
-
-                    <!-- Version 1.2.1+ -->
                     <useDefaultResourceIgnoreList>true</useDefaultResourceIgnoreList>
-                    <!-- Version 1.2.1+ -->
-
                     <exceptions>
                         <exception>
                             <currentProject>false</currentProject>
-
-                            <!-- Version 1.1.1+ -->
                             <bootClasspath>false</bootClasspath>
-                            <!-- Version 1.1.1+ -->
-
                             <conflictingDependencies>
                                 <dependency>
                                     <artifactId>...</artifactId>
@@ -448,25 +328,6 @@
                             </resourcePatterns>
                         </exception>
                     </exceptions>
-                    <ignoredResourcePatterns>
-                        <ignoredResourcePattern>...</ignoredResourcePattern>
-                    </ignoredResourcePatterns>
-
-                    <!-- Version 1.2.1+ -->
-                    <ignoredClassPatterns>
-                        <ignoredClassPattern>...</ignoredClassPattern>
-                    </ignoredClassPatterns>
-                    <!-- Version 1.2.1+ -->
-
-                    <ignoredDependencies>
-                        <dependency>
-                            <artifactId>...</artifactId>
-                            <groupId>...</groupId>
-                            <version>...</version>
-                            <type>...</type>
-                            <classifier>...</classifier>
-                        </dependency>
-                    </ignoredDependencies>
                 </configuration>
             </plugin>
 

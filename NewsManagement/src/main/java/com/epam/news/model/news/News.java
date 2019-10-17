@@ -37,6 +37,9 @@ import java.util.Collection;
         @NamedQuery(
                 name = "getAllNews",
                 query = "select  n from News n"),
+        @NamedQuery(
+                name = "News.getById",
+                query = "select n from News n where n.id = ?1")
 
 })
 @Entity(name = "News")
@@ -232,7 +235,7 @@ public class News {
             return false;
         }
         News news = (News) object;
-        return  id == news.id
+        return id == news.id
                 && title.equals(news.title)
                 && brief.equals(news.brief)
                 && content.equals(news.content);

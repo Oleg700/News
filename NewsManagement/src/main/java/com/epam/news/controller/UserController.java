@@ -69,8 +69,7 @@ public class UserController {
      */
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_USER')")
     @PostMapping(value = "/users")
-    public ResponseEntity<User> addUser(@RequestBody @Valid
-                                            final UserDto userDto) {
+    public ResponseEntity<User> addUser(@RequestBody @Valid final UserDto userDto) {
         User userAdded = userService.add(userDto.getUser());
         return ResponseEntity.ok().body(userAdded);
     }

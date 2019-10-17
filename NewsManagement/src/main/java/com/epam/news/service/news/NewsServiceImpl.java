@@ -27,12 +27,6 @@ public class NewsServiceImpl implements NewsService {
     private CommentDao commentDao;
 
 
-   /* @Autowired
-    public NewsServiceImpl(final NewsDao newsRepository, final CommentDao commentDao) {
-        this.newsRepository = newsRepository;
-        this.commentDao = commentDao;
-    }*/
-
     @Autowired
     public NewsServiceImpl(final NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
@@ -44,11 +38,16 @@ public class NewsServiceImpl implements NewsService {
         return newsRepository.findAll();
     }
 
-   /* @Override
-    public News get(final long id) {
-        return (News) newsDao.get(id);
+    @Override
+    public News getById(final long id) {
+        return newsRepository.getById(id);
     }
 
+    @Override
+    public News save(final News news) {
+        return newsRepository.save(news);
+    }
+/*
     @Override
     @Transactional
     public News getNewsWithTwoRecentComments(final long id, final int page) {
@@ -56,13 +55,6 @@ public class NewsServiceImpl implements NewsService {
         Collection<Comment> comments = commentDao.getCommentsByNewsId(id, page);
         news.setComments(comments);
         return news;
-    }
-
-
-    @Override
-    @Transactional
-    public News add(final News news) {
-        return newsDao.add(news);
     }
 
     @Override

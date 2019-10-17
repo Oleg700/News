@@ -21,6 +21,15 @@ import javax.validation.Valid;
  * REST API controller for processing queries with entity {@link Comment}.
  *
  * @author Oleg Aliyev
+ * <p>
+ * service is used to interact with database.
+ * <p>
+ * Save comment to database.
+ * @param comment to save
+ * @return comment
+ * <p>
+ * Retrieve authorize username from session.
+ * @return username
  *//*
 
 @CrossOrigin("*")
@@ -30,19 +39,19 @@ public class CommentController {
 
     */
 /**
-     * service is used to interact with database.
-     *//*
+ * service is used to interact with database.
+ *//*
 
     @Autowired
     private CommentService commentService;
 
     */
 /**
-     * Save comment to database.
-     *
-     * @param comment to save
-     * @return comment
-     *//*
+ * Save comment to database.
+ *
+ * @param comment to save
+ * @return comment
+ *//*
 
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_COMMENT')")
     @PostMapping(value = "/news/{newsId}/comments")
@@ -55,10 +64,10 @@ public class CommentController {
 
     */
 /**
-     * Retrieve authorize username from session.
-     *
-     * @return username
-     *//*
+ * Retrieve authorize username from session.
+ *
+ * @return username
+ *//*
 
     private String getUsernameFromSession() {
         UserDetails user = (UserDetails)
