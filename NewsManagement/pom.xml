@@ -21,8 +21,17 @@
         <mockito.version>1.10.19</mockito.version>
         <junit.jupiter.version>5.4.2</junit.jupiter.version>
         <h2database.version>1.4.199</h2database.version>
+        <spring.boot.version>2.1.8.RELEASE</spring.boot.version>
     </properties>
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-autoconfigure -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
         <dependency>
             <groupId>javax.validation</groupId>
@@ -115,23 +124,11 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
-        <!--spring-orm-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.orm.version}</version>
-        </dependency>
-        <!--spring unit test-->
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-
-
-
         <!--spring hibernate data source-->
         <dependency>
             <groupId>commons-dbcp</groupId>

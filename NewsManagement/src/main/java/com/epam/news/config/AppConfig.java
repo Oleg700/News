@@ -22,8 +22,6 @@ import com.epam.news.service.role.RoleServiceImpl;
 import com.epam.news.service.user.UserService;
 import com.epam.news.service.user.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,11 +29,6 @@ import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.env.Environment;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -43,7 +36,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.sql.DataSource;
 import javax.validation.Validator;
 
 /**
@@ -83,13 +75,6 @@ public class AppConfig {
         return new LocalValidatorFactoryBean();
     }
 
-
-    /**
-     * environment for reading rows from property.
-     */
-    @Autowired
-    private Environment environment;
-
     /**
      * Returns the RestTemplate for Integration tests.
      *
@@ -98,66 +83,6 @@ public class AppConfig {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
-    }
-
-    /**
-     * Returns factory used to
-     * create transactionManager {@link JpaTransactionManager}.
-     *
-     * @return factoryBean
-     */
-    @Bean
-    public LocalContainerEntityManagerFactoryBean localContainerFactoryBean() {
-        LocalContainerEntityManagerFactoryBean factory =
-                new LocalContainerEntityManagerFactoryBean();
-        factory.setDataSource(dataSource());
-        factory.setPackagesToScan("com.epam.news");
-        factory.setJpaVendorAdapter(jpaVendorAdapter());
-        return factory;
-    }
-
-    /**
-     * Returns dataSource with database settings.
-     *
-     * @return dataSource
-     */
-    @Bean
-    public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(environment.getProperty("db.driver"));
-        dataSource.setUrl(environment.getProperty("db.url"));
-        dataSource.setUsername(environment.getProperty("db.user"));
-        dataSource.setPassword(environment.getProperty("db.password"));
-        return dataSource;
-    }
-
-    /**
-     * Get JpaVendorAdapter with specific database settings.
-     *
-     * @return jpaVendorAdapter
-     */
-    @Bean
-    public JpaVendorAdapter jpaVendorAdapter() {
-        JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        ((HibernateJpaVendorAdapter) jpaVendorAdapter).setShowSql(true);
-        ((HibernateJpaVendorAdapter) jpaVendorAdapter).setGenerateDdl(false);
-        return jpaVendorAdapter;
-    }
-
-
-    /**
-     * Get transactionManager for creating transactions with database.
-     *
-     * @return transactionManager
-     */
-    @Bean
-    public JpaTransactionManager transactionManager() {
-        JpaTransactionManager jpaTransactionManager
-                = new JpaTransactionManager();
-        jpaTransactionManager
-                .setEntityManagerFactory(localContainerFactoryBean()
-                        .getObject());
-        return jpaTransactionManager;
     }
 
     /**
