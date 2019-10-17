@@ -15,6 +15,5 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     @Override
     News save(News news);
 
-    /*@Query("SELECT n FROM News n WHERE n.id = id")*/
     News getById(final long id);
 }

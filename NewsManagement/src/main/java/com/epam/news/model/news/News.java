@@ -35,9 +35,6 @@ import java.util.Collection;
 @Table
 @NamedQueries({
         @NamedQuery(
-                name = "getAllNews",
-                query = "select  n from News n"),
-        @NamedQuery(
                 name = "News.getById",
                 query = "select n from News n where n.id = ?1")
 
