@@ -1,4 +1,3 @@
-/*
 package com.epam.news.controller;
 
 import com.epam.news.model.user.Role;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
-*/
 /**
  * REST API controller for processing queries with entity {@link Role}.
  *
@@ -32,30 +30,28 @@ import java.util.List;
  * request to save role to database.
  * @param role to save
  * @return role
- *//*
+ */
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/api")
 public class RoleController {
 
-    */
 /**
  * service is used to interact with database.
- *//*
+ */
 
     @Autowired
     private RoleService roleService;
 
     @Autowired
     private RoleRepository roleRepository;
-    */
 /**
  * returns list of roles
  * only users with role admin has access to this information.
  *
  * @return list of roles
- *//*
+ */
 
     @PreAuthorize("hasAuthority('PRIVILEGE_READ_ROLE')")
     @GetMapping(value = "/roles")
@@ -64,13 +60,12 @@ public class RoleController {
         return ResponseEntity.ok().body(listRoles);
     }
 
-    */
 /**
  * request to save role to database.
  *
  * @param role to save
  * @return role
- *//*
+ */
 
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_ROLE')")
     @PostMapping(value = "/roles")
@@ -79,4 +74,3 @@ public class RoleController {
         return ResponseEntity.ok().body(role1);
     }
 }
-*/

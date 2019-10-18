@@ -69,7 +69,7 @@ class UserControllerTest {
     void whenGetUriThenReturnAllUsers() throws Exception {
 
         //given
-        Collection<User> listUsers = userService.getAll();
+        Collection<User> listUsers = userService.findAll();
 
         //when
         MvcResult result = this.mockMvc

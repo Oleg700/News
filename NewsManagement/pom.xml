@@ -9,27 +9,46 @@
     <packaging>war</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>5.1.2.RELEASE</spring.version>
-        <spring.orm.version>5.1.6.RELEASE</spring.orm.version>
-        <hibernate.version>4.3.11.Final</hibernate.version>
         <oracle.jdbc.version>12.2.0.1</oracle.jdbc.version>
-        <javax.transaction>1.1</javax.transaction>
         <jackson.version>2.9.4</jackson.version>
-        <org.spring.hibernate.version>1.2.9</org.spring.hibernate.version>
-        <common.dbcp.version>1.4</common.dbcp.version>
-        <servlet.version>3.0.1</servlet.version>
         <mockito.version>1.10.19</mockito.version>
         <junit.jupiter.version>5.4.2</junit.jupiter.version>
         <h2database.version>1.4.199</h2database.version>
-        <spring.boot.version>2.1.8.RELEASE</spring.boot.version>
     </properties>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.8.RELEASE</version>
+    </parent>
     <dependencies>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.1.7.RELEASE</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-autoconfigure -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
@@ -37,35 +56,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>6.0.16.Final</version>
-        </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-            <version>2.1.6.RELEASE</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>2.1.8.RELEASE</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <version>2.1.6.RELEASE</version>
-        </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-autoconfigure -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>${spring.boot.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
@@ -81,6 +71,9 @@
             <artifactId>jackson-datatype-hibernate4</artifactId>
             <version>2.9.9</version>
         </dependency>
+
+
+
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -304,36 +297,10 @@
                         <exception>
                             <currentProject>false</currentProject>
                             <bootClasspath>false</bootClasspath>
-                            <conflictingDependencies>
-                                <dependency>
-                                    <artifactId>...</artifactId>
-                                    <groupId>...</groupId>
-                                    <version>...</version>
-                                    <type>...</type>
-                                    <classifier>...</classifier>
-                                </dependency>
-                                ...
-                            </conflictingDependencies>
-                            <classes>
-                                <class>...</class>
-                            </classes>
-                            <packages>
-                                <package>...</package>
-                            </packages>
-                            <resources>
-                                <resource>...</resource>
-                            </resources>
-                            <resourcePatterns>
-                                <resourcePattern>...</resourcePattern>
-                            </resourcePatterns>
                         </exception>
                     </exceptions>
                 </configuration>
             </plugin>
-
-
-
-
         </plugins>
     </build>
 </project>

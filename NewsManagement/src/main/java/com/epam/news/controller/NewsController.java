@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +45,6 @@ public class NewsController {
         return ResponseEntity.ok().body(news);
     }
 
-
     /**
      * get news by id
      * responseEntity is allowed for all users.
@@ -64,7 +65,7 @@ public class NewsController {
      * @param id   to get news by id
      * @param page get current comment page
      * @return news
-     *//*
+     */
     @GetMapping(value = "/news/{id}/comments/{page}")
     public ResponseEntity<News> getNewsWithTwoRecentComments(
             @PathVariable("id") final long id,
@@ -73,7 +74,6 @@ public class NewsController {
         return ResponseEntity.ok().body(news);
     }
 
-    */
 
     /**
      * Returns added news as a result of request,
@@ -96,7 +96,7 @@ public class NewsController {
      * @param id   newsId
      * @param news to update
      * @return ResponseEntity<News>
-     *//*
+     */
     @PreAuthorize("hasAuthority('PRIVILEGE_UPDATE_NEWS')")
     @PutMapping(value = "/news/{id}")
     public ResponseEntity<News> updateNews(
@@ -106,18 +106,18 @@ public class NewsController {
         return ResponseEntity.ok().body(newsUpdated);
     }
 
-    *//**
+    /**
      * request for deleting news.
      *
      * @param id newsId
      * @return result of request
-     *//*
+     */
     @PreAuthorize("hasAuthority('PRIVILEGE_DELETE_NEWS')")
     @DeleteMapping("/news/{id}")
     public ResponseEntity<String> deleteNews(
             @PathVariable("id") final long id) {
-        newsService.delete(id);
+        newsService.deleteByid(id);
         return ResponseEntity.ok()
                 .body("News has been deleted successfully with id " + id);
-    }*/
+    }
 }

@@ -1,10 +1,11 @@
 package com.epam.news.service.user;
 
-import com.epam.news.dao.user.UserDao;
 import com.epam.news.model.user.Role;
 import com.epam.news.model.user.User;
+import com.epam.news.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -15,43 +16,42 @@ import java.util.List;
  *
  * @author Oleg Aliyev
  */
+@Service
 public class UserServiceImpl implements UserService {
 
-    /**
-     * userDao is used for connection with database.
-     */
-    private UserDao userDao;
+   private UserRepository userRepository;
 
     /**
-     * @param userDao userDao is used for connection with database.
+     * @param userRepository userDao is used for connection with database.
      */
     @Autowired
-    public UserServiceImpl(final UserDao userDao) {
-        this.userDao = userDao;
+    public UserServiceImpl(final UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
-    public List<User> getAll() {
-        return userDao.getAll();
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
     public User getByName(final String name) {
-        return userDao.getByName(name);
+        return userRepository.findDistinctFirstByUsername(name);
     }
 
     @Override
     @Transactional
-    public User add(final User user) {
+    public User save(final User user) {
         String hashPassword = encodePassword(user.getPassword());
         user.setPassword(hashPassword);
-        return userDao.add(user);
+        return userRepository.save(user);
     }
 
 
     @Override
-    public Collection<Role> getRoleByUsername(final String username) {
-        return userDao.getRoleByUsername(username);
+    public Collection<Role> getRolesByUsername(final String username) {
+        /*return userDao.getRoleByUsername(username);*/
+        return null;
     }
 
     /**

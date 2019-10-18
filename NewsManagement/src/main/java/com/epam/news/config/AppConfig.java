@@ -1,10 +1,6 @@
 package com.epam.news.config;
 
-import com.epam.news.dao.user.UserDao;
-import com.epam.news.dao.user.UserDaoImpl;
 import com.epam.news.security.RestResponseEntityExceptionHandler;
-import com.epam.news.service.user.UserService;
-import com.epam.news.service.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -83,28 +79,6 @@ public class AppConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-
-    /**
-     * Get UserDao, which will be used in service layer  {@link UserService}.
-     *
-     * @return userDao
-     */
-    @Bean
-    public UserDao userDao() {
-        return new UserDaoImpl();
-    }
-
-    /**
-     * Get UserService for processing
-     * with Entity {@link com.epam.news.model.user.User}.
-     *
-     * @return userService
-     */
-    @Bean
-    public UserService userService() {
-        return new UserServiceImpl(userDao());
     }
 
 

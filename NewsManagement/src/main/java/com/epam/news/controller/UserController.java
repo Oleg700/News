@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping(value = "/users/{username}/roles")
     public ResponseEntity<Collection<Role>> getRoleByUsername(
             @PathVariable("username") final String username) {
-        Collection<Role> roles = userService.getRoleByUsername(username);
+        Collection<Role> roles = userService.getRolesByUsername(username);
         return ResponseEntity.ok().body(roles);
     }
 
@@ -57,7 +57,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('PRIVILEGE_READ_USER')")
     @GetMapping(value = "/users")
     public ResponseEntity<List<User>> getAllUsers() {
-        List<User> newsList = userService.getAll();
+        List<User> newsList = userService.findAll();
         return ResponseEntity.ok().body(newsList);
     }
 
@@ -70,7 +70,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_USER')")
     @PostMapping(value = "/users")
     public ResponseEntity<User> addUser(@RequestBody @Valid final UserDto userDto) {
-        User userAdded = userService.add(userDto.getUser());
+        User userAdded = userService.save(userDto.getUser());
         return ResponseEntity.ok().body(userAdded);
     }
 

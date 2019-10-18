@@ -36,10 +36,10 @@ public interface NewsService {
      * @param id   news
      * @param page of current comment page on frontend side
      * @return news
-     *//*
+     */
     News getNewsWithTwoRecentComments(long id, int page);
 
-    *//**
+    /**
      * save news.
      *
      * @param news to save
@@ -52,13 +52,13 @@ public interface NewsService {
      *
      * @param news to update
      * @return news
-     *//*
+     */
     News update(News news);
 
-    *//**
+    /**
      * delete news by id.
      *
      * @param id of news to delete
-     *//*
-    void delete(long id);*/
+     */
+    Long deleteByid(long id);
 }

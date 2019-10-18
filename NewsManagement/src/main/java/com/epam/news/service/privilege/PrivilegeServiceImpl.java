@@ -1,8 +1,9 @@
 package com.epam.news.service.privilege;
 
-import com.epam.news.dao.privilege.PrivilegeDao;
 import com.epam.news.model.user.Privilege;
+import com.epam.news.repository.PrivilegeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -12,32 +13,33 @@ import java.util.Collection;
  *
  * @author Oleg Aliyev
  */
+@Service
 public class PrivilegeServiceImpl implements PrivilegeService {
 
     /**
      * privilegeDao is used to process privilege objects in database.
      */
-    private PrivilegeDao privilegeDao;
+    private PrivilegeRepository privilegeRepository;
 
     /**
      * constructor.
      *
-     * @param privilegeDao is used to process privilege objects in database.
+     * @param privilegeRepository is used to process privilege objects in database.
      */
     @Autowired
-    public PrivilegeServiceImpl(final PrivilegeDao privilegeDao) {
-        this.privilegeDao = privilegeDao;
+    public PrivilegeServiceImpl(final PrivilegeRepository privilegeRepository) {
+        this.privilegeRepository = privilegeRepository;
     }
 
     @Override
     public Collection<Privilege> getAll() {
-        return privilegeDao.getAll();
+        return privilegeRepository.findAll();
     }
 
 
     @Override
     @Transactional
     public Privilege add(final Privilege privilege) {
-        return privilegeDao.add(privilege);
+        return privilegeRepository.save(privilege);
     }
 }

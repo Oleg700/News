@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -31,13 +29,6 @@ import javax.validation.constraints.Size;
  */
 @Table
 @Entity(name = "Comments")
-@NamedQueries({
-        @NamedQuery(
-                name = "getCommentsByNewsId",
-                query = "select c from Comments"
-                        + " c where news_id = :id ORDER BY c.id DESC"
-        )
-})
 public class Comment {
 
     /**

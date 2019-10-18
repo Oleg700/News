@@ -26,7 +26,7 @@ public interface UserService {
      *
      * @return list of users
      */
-    List<User> getAll();
+    List<User> findAll();
 
     /**
      * Returns user by username.
@@ -42,7 +42,7 @@ public interface UserService {
      * @param username of user to get list of roles
      * @return role
      */
-    Collection<Role> getRoleByUsername(String username);
+    Collection<Role> getRolesByUsername(String username);
 
     /**
      * Returns added user.
@@ -50,5 +50,5 @@ public interface UserService {
      * @param user to add
      * @return user
      */
-    User add(User user);
+    User save(User user);
 }

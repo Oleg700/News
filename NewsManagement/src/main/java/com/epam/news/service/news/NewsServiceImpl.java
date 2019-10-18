@@ -1,11 +1,17 @@
 package com.epam.news.service.news;
 
-import com.epam.news.dao.comment.CommentDao;
+import com.epam.news.model.news.Comment;
 import com.epam.news.model.news.News;
+import com.epam.news.repository.CommentRepository;
 import com.epam.news.repository.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,56 +22,50 @@ import java.util.List;
 @Service
 public class NewsServiceImpl implements NewsService {
 
-    /**
-     * newsDao is used to process news objects in database.
-     */
     private NewsRepository newsRepository;
 
-    /**
-     * commentDao is used to process comment objects in database.
-     */
-    private CommentDao commentDao;
-
+    private CommentRepository commentRepository;
 
     @Autowired
-    public NewsServiceImpl(final NewsRepository newsRepository) {
+    public NewsServiceImpl(final NewsRepository newsRepository, final CommentRepository commentRepository) {
         this.newsRepository = newsRepository;
+        this.commentRepository = commentRepository;
     }
-
 
     @Override
     public List<News> findAll() {
-        return newsRepository.findAll();
+        return newsRepository.findAllNews();
     }
 
     @Override
     public News getById(final long id) {
-        return newsRepository.getById(id);
+        return newsRepository.getOne(id);
     }
 
     @Override
     public News save(final News news) {
         return newsRepository.save(news);
     }
-/*
+
     @Override
-    @Transactional
+    public News update(final News news) {
+        News newsUpdated = newsRepository.getOne(news.getId());
+        newsUpdated =  news;
+        return newsRepository.save(newsUpdated);
+    }
+
+    @Override
+    public Long deleteByid(final long id) {
+        return newsRepository.deleteById(id);
+    }
+
+    @Override
     public News getNewsWithTwoRecentComments(final long id, final int page) {
-        News news = newsDao.get(id);
-        Collection<Comment> comments = commentDao.getCommentsByNewsId(id, page);
+        News news = newsRepository.getOne(id);
+        Pageable pageable = PageRequest.of(page, 2, Sort.by("id"));
+        Page<Comment> pageComments = commentRepository.findById(id, pageable);
+        Collection<Comment> comments = pageComments.getContent();
         news.setComments(comments);
         return news;
     }
-
-    @Override
-    @Transactional
-    public News update(final News news) {
-        return newsDao.update(news);
-    }
-
-    @Override
-    @Transactional
-    public void delete(final long id) {
-        newsDao.delete(id);
-    }*/
 }

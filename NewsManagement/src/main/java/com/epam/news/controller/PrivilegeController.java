@@ -1,4 +1,3 @@
-/*
 package com.epam.news.controller;
 
 import com.epam.news.model.user.Privilege;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
-*/
 /**
  * REST API controller for processing queries with entity {@link Privilege}.
  *
@@ -29,30 +27,27 @@ import java.util.List;
  * @return list of privileges
  * <p>
  * request to save privilege to database.
- * @param privilege to save
  * @return privilege
- *//*
+ */
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/api")
 public class PrivilegeController {
 
-    */
 /**
  * service is used to interact with database.
- *//*
+ */
 
     @Autowired
     private PrivilegeService privilegeService;
 
-    */
 /**
  * returns list of privileges
  * only users with role admin has access to this information.
  *
  * @return list of privileges
- *//*
+ */
 
     @PreAuthorize("hasAuthority('PRIVILEGE_READ_PRIVILEGE')")
     @GetMapping(value = "/privileges")
@@ -62,13 +57,12 @@ public class PrivilegeController {
         return ResponseEntity.ok().body(listPrivileges);
     }
 
-    */
 /**
  * request to save privilege to database.
  *
  * @param privilege to save
  * @return privilege
- *//*
+ */
 
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_PRIVILEGE')")
     @PostMapping(value = "/privileges")
@@ -78,4 +72,3 @@ public class PrivilegeController {
         return ResponseEntity.ok().body(savedPrivilege);
     }
 }
-*/
