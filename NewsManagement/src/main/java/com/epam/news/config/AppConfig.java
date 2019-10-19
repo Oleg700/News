@@ -38,7 +38,7 @@ import javax.validation.Validator;
 public class AppConfig {
 
     @Autowired
-    Environment environment;
+    private Environment environment;
 
     @Bean
     public MessageSource messageSource() {

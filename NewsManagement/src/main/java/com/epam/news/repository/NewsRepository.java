@@ -17,6 +17,6 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     Long deleteById(final long id);
 
-    @Query(value = "SELECT n.title, n.brief FROM News n")
+    @Query(value = "SELECT new News(n.title, n.brief, n.content) from News n")
     List<News> findAllNews();
 }

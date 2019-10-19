@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -28,17 +26,6 @@ import java.util.Objects;
  */
 @Entity(name = "Users")
 @Table
-@NamedQueries({
-        @NamedQuery(
-                name = "getAllUsers",
-                query = "select u from Users u"
-        ),
-        @NamedQuery(
-                name = "getUserByName",
-                query = "select c from Users c where c.username = :name"
-        )
-}
-)
 public class User implements Serializable {
 
     /**

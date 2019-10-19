@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -33,12 +31,6 @@ import java.util.Objects;
 @Entity(name = "Roles")
 @Table
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NamedQueries(
-        @NamedQuery(
-                name = "getAllRoles",
-                query = "select r from Roles r"
-        )
-)
 public class Role implements GrantedAuthority {
 
     /**
