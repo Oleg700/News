@@ -1,3 +1,4 @@
+/*
 package com.epam.news.service.news;
 
 import com.epam.news.model.news.Comment;
@@ -14,11 +15,13 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 
+*/
 /**
  * implementation of interface {@link NewsService}.
  *
  * @author Oleg Aliyev
- */
+ *//*
+
 @Service
 public class NewsServiceImpl implements NewsService {
 
@@ -34,7 +37,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<News> findAll() {
-        return newsRepository.findAllNews();
+        return newsRepository.findAll();
     }
 
     @Override
@@ -55,7 +58,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Long deleteByid(final long id) {
+    public Long deleteByid(final Long id) {
         return newsRepository.deleteById(id);
     }
 
@@ -69,3 +72,4 @@ public class NewsServiceImpl implements NewsService {
         return news;
     }
 }
+*/
