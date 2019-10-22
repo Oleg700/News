@@ -16,5 +16,5 @@ public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
 
     @Override
     @PreAuthorize("hasAuthority('PRIVILEGE_WRITE_PRIVILEGE')")
-    Privilege save(Privilege news);
+    Privilege save(Privilege privilege);
 }
