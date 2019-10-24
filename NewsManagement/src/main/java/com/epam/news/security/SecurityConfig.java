@@ -2,7 +2,6 @@ package com.epam.news.security;
 
 
 import com.epam.news.repository.UserRepository;
-import com.epam.news.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
