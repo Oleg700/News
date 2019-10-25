@@ -1,7 +1,7 @@
-package com.epam.news.controller;
+package com.epam.news.controller.comment;
 
 import com.epam.news.model.news.Comment;
-import com.epam.news.service.CommentService;
+import com.epam.news.service.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;

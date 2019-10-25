@@ -1,4 +1,4 @@
-package com.epam.news.service;
+package com.epam.news.service.comment;
 
 import com.epam.news.model.news.Comment;
 
