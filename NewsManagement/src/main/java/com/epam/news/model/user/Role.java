@@ -3,7 +3,6 @@ package com.epam.news.model.user;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -34,12 +31,6 @@ import java.util.Objects;
 @Entity(name = "Roles")
 @Table
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NamedQueries(
-        @NamedQuery(
-                name = "getAllRoles",
-                query = "select r from Roles r"
-        )
-)
 public class Role implements GrantedAuthority {
 
     /**
@@ -55,7 +46,7 @@ public class Role implements GrantedAuthority {
      * role name.
      */
     @Column
-    @Size(max = 20, message = "{validation.role.name.size}")
+    @Size(max = 40, message = "{validation.role.name.size}")
     @NotNull(message = "{validation.role.name.notNull}")
     private String name;
 
@@ -68,7 +59,7 @@ public class Role implements GrantedAuthority {
     /**
      * roles and privileges are connected with relation @ManyToMany.
      */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(

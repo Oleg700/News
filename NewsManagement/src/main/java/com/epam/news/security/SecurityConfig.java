@@ -1,8 +1,7 @@
 package com.epam.news.security;
 
 
-
-import com.epam.news.service.user.UserService;
+import com.epam.news.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  *
  * @author Oleg Aliyev
  */
+
+
 @Configuration
 @EnableWebSecurity
 @ComponentScan("com.epam.news")
@@ -30,12 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * class is used to get username and password from database.
      */
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(new CustomUserService(userService));
+        auth.userDetailsService(new CustomUserService(userRepository));
     }
 
     @Override
@@ -47,4 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/news/**").permitAll();
     }
+
 }
+

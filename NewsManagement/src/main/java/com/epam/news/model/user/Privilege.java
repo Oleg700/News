@@ -1,5 +1,6 @@
 package com.epam.news.model.user;
 
+import com.epam.news.controller.news.NewsController;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -8,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -24,17 +23,11 @@ import java.util.Objects;
  * <p>
  *
  * @author Oleg Aliyev
- * @see com.epam.news.controller.NewsController
+ * @see NewsController
  */
 @Table
 @Entity(name = "Privileges")
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NamedQueries({
-        @NamedQuery(
-                name = "getAllPrivileges",
-                query = "select p from Privileges p"
-        )
-})
 public class Privilege implements GrantedAuthority {
 
     /**
@@ -45,13 +38,14 @@ public class Privilege implements GrantedAuthority {
             generator = "privilege_seq")
     @SequenceGenerator(name = "privilege_seq",
             sequenceName = "privilege_seq", allocationSize = 1)
+
     private Long id;
 
     /**
      * privilege name.
      */
     @Column
-    @Size(max = 20, message = "{validation.privilege.name.size}")
+    @Size(max = 40, message = "{validation.privilege.name.size}")
     @NotNull(message = "{validation.privilege.name.notNull}")
     private String name;
 

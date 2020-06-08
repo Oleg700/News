@@ -1,50 +1,32 @@
 package com.epam.news.service.comment;
 
-import com.epam.news.dao.comment.CommentDao;
 import com.epam.news.model.news.Comment;
 import com.epam.news.model.user.User;
-import com.epam.news.service.user.UserService;
+import com.epam.news.repository.CommentRepository;
+import com.epam.news.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
-/**
- * implementation of interface {@link CommentService}.
- *
- * @author Oleg Aliyev
- */
+@Service
 public class CommentServiceImpl implements CommentService {
 
-    /**
-     * commentDao is used for connection with database.
-     */
-    private CommentDao commentDao;
+    private CommentRepository commentRepository;
 
-    /**
-     * userService is used to get user by name.
-     */
-    private UserService userService;
+    private UserRepository userRepository;
 
-    /**
-     * Constructor.
-     *
-     * @param commentDao  is used for connection with database.
-     * @param userService is used to get user by name.
-     */
     @Autowired
-    public CommentServiceImpl(final CommentDao commentDao,
-                              final UserService userService) {
-        this.commentDao = commentDao;
-        this.userService = userService;
+    public CommentServiceImpl(final CommentRepository commentRepository,
+                              final UserRepository userRepository) {
+        this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
     }
 
 
     @Override
-    @Transactional
     public Comment add(final Comment comment, final String username) {
-        User user = userService.getByName(username);
+        User user = userRepository.findDistinctFirstByUsername(username);
         comment.setUser(user);
-        return commentDao.add(comment);
+        return commentRepository.save(comment);
     }
 
 

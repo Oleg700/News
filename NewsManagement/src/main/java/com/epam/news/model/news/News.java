@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,8 +13,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
@@ -33,12 +29,6 @@ import java.util.Collection;
  * @author Oleg Aliyev
  */
 @Table
-@NamedQueries({
-        @NamedQuery(
-                name = "getAllNews",
-                query = "select  n from News n"),
-
-})
 @Entity(name = "News")
 public class News {
 
@@ -57,7 +47,6 @@ public class News {
      */
     @OneToMany(mappedBy = "news",
             fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @Fetch(FetchMode.JOIN)
     private Collection<Comment> comments;
 
     /**
@@ -232,7 +221,7 @@ public class News {
             return false;
         }
         News news = (News) object;
-        return  id == news.id
+        return id == news.id
                 && title.equals(news.title)
                 && brief.equals(news.brief)
                 && content.equals(news.content);
