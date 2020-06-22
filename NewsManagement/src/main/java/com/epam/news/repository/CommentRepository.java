@@ -9,10 +9,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CommentRepository extends PagingAndSortingRepository<Comment, Long> {
+public interface CommentRepository
+        extends PagingAndSortingRepository<Comment, Long> {
 
-     @Query("SELECT c FROM Comments c where news_id = :#{#id}")
-     Page<Comment> findById(@Param("id") long id, Pageable pageable);
-
+    @Query("SELECT c FROM Comments c where news_id = :#{#id}")
+    Page<Comment> findById(@Param("id") long id, Pageable pageable);
 
 }
