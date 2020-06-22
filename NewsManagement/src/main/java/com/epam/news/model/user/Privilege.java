@@ -1,5 +1,6 @@
 package com.epam.news.model.user;
 
+import com.epam.news.controller.news.NewsController;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -22,7 +23,7 @@ import java.util.Objects;
  * <p>
  *
  * @author Oleg Aliyev
- * @see com.epam.news.controller.NewsController
+ * @see NewsController
  */
 @Table
 @Entity(name = "Privileges")
