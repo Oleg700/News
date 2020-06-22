@@ -12,13 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
-/**
- * implementation of interface {@link NewsService}.
- *
- * @author Oleg Aliyev
- */
 @Service
 public class NewsServiceImpl implements NewsService {
 
@@ -27,37 +21,12 @@ public class NewsServiceImpl implements NewsService {
     private CommentRepository commentRepository;
 
     @Autowired
-    public NewsServiceImpl(final NewsRepository newsRepository, final CommentRepository commentRepository) {
+    public NewsServiceImpl(final NewsRepository newsRepository,
+                           final CommentRepository commentRepository) {
         this.newsRepository = newsRepository;
         this.commentRepository = commentRepository;
     }
 
-    @Override
-    public List<News> findAll() {
-        return newsRepository.findAllNews();
-    }
-
-    @Override
-    public News getById(final long id) {
-        return newsRepository.getOne(id);
-    }
-
-    @Override
-    public News save(final News news) {
-        return newsRepository.save(news);
-    }
-
-    @Override
-    public News update(final News news) {
-        News newsUpdated = newsRepository.getOne(news.getId());
-        newsUpdated =  news;
-        return newsRepository.save(newsUpdated);
-    }
-
-    @Override
-    public Long deleteByid(final long id) {
-        return newsRepository.deleteById(id);
-    }
 
     @Override
     public News getNewsWithTwoRecentComments(final long id, final int page) {

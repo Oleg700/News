@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -272,8 +272,9 @@ class NewsControllerTest {
                 .andReturn();
 
         //then
-    /*    News newsDeleted = newsService.get(1);
+/*    News newsDeleted = newsService.get(1);
 
-        assertThat(newsDeleted, is(nullValue()));*/
+        assertThat(newsDeleted, is(nullValue()));*//*
+
     }
-}
+}*/

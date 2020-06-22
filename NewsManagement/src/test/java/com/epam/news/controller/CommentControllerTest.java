@@ -4,7 +4,7 @@ import com.epam.news.config.AppConfig;
 import com.epam.news.model.news.Comment;
 import com.epam.news.model.news.News;
 import com.epam.news.model.user.User;
-import com.epam.news.service.comment.CommentService;
+import CommentService;
 import com.epam.news.service.news.NewsService;
 import com.epam.news.service.user.UserService;
 import com.epam.news.util.JsonConvertUtil;
